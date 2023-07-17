@@ -1,41 +1,6 @@
 {
   "author": "Volkov Labs",
-  "name": "@volkovlabs/jest-selectors",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [
-    "jest",
-    "selector"
-  ],
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/VolkovLabs/volkovlabs-packages.git",
-    "directory": "packages/jest-selectors"
-  },
-  "files": [
-    "dist",
-    "./README.md",
-    "./CHANGELOG.md",
-    "./LICENSE"
-  ],
-  "scripts": {
-    "build": "rollup -c",
-    "clean": "rimraf ./dist",
-    "typecheck": "tsc --emitDeclarationOnly false --noEmit",
-    "prettier": "prettier . --write",
-    "prepack": "npm run clean & npm run build"
-  },
-  "license": "Apache-2.0",
-  "peerDependencies": {
-    "@testing-library/react": "^14.0.0"
-  },
+  "description": "Jest selectors",
   "devDependencies": {
     "@types/node": "^20.4.2",
     "esbuild": "^0.18.13",
@@ -46,5 +11,40 @@
     "rollup-plugin-esbuild": "^5.0.0",
     "tslib": "^2.6.0",
     "typescript": "^5.1.6"
-  }
+  },
+  "files": [
+    "dist",
+    "./README.md",
+    "./CHANGELOG.md",
+    "./LICENSE"
+  ],
+  "keywords": [
+    "jest",
+    "selector"
+  ],
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "name": "@volkovlabs/jest-selectors",
+  "peerDependencies": {
+    "@testing-library/react": "^14.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "repository": {
+    "directory": "packages/jest-selectors",
+    "type": "git",
+    "url": "https://github.com/VolkovLabs/volkovlabs-packages.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf ./dist",
+    "prepack": "npm run clean & npm run build",
+    "prettier": "prettier . --write",
+    "typecheck": "tsc --emitDeclarationOnly false --noEmit"
+  },
+  "types": "src/index.ts",
+  "version": "1.0.0"
 }

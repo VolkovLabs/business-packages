@@ -1,2 +1,3 @@
-# volkovlabs-packages
+# NPM packages
+
 Frontend packages

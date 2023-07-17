@@ -1,11 +1,13 @@
-# volkovlabs-jest-selectors
+# Jest selectors
 
 ## Install
+
 ```
 npm install --save-dev @volkovlabs/jest-selectors
 ```
 
 ## Example of usage
+
 ```javascript
 import { screen } from '@testing-library/react'
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
