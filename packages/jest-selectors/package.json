@@ -23,7 +23,7 @@
     "selector"
   ],
   "license": "Apache-2.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "name": "@volkovlabs/jest-selectors",
   "peerDependencies": {
     "@testing-library/react": "^14.0.0"
@@ -45,6 +45,6 @@
     "prettier": "prettier . --write",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "version": "1.0.0"
 }

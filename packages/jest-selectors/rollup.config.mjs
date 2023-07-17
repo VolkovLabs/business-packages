@@ -4,17 +4,9 @@ import packageJson from './package.json' assert { type: 'json' };
 
 const name = packageJson.main.replace(/\.js$/, '');
 
-const bundle = (config) => ({
-  ...config,
-  input: 'src/index.ts',
-  external: (id) => !/^[./]/.test(id),
-  output: {
-    dir: 'dist/',
-  },
-});
-
 export default [
-  bundle({
+  {
+    input: `src/index.ts`,
     plugins: [esbuild()],
     output: [
       {
@@ -22,18 +14,14 @@ export default [
         format: 'cjs',
         sourcemap: true,
       },
-      {
-        file: `${name}.mjs`,
-        format: 'es',
-        sourcemap: true,
-      },
     ],
-  }),
-  bundle({
+  },
+  {
+    input: `src/index.ts`,
     plugins: [dts()],
     output: {
       file: `${name}.d.ts`,
       format: 'es',
     },
-  }),
+  },
 ];
