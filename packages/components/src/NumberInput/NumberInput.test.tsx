@@ -1,10 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
-/**
- * TODO: remove after jest is configured
- */
-import '@testing-library/jest-dom';
 
 import { NumberInput } from './NumberInput';
 

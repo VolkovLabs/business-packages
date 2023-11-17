@@ -4,7 +4,7 @@ import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } f
 /**
  * Properties
  */
-interface NumberInputProps extends Omit<React.ComponentProps<typeof Input>, 'onChange' | 'value'> {
+interface Props extends Omit<React.ComponentProps<typeof Input>, 'onChange' | 'value'> {
   /**
    * on Change
    * @param value
@@ -43,7 +43,7 @@ interface NumberInputProps extends Omit<React.ComponentProps<typeof Input>, 'onC
 /**
  * Number Input
  */
-export const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, min, max, step, ...restProps }) => {
+export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, ...restProps }) => {
   /**
    * Local Value
    */
