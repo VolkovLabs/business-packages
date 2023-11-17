@@ -47,12 +47,12 @@
   "scripts": {
     "build": "rollup -c",
     "clean": "rimraf ./dist",
-    "prepack": "npm run clean & npm run build",
-    "prettier": "prettier . --write",
-    "typecheck": "tsc --emitDeclarationOnly false --noEmit",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test:ci": ""
+    "prepack": "npm run clean & npm run build",
+    "prettier": "prettier . --write",
+    "test:ci": "",
+    "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/index.d.ts",
   "version": "1.2.0"
