@@ -4,12 +4,14 @@
   "description": "Public packages",
   "packageManager": "^npm@9.0.0",
   "workspaces": [
-    "packages/*"
+    "packages/eslint-config",
+    "packages/jest-selectors",
+    "packages/components"
   ],
   "scripts": {
-    "test:ci": "npm run test:ci -w @volkovlabs/components",
-    "lint": "npm run lint -w @volkovlabs/components -w @volkovlabs/jest-selectors",
-    "build": "npm run build -w @volkovlabs/components -w @volkovlabs/jest-selectors",
+    "test:ci": "npm run test:ci --workspaces",
+    "lint": "npm run lint --workspaces",
+    "build": "npm run build --workspaces",
     "publish": "npm publish --workspaces"
   }
 }
