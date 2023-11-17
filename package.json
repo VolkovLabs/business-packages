@@ -5,5 +5,11 @@
   "packageManager": "^npm@9.0.0",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "test:ci": "npm run test:ci -w @volkovlabs/components",
+    "lint": "npm run lint -w @volkovlabs/components -w @volkovlabs/jest-selectors",
+    "build": "npm run build -w @volkovlabs/components -w @volkovlabs/jest-selectors",
+    "publish": "npm publish --workspaces"
+  }
 }
