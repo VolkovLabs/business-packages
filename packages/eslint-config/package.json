@@ -1,0 +1,35 @@
+{
+  "author": "Volkov Labs",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
+  },
+  "description": "ESLint configuration",
+  "files": [
+    "index.js",
+    "./README.md",
+    "./CHANGELOG.md",
+    "./LICENSE"
+  ],
+  "keywords": [
+    "eslint",
+    "config"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "name": "@volkovlabs/eslint-config",
+  "peerDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "index.js"
+  },
+  "scripts": {
+    "build": "",
+    "lint": "",
+    "test:ci": ""
+  },
+  "version": "1.0.0"
+}

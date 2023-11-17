@@ -1,0 +1,17 @@
+{
+  "description": "Public packages",
+  "name": "volkovlabs-packages",
+  "packageManager": "^npm@9.0.0",
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "publish": "npm publish --workspaces",
+    "test:ci": "npm run test:ci --workspaces"
+  },
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/eslint-config",
+    "packages/jest-selectors",
+    "packages/components"
+  ]
+}
