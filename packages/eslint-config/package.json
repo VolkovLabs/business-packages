@@ -1,0 +1,33 @@
+{
+  "name": "@volkovlabs/eslint-config",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "eslint",
+    "config"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
+  },
+  "peerDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "files": [
+    "index.js",
+    "./README.md",
+    "./CHANGELOG.md",
+    "./LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "main": "index.js"
+  }
+}
