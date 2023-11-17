@@ -69,5 +69,10 @@
   "dependencies": {
     "@grafana/data": "^10.2.1",
     "@grafana/ui": "^10.2.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
   }
 }

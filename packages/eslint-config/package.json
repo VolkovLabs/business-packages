@@ -1,7 +1,7 @@
 {
   "name": "@volkovlabs/eslint-config",
   "version": "1.0.0",
-  "description": "",
+  "description": "ESLint configuration",
   "scripts": {
     "lint": "",
     "test:ci": "",
@@ -11,7 +11,7 @@
     "eslint",
     "config"
   ],
-  "author": "",
+  "author": "Volkov Labs",
   "license": "Apache-2.0",
   "main": "index.js",
   "dependencies": {
