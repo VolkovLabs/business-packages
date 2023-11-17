@@ -3,5 +3,7 @@
   "version": "1.0.0",
   "description": "Public packages",
   "packageManager": "^npm@9.0.0",
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ]
 }

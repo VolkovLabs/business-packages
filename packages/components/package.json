@@ -1,0 +1,50 @@
+{
+  "name": "@volkovlabs/components",
+  "version": "1.0.0",
+  "description": "UI Components for Grafana",
+  "main": "dist/index.js",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.0",
+    "@types/jest": "^29.5.8",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@volkovlabs/eslint-config": "^1.0.0",
+    "@volkovlabs/jest-selectors": "^1.2.0",
+    "esbuild": "^0.19.5",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^3.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.4.1",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.1.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rimraf ./dist",
+    "prepack": "npm run clean & npm run build",
+    "prettier": "prettier . --write",
+    "typecheck": "tsc --emitDeclarationOnly false --noEmit",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+  },
+  "author": "Volkov Labs",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "./README.md",
+    "./CHANGELOG.md",
+    "./LICENSE"
+  ],
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@grafana/ui": "^10.2.1"
+  }
+}
