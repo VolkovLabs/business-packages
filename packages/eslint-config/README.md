@@ -1,4 +1,4 @@
-# Eslint Config
+# ESLint Config
 
 ## Install
 
@@ -8,7 +8,7 @@ npm install --save-dev @volkovlabs/eslint-config
 
 ## Usage
 
-Add to eslint config the following
+Add to ESLint config the following
 
 ```
 {
@@ -17,4 +17,5 @@ Add to eslint config the following
 ```
 
 ## Working in Monorepo
-Eslint can't handle dependencies in monorepo. Need to install all package dependencies to make it working. 
+
+ESLint can't handle dependencies in a mono repo. Install all package dependencies to make it work.

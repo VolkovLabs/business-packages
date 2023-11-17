@@ -1,8 +1,10 @@
 {
-  "name": "@volkovlabs/components",
-  "version": "1.0.0",
+  "author": "Volkov Labs",
+  "dependencies": {
+    "@grafana/data": "^10.2.1",
+    "@grafana/ui": "^10.2.1"
+  },
   "description": "UI Components for Grafana",
-  "main": "dist/index.js",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@storybook/addon-essentials": "^7.5.3",
@@ -44,35 +46,33 @@
     "typescript": "^5.2.2",
     "util": "^0.12.5"
   },
-  "scripts": {
-    "build": "rollup -c",
-    "clean": "rimraf ./dist",
-    "prepack": "npm run clean & npm run build",
-    "prettier": "prettier . --write",
-    "typecheck": "tsc --emitDeclarationOnly false --noEmit",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
-    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\" --fix",
-    "test": "jest --watch --onlyChanged",
-    "test:ci": "jest --maxWorkers 4 --coverage",
-    "dev": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "author": "Volkov Labs",
-  "license": "Apache-2.0",
   "files": [
     "dist",
     "./README.md",
     "./CHANGELOG.md",
     "./LICENSE"
   ],
-  "types": "dist/index.d.ts",
-  "dependencies": {
-    "@grafana/data": "^10.2.1",
-    "@grafana/ui": "^10.2.1"
-  },
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "name": "@volkovlabs/components",
   "publishConfig": {
     "access": "public",
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
-  }
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "build-storybook": "storybook build",
+    "clean": "rimraf ./dist",
+    "dev": "storybook dev -p 6006",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.{ts,tsx}\" --fix",
+    "prepack": "npm run clean & npm run build",
+    "prettier": "prettier . --write",
+    "test": "jest --watch --onlyChanged",
+    "test:ci": "jest --maxWorkers 4 --coverage",
+    "typecheck": "tsc --emitDeclarationOnly false --noEmit"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.0"
 }
