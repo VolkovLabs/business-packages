@@ -3,7 +3,13 @@
   "description": "Jest selectors",
   "devDependencies": {
     "@types/node": "^20.4.2",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@volkovlabs/eslint-config": "^1.0.0",
     "esbuild": "^0.18.13",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^3.0.0",
     "rimraf": "^5.0.1",
     "rollup": "^3.26.2",
@@ -43,7 +49,9 @@
     "clean": "rimraf ./dist",
     "prepack": "npm run clean & npm run build",
     "prettier": "prettier . --write",
-    "typecheck": "tsc --emitDeclarationOnly false --noEmit"
+    "typecheck": "tsc --emitDeclarationOnly false --noEmit",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "types": "dist/index.d.ts",
   "version": "1.2.0"

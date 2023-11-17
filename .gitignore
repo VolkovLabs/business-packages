@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 
 node_modules/
+packages/**/package-lock.json
 
 # Runtime data
 pids
