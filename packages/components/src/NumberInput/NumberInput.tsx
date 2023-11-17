@@ -77,6 +77,7 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
     }
 
     onChange?.(v);
+    setLocalValue(v.toString());
   }, [localValue, max, min, onChange, step]);
 
   /**
