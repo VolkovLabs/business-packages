@@ -30,3 +30,7 @@ test('Panel', () => {
   selectors.button(true, 'submit') // screen.queryByLabelText
 })
 ```
+
+## License
+
+Apache License Version 2.0.
