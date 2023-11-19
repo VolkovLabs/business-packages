@@ -1,4 +1,4 @@
-# ESLint Config
+# ESLint Configuration
 
 ## Install
 
@@ -19,3 +19,7 @@ Add to ESLint config the following
 ## Working in Monorepo
 
 ESLint can't handle dependencies in a mono repo. Install all package dependencies to make it work.
+
+## License
+
+Apache License Version 2.0.
