@@ -3,6 +3,7 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0"
   },
   "description": "ESLint configuration",
@@ -31,5 +32,5 @@
     "lint": "",
     "test:ci": ""
   },
-  "version": "1.0.0"
+  "version": "1.1.0"
 }

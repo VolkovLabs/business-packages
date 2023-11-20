@@ -5,7 +5,11 @@
  */
 module.exports = {
   extends: ["plugin:@typescript-eslint/recommended"],
-  plugins: ["@typescript-eslint/eslint-plugin", "simple-import-sort"],
+  plugins: [
+    "@typescript-eslint/eslint-plugin",
+    "simple-import-sort",
+    "deprecation",
+  ],
   rules: {
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": [
@@ -16,6 +20,7 @@ module.exports = {
         vars: "all",
       },
     ],
+    "deprecation/deprecation": ["warn"],
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": "error",
     "sort-imports": [
