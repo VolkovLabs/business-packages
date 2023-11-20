@@ -1,6 +1,7 @@
 # Grafana Components
 
 - NumberInput allows to check and input numbers
+- Collapse allows to display collapsable elements
 
 ## License
 

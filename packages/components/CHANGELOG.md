@@ -4,7 +4,7 @@
 
 ### Features / Enhancements
 
-- Add Collapse component ()
+- Add Collapse component (#8)
 
 ## 1.0.0 (2023-11-17)
 
