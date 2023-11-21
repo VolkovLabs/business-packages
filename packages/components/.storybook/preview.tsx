@@ -1,31 +1,23 @@
 import type { Preview } from '@storybook/react';
-import { ThemeContext, createTheme } from '@grafana/data';
-import { useDarkMode } from 'storybook-dark-mode';
+// @ts-ignore
+import grafanaLightTheme from './grafana-10.2.1/grafana.light.scss';
+// @ts-ignore
+import grafanaDarkTheme from './grafana-10.2.1/grafana.dark.scss';
 import { Light, Dark } from './theme';
+import { withTheme } from './withTheme';
+
+const handleThemeChange = (theme: any) => {
+  if (theme !== 'light') {
+    grafanaLightTheme.unuse();
+    grafanaDarkTheme.use();
+  } else {
+    grafanaDarkTheme.unuse();
+    grafanaLightTheme.use();
+  }
+};
 
 const preview: Preview = {
-  decorators: [
-    /**
-     * Pass Context
-     * @param Story
-     */
-    (Story) => {
-      const theme = createTheme({ colors: { mode: useDarkMode() ? 'dark' : 'light' } });
-
-      const css = `
-        body {
-          background: ${theme.colors.background.primary}
-        }
-      `;
-
-      return (
-        <ThemeContext.Provider value={theme}>
-          <style>{css}</style>
-          <Story />
-        </ThemeContext.Provider>
-      );
-    },
-  ],
+  decorators: [withTheme(handleThemeChange)],
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {

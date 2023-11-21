@@ -1,7 +1,7 @@
-import { IconButton, useTheme2 } from '@grafana/ui';
+import { IconButton, useStyles2 } from '@grafana/ui';
 import React from 'react';
 
-import { Styles } from './styles';
+import { Styles } from './Collapse.styles';
 
 /**
  * Properties
@@ -30,7 +30,7 @@ interface Props {
   /**
    * On Toggle
    */
-  onToggle?: () => void;
+  onToggle?: (isOpen: boolean) => void;
 
   /**
    * Header Test Id
@@ -56,14 +56,13 @@ export const Collapse: React.FC<Props> = ({
   contentTestId,
 }) => {
   /**
-   * Styles and Theme
+   * Styles
    */
-  const theme = useTheme2();
-  const styles = Styles(theme);
+  const styles = useStyles2(Styles);
 
   return (
     <>
-      <div className={styles.header} data-testid={headerTestId} onClick={onToggle}>
+      <div className={styles.header} data-testid={headerTestId} onClick={() => onToggle?.(!isOpen)}>
         <IconButton
           name={isOpen ? 'angle-down' : 'angle-right'}
           tooltip={isOpen ? 'Collapse' : 'Expand'}
