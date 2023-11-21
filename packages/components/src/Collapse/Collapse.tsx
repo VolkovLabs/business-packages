@@ -1,4 +1,5 @@
-import { IconButton, useStyles2 } from '@grafana/ui';
+import { cx } from '@emotion/css';
+import { IconButton, useStyles2, useTheme2 } from '@grafana/ui';
 import React from 'react';
 
 import { Styles } from './Collapse.styles';
@@ -41,6 +42,16 @@ interface Props {
    * Content Test Id
    */
   contentTestId?: string;
+
+  /**
+   * Fill
+   */
+  fill?: 'outline' | 'solid';
+
+  /**
+   * Is Inline Content
+   */
+  isInlineContent?: boolean;
 }
 
 /**
@@ -54,15 +65,34 @@ export const Collapse: React.FC<Props> = ({
   onToggle,
   headerTestId,
   contentTestId,
+  fill = 'outline',
+  isInlineContent = false,
 }) => {
   /**
-   * Styles
+   * Styles and Theme
    */
+  const theme = useTheme2();
   const styles = useStyles2(Styles);
 
+  /**
+   * Fill Options
+   */
+  const isSolid = fill === 'solid';
+  const isOutline = fill === 'outline';
+
   return (
-    <>
-      <div className={styles.header} data-testid={headerTestId} onClick={() => onToggle?.(!isOpen)}>
+    <div
+      className={cx({
+        [styles.rootOutline]: isOutline,
+      })}
+    >
+      <div
+        className={cx(styles.header, {
+          [styles.headerSolid]: isSolid,
+        })}
+        data-testid={headerTestId}
+        onClick={() => onToggle?.(!isOpen)}
+      >
         <IconButton
           name={isOpen ? 'angle-down' : 'angle-right'}
           tooltip={isOpen ? 'Collapse' : 'Expand'}
@@ -77,10 +107,10 @@ export const Collapse: React.FC<Props> = ({
         )}
       </div>
       {isOpen && (
-        <div className={styles.content} data-testid={contentTestId}>
+        <div style={{ padding: isInlineContent ? 0 : theme.spacing(0.5) }} data-testid={contentTestId}>
           {children}
         </div>
       )}
-    </>
+    </div>
   );
 };

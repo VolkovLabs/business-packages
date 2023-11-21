@@ -6,23 +6,29 @@ import { GrafanaTheme2 } from '@grafana/data';
  */
 export const Styles = (theme: GrafanaTheme2) => {
   return {
+    rootOutline: css`
+      border: 1px solid ${theme.colors.border.weak};
+      background-color: ${theme.colors.background.primary};
+    `,
     header: css`
       padding: ${theme.spacing(0.5, 0.5)};
-      border-radius: ${theme.shape.radius.default};
-      background: ${theme.colors.background.secondary};
       min-height: ${theme.spacing(4)};
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       white-space: nowrap;
 
       &:focus {
         outline: none;
       }
     `,
+    headerSolid: css`
+      border-radius: ${theme.shape.radius.default};
+      background: ${theme.colors.background.secondary};
+    `,
     title: css`
       font-weight: ${theme.typography.fontWeightBold};
-      margin-left: ${theme.spacing(0.5)};
+      margin: ${theme.spacing(0, 0.5)};
       overflow: hidden;
       text-overflow: ellipsis;
     `,
@@ -34,10 +40,6 @@ export const Styles = (theme: GrafanaTheme2) => {
       margin-left: auto;
       display: flex;
       align-items: center;
-    `,
-    content: css`
-      margin-top: ${theme.spacing(0.5)};
-      margin-left: ${theme.spacing(0.5)};
     `,
   };
 };

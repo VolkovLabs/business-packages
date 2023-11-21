@@ -1,3 +1,4 @@
+import { Button, Icon } from '@grafana/ui';
 import { useArgs } from '@storybook/client-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
@@ -21,7 +22,6 @@ const meta = {
     },
     title: {
       name: 'title',
-      type: 'string',
       defaultValue: 'Section',
     },
   },
@@ -29,7 +29,11 @@ const meta = {
     const [{}, updateArgs] = useArgs();
     const onToggle = (isOpen: boolean) => updateArgs({ isOpen });
 
-    return <Collapse {...args} onToggle={onToggle} />;
+    return (
+      <div style={{ width: 200 }}>
+        <Collapse {...args} onToggle={onToggle} />
+      </div>
+    );
   },
 } satisfies Meta<typeof Collapse>;
 
@@ -47,5 +51,52 @@ export const Default: Story = {
   args: {
     isOpen: true,
     title: 'Section',
+    children: <div>Content</div>,
+  },
+};
+
+/**
+ * Actions
+ */
+export const Actions: Story = {
+  args: {
+    isOpen: true,
+    title: 'Section',
+    actions: (
+      <>
+        <Button icon="trash-alt" variant="secondary" fill="text" size="sm" />
+        <Icon name="draggabledots" />
+      </>
+    ),
+    children: <div>Content</div>,
+  },
+};
+
+/**
+ * Solid
+ */
+export const Solid: Story = {
+  args: {
+    isOpen: true,
+    title: 'Section',
+    children: <div>Content</div>,
+    fill: 'solid',
+  },
+};
+
+/**
+ * With Long Text
+ */
+export const LongTitle: Story = {
+  args: {
+    isOpen: true,
+    title: 'Very long section title',
+    actions: (
+      <>
+        <Button icon="trash-alt" variant="secondary" fill="text" size="sm" />
+        <Icon name="draggabledots" />
+      </>
+    ),
+    children: <div>Content</div>,
   },
 };
