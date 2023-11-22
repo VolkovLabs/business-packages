@@ -84,5 +84,5 @@ export const service = new Service();
 const Component: React.FC<null> = () => {
   const onChange = () => {};
 
-  return <input onChange={onChange} />;
+  return <input onChange={onChange} dangerouslySetInnerHTML={{ __html: '' }} />;
 };
