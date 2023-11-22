@@ -10,6 +10,10 @@ const getNamingConventionRule = ({ target = 'default' }) => ({
       ? {
           selector: ['default'],
           format: ['strictCamelCase', 'StrictPascalCase'],
+          filter: {
+            regex: '^__html$',
+            match: false,
+          },
         }
       : {
           selector: ['default'],
