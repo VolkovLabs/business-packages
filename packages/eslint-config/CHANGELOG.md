@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.2.1 (2023-11-22)
+
+### Features / Enhancements
+
+- Allow \_\_html property in react files (#11)
+
+## 1.2.0 (2023-11-22)
+
+### Features / Enhancements
+
+- Add ESLint naming convention rule (#10)
+
 ## 1.1.0 (2023-11-19)
 
 ### Features / Enhancements
