@@ -3,9 +3,9 @@ import { GetByBoundAttribute } from '@testing-library/react';
 /**
  * Jest Selector
  */
-type JestSelector<Args extends unknown[]> = (
+type JestSelector<TArgs extends unknown[]> = (
   noThrowOnNotFound?: boolean,
-  ...args: Args
+  ...args: TArgs
 ) => ReturnType<GetByBoundAttribute>;
 
 /**
