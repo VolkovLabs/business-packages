@@ -1,6 +1,47 @@
 'use strict';
 
 /**
+ * Get Naming Convention Rule
+ */
+const getNamingConventionRule = ({ target = 'default' }) => ({
+  '@typescript-eslint/naming-convention': [
+    'error',
+    target === 'component'
+      ? {
+          selector: ['default'],
+          format: ['strictCamelCase', 'StrictPascalCase'],
+        }
+      : {
+          selector: ['default'],
+          format: ['strictCamelCase'],
+        },
+    target === 'constant' && {
+      selector: 'variable',
+      modifiers: ['global'],
+      format: ['UPPER_CASE'],
+    },
+    {
+      selector: 'typeLike',
+      format: ['StrictPascalCase'],
+    },
+    {
+      selector: 'typeParameter',
+      format: ['StrictPascalCase'],
+      prefix: ['T', 'K'],
+    },
+    {
+      selector: 'enumMember',
+      format: ['UPPER_CASE'],
+    },
+    {
+      selector: ['classProperty', 'objectLiteralProperty'],
+      format: null,
+      modifiers: ['requiresQuotes'],
+    },
+  ].filter(Boolean),
+});
+
+/**
  * Documentation - https://eslint.org/docs/latest/extend/plugins#configs-in-plugins
  */
 module.exports = {
@@ -26,36 +67,20 @@ module.exports = {
         ignoreDeclarationSort: true,
       },
     ],
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'default',
-        format: ['camelCase'],
-        leadingUnderscore: 'forbid',
-      },
-      {
-        selector: 'variable',
-        modifiers: ['global'],
-        format: ['UPPER_CASE'],
-      },
-      {
-        selector: 'variable',
-        types: ['function'],
-        format: ['camelCase'],
-      },
-      {
-        selector: 'typeLike',
-        format: ['PascalCase'],
-      },
-      {
-        selector: 'typeParameter',
-        format: ['PascalCase'],
-        prefix: ['T', 'K'],
-      },
-      {
-        selector: 'enumMember',
-        format: ['UPPER_CASE'],
-      },
-    ],
+    ...getNamingConventionRule({ target: 'default' }),
   },
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        ...getNamingConventionRule({ target: 'component' }),
+      },
+    },
+    {
+      files: ['**/constants/*.ts', '**/constants.ts'],
+      rules: {
+        ...getNamingConventionRule({ target: 'constant' }),
+      },
+    },
+  ],
 };

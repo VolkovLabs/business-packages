@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "",
-    "lint": "eslint ./tests/*.ts -c ./tests/eslint.config.js",
+    "lint": "eslint ./tests/**/*.ts ./tests/**/*.tsx",
     "test:ci": ""
   },
   "version": "1.1.0"

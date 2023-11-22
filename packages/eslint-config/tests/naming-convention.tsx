@@ -1,9 +1,10 @@
+import React from 'react';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
- * Global Constant
+ * Constant
  */
-const GLOBAL_CONSTANT = {};
+const globalConstant = {};
 
 /**
  * Global Function
@@ -13,6 +14,8 @@ const func = () => {
    * Local Variable
    */
   const localVariable = 'hello';
+
+  const func = () => {};
 
   return localVariable.trim();
 };
@@ -45,7 +48,7 @@ type ApiResponse<TData> = {
 /**
  * Property
  */
-const ADMIN_USER = {
+const adminUser = {
   firstName: 'John',
 };
 
@@ -54,15 +57,11 @@ const ADMIN_USER = {
  */
 interface ThirdPartyObject {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  Name: string;
+  'custom-name': string;
 }
 
-/**
- * Now it's not solved - https://github.com/typescript-eslint/typescript-eslint/issues/2160
- */
-const THIRD_PARTY_OBJECT: ThirdPartyObject = {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  Name: 'john',
+const ThirdPartyObject: ThirdPartyObject = {
+  'custom-name': 'john',
 };
 
 /**
@@ -82,4 +81,8 @@ export const service = new Service();
 /**
  * Component
  */
-const Component = () => null;
+const Component: React.FC<null> = () => {
+  const onChange = () => {};
+
+  return <input onChange={onChange} />;
+};
