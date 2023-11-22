@@ -8,10 +8,10 @@ import { JestSelectors } from './types';
  * @param enforceTestIdSelectorForKeys
  */
 export const getJestSelectors =
-  <Selectors extends Record<keyof Selectors, Selectors[keyof Selectors]>>(
-    selectors: Selectors,
-    enforceTestIdSelectorForKeys: Array<keyof Selectors> = []
-  ): ((screen: Screen | BoundFunctions<Queries>) => JestSelectors<Selectors>) =>
+  <TSelectors extends Record<keyof TSelectors, TSelectors[keyof TSelectors]>>(
+    selectors: TSelectors,
+    enforceTestIdSelectorForKeys: Array<keyof TSelectors> = []
+  ): ((screen: Screen | BoundFunctions<Queries>) => JestSelectors<TSelectors>) =>
   (screen) => {
     return Object.entries(selectors).reduce((acc, [key, selector]) => {
       /**
@@ -22,7 +22,7 @@ export const getJestSelectors =
       const getElement = (noThrowOnNotFound = false, ...args: unknown[]) => {
         const value = typeof selector === 'function' ? selector(...args) : selector;
 
-        if (value.startsWith('data-testid') || enforceTestIdSelectorForKeys.includes(key as keyof Selectors)) {
+        if (value.startsWith('data-testid') || enforceTestIdSelectorForKeys.includes(key as keyof TSelectors)) {
           return noThrowOnNotFound ? screen.queryByTestId(value) : screen.getByTestId(value);
         }
 
@@ -33,5 +33,5 @@ export const getJestSelectors =
         ...acc,
         [key]: getElement,
       };
-    }, {} as JestSelectors<Selectors>);
+    }, {} as JestSelectors<TSelectors>);
   };

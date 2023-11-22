@@ -2,7 +2,7 @@ import { cx } from '@emotion/css';
 import { IconButton, useStyles2, useTheme2 } from '@grafana/ui';
 import React from 'react';
 
-import { Styles } from './Collapse.styles';
+import { getStyles } from './Collapse.styles';
 
 /**
  * Properties
@@ -72,7 +72,7 @@ export const Collapse: React.FC<Props> = ({
    * Styles and Theme
    */
   const theme = useTheme2();
-  const styles = useStyles2(Styles);
+  const styles = useStyles2(getStyles);
 
   /**
    * Fill Options
