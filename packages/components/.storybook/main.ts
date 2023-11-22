@@ -17,6 +17,19 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('storybook-dark-mode'),
+    {
+      name: '@storybook/preset-scss',
+      options: {
+        styleLoaderOptions: {
+          // this is required for theme switching .use() and .unuse()
+          injectType: 'lazyStyleTag',
+        },
+        cssLoaderOptions: {
+          url: false,
+          importLoaders: 2,
+        },
+      },
+    },
   ],
   framework: {
     name: getAbsolutePath('@storybook/react-webpack5'),
@@ -25,5 +38,21 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag',
   },
+  staticDirs: [
+    /**
+     * For Grafana Styles
+     */
+    {
+      from: './grafana-10.2.1/public',
+      to: '/',
+    },
+    /**
+     * For @grafana/ui
+     */
+    {
+      from: './grafana-10.2.1/public',
+      to: '/public',
+    },
+  ],
 };
 export default config;
