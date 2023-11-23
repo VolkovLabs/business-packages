@@ -106,7 +106,7 @@ describe('Number Input', () => {
     expect(selectors.field()).toHaveValue('10');
   });
 
-  it('Should save value to enter press', () => {
+  it('Should blur to enter press', async () => {
     const onChange = jest.fn();
 
     render(getComponent({ onChange }));
@@ -114,6 +114,12 @@ describe('Number Input', () => {
     fireEvent.change(selectors.field(), { target: { value: '5' } });
     fireEvent.keyDown(selectors.field(), { key: 'Enter' });
 
+    expect(selectors.field()).not.toHaveFocus();
+
+    /**
+     * Jest doesn't trigger onBlur by element.blur() so just fire blur event
+     */
+    fireEvent.blur(selectors.field());
     expect(onChange).toHaveBeenCalledWith(5);
   });
 });
