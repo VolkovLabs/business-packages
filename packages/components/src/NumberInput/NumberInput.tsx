@@ -1,5 +1,5 @@
 import { Input } from '@grafana/ui';
-import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Properties
@@ -45,6 +45,11 @@ interface Props extends Omit<React.ComponentProps<typeof Input>, 'onChange' | 'v
  */
 export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, ...restProps }) => {
   /**
+   * Ref
+   */
+  const ref = useRef<HTMLInputElement>(null);
+
+  /**
    * Local Value
    */
   const [localValue, setLocalValue] = useState(value?.toString() ?? '0');
@@ -86,7 +91,7 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
-        onSaveValue();
+        ref.current?.blur();
       }
     },
     [onSaveValue]
@@ -101,6 +106,7 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
 
   return (
     <Input
+      ref={ref}
       {...restProps}
       type="text"
       value={localValue}
