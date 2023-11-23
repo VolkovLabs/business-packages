@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.0 (2023-11-23)
+
+### Features / Enhancements
+
+- Add blur on enter press for Number Input component (#13)
+
 ## 1.1.0 (2023-11-20)
 
 ### Features / Enhancements
