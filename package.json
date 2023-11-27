@@ -12,6 +12,7 @@
   "workspaces": [
     "packages/eslint-config",
     "packages/jest-selectors",
-    "packages/components"
+    "packages/components",
+    "packages/grafana-utils"
   ]
 }
