@@ -11,8 +11,8 @@ import {
   FieldMatcherID,
   Field,
   MutableDataFrame,
+  Labels,
 } from '@grafana/data';
-import { Labels } from 'app/types/unified-alerting-dto';
 
 import { partitionByValues } from '../partitionByValues/partitionByValues';
 

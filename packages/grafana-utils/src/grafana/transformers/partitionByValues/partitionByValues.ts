@@ -7,11 +7,13 @@ import {
   getFieldMatcher,
   DataTransformContext,
   FieldMatcher,
+  standardTransformers,
 } from '@grafana/data';
-import { getMatcherConfig } from '@grafana/data/src/transformations/transformers/filterByName';
-import { noopTransformer } from '@grafana/data/src/transformations/transformers/noop';
+import { getMatcherConfig } from '../../utils/filterByName';
 
 import { partition } from './partition';
+
+const noopTransformer = standardTransformers.noopTransformer;
 
 export interface FrameNamingOptions {
   /** when true, the frame name is copied unmodified, and discriminator fields' names+values become field labels in new frames */

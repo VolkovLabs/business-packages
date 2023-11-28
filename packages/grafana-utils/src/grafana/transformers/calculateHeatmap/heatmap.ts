@@ -16,8 +16,7 @@ import {
   parseDuration,
   TransformationApplicabilityLevels,
 } from '@grafana/data';
-import { isLikelyAscendingVector } from '@grafana/data/src/transformations/transformers/joinDataFrames';
-import { config } from '@grafana/runtime';
+import { isLikelyAscendingVector } from '@grafana/data';
 import {
   ScaleDistribution,
   HeatmapCellLayout,
@@ -31,6 +30,8 @@ export interface HeatmapTransformerOptions extends HeatmapCalculationOptions {
   /** the raw values will still exist in results after transformation */
   keepOriginalData?: boolean;
 }
+
+const transformationsVariableSupport = true;
 
 export const heatmapTransformer: SynchronousDataTransformerInfo<HeatmapTransformerOptions> = {
   id: DataTransformerID.heatmap,
@@ -55,7 +56,7 @@ export const heatmapTransformer: SynchronousDataTransformerInfo<HeatmapTransform
   operator: (options, ctx) => (source) =>
     source.pipe(
       map((data) => {
-        if (config.featureToggles.transformationsVariableSupport) {
+        if (transformationsVariableSupport) {
           const optionsCopy = {
             ...options,
             xBuckets: { ...options.xBuckets } ?? undefined,
@@ -323,8 +324,8 @@ export function calculateHeatmapFromData(frames: DataFrame[], options: HeatmapCa
       xBucketsCfg.mode === HeatmapCalculationMode.Size
         ? durationToMilliseconds(parseDuration(xBucketsCfg.value ?? ''))
         : xBucketsCfg.value
-        ? +xBucketsCfg.value
-        : undefined,
+          ? +xBucketsCfg.value
+          : undefined,
     yMode: yBucketsCfg.mode,
     ySize: yBucketsCfg.value ? +yBucketsCfg.value : undefined,
     yLog: scaleDistribution?.type === ScaleDistribution.Log ? (scaleDistribution?.log as any) : undefined,

@@ -9,7 +9,7 @@ import {
   getFieldTypeFromValue,
   SynchronousDataTransformerInfo,
 } from '@grafana/data';
-import { findField } from 'app/features/dimensions';
+import { findField } from '../../utils/dimensions';
 
 import { fieldExtractors } from './fieldExtractors';
 import { ExtractFieldsOptions, FieldExtractorID, JSONPath } from './types';
