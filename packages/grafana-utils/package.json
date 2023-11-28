@@ -51,5 +51,5 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/index.d.ts",
-  "version": "10.2.1"
+  "version": "1.0.0"
 }
