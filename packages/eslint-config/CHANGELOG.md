@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.2 (2023-12-01)
+
+### Features / Enhancements
+
+- Allow pascal case for decorator and rule files (#15)
+
 ## 1.2.1 (2023-11-22)
 
 ### Features / Enhancements
