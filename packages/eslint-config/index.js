@@ -6,19 +6,22 @@
 const getNamingConventionRule = ({ target = 'default' }) => ({
   '@typescript-eslint/naming-convention': [
     'error',
-    target === 'component'
-      ? {
-          selector: ['default'],
-          format: ['strictCamelCase', 'StrictPascalCase'],
-          filter: {
-            regex: '^__html$',
-            match: false,
-          },
-        }
-      : {
-          selector: ['default'],
-          format: ['strictCamelCase'],
-        },
+    target === 'component' && {
+      selector: ['default'],
+      format: ['strictCamelCase', 'StrictPascalCase'],
+      filter: {
+        regex: '^__html$',
+        match: false,
+      },
+    },
+    target === 'default' && {
+      selector: ['default'],
+      format: ['strictCamelCase'],
+    },
+    target === 'decorator' && {
+      selector: ['default'],
+      format: ['strictCamelCase', 'StrictPascalCase'],
+    },
     target === 'constant' && {
       selector: 'variable',
       modifiers: ['global'],
@@ -84,6 +87,12 @@ module.exports = {
       files: ['**/constants/*.ts', '**/constants.ts'],
       rules: {
         ...getNamingConventionRule({ target: 'constant' }),
+      },
+    },
+    {
+      files: ['**/*.decorator.ts', '**/*.rule.ts'],
+      rules: {
+        ...getNamingConventionRule({ target: 'decorator' }),
       },
     },
   ],
