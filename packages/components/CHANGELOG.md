@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.1 (2023-12-05)
+
+### Bugfixes
+
+- Fix Collapse component compatibility with Grafana prior to 9.5 (#16)
+
 ## 1.2.0 (2023-11-23)
 
 ### Features / Enhancements
