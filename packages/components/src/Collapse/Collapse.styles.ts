@@ -23,7 +23,7 @@ export const getStyles = (theme: GrafanaTheme2) => {
       }
     `,
     headerSolid: css`
-      border-radius: ${theme.shape.radius.default};
+      border-radius: ${theme.shape.radius?.default};
       background: ${theme.colors.background.secondary};
     `,
     title: css`
