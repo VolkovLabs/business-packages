@@ -50,6 +50,9 @@ export interface ResponseData {
   tables?: any[];
 }
 
+/**
+ * Fetch Response
+ */
 export interface FetchResponse<T = FetchDataQueryResponse> {
   data: T;
   readonly status: number;
@@ -60,4 +63,27 @@ export interface FetchResponse<T = FetchDataQueryResponse> {
   readonly type?: ResponseType;
   readonly url?: string;
   readonly traceId?: string;
+}
+
+/**
+ * Variable Format
+ */
+export enum VariableFormat {
+  CSV = 'csv',
+  DATE = 'date',
+  DISTRIBUTED = 'distributed',
+  DOUBLE_QUOTE = 'doublequote',
+  GLOB = 'glob',
+  HTML = 'html',
+  JSON = 'json',
+  LUCENE = 'lucene',
+  PERCENT_ENCODE = 'percentencode',
+  PIPE = 'pipe',
+  QUERY_PARAM = 'queryparam',
+  RAW = 'raw',
+  REGEX = 'regex',
+  SQL_STRING = 'sqlstring',
+  SINGLE_QUOTE = 'singlequote',
+  TEXT = 'text',
+  URI_ENCODE = 'uriencode',
 }
