@@ -1,40 +1,47 @@
-import { GLOBAL_VARIABLES } from './constants';
+import { ScopedVars } from '@grafana/data';
 
-/*
- * This regex matches 3 types of variable reference with an optional format specifier
- * There are 6 capture groups that replace will return
- * \$(\w+)                                    $var1
- * \[\[(\w+?)(?::(\w+))?\]\]                  [[var2]] or [[var2:fmt2]]
- * \${(\w+)(?:\.([^:^\}]+))?(?::([^\}]+))?}   ${var3} or ${var3.fieldPath} or ${var3:fmt3} (or ${var3.fieldPath:fmt3} but that is not a separate capture group)
- */
-const variableRegex = /\$(\w+)|\[\[(\w+?)(?::(\w+))?\]\]|\${(\w+)(?:\.([^:^\}]+))?(?::([^\}]+))?}/g;
+import { GLOBAL_VARIABLES, VARIABLE_REGEX } from './constants';
+import { TemplateSrv } from './grafana/templating/template_srv';
+import { VariableCustomFormatterFn, VariableInterpolation } from './grafana/types';
+import { VariableFormat } from './types';
 
 /**
  * Template service
  */
 class TemplateService {
   /**
+   * Variable Regex
+   */
+  private regex = VARIABLE_REGEX;
+
+  /**
+   * Grafana Template Service
+   */
+  constructor(private readonly templateService: TemplateSrv) {}
+
+  /**
    * Get variable names
    * @param expression
    * @private
    */
   private getVariableNames(expression: string): string[] {
-    variableRegex.lastIndex = 0;
+    this.regex.lastIndex = 0;
     let match = undefined;
     const results: string[] = [];
 
-    while ((match = variableRegex.exec(expression))) {
-      results.push(match[1]);
+    while ((match = this.regex.exec(expression))) {
+      results.push(match[1] ?? match[4]);
     }
 
     if (!results.length) {
       return [];
     }
+
     return results;
   }
 
   /**
-   * Contains template
+   * Contains variable
    * @param target
    * @param variableNames
    */
@@ -71,9 +78,29 @@ class TemplateService {
       includeGlobal ? true : !GLOBAL_VARIABLES.includes(variableName)
     );
   }
+
+  /**
+   * Replace Variables
+   * @param target
+   * @param scopedVars
+   * @param format
+   * @param interpolations
+   */
+  public replace(
+    target: string,
+    scopedVars: ScopedVars,
+    format: VariableFormat | VariableCustomFormatterFn | undefined,
+    interpolations?: VariableInterpolation[]
+  ): string {
+    if (!target) {
+      return target ?? '';
+    }
+
+    return this.templateService.replace(target, scopedVars, format, interpolations);
+  }
 }
 
 /**
  * Template service instance
  */
-export const templateService = new TemplateService();
+export const templateService = new TemplateService(new TemplateSrv());
