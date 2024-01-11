@@ -1,21 +1,14 @@
+import { GlobalVariableName } from '../types';
+
 /**
  * Global variables
  */
-export const GLOBAL_VARIABLES = [
-  '__time',
-  '__timeEpoch',
-  '__timeFilter',
-  '__timeFrom',
-  '__timeTo',
-  '__timeGroup',
-  '__timeGroupAlias',
-  '__unixEpochFilter',
-  '__unixEpochNanoFilter',
-  '__unixEpochNanoFrom',
-  '__unixEpochNanoTo',
-  '__unixEpochGroup',
-  '__unixEpochGroupAlias',
-];
+export const GLOBAL_VARIABLES: string[] = Object.values(GlobalVariableName);
+
+/**
+ * Selectable Global variables
+ */
+export const SELECTABLE_GLOBAL_VARIABLES = [GlobalVariableName.USER];
 
 /*
  * This regex matches 3 types of variable reference with an optional format specifier

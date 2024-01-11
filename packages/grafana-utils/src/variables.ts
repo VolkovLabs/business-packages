@@ -58,14 +58,14 @@ class TemplateService {
 
     for (const name of names) {
       if (GLOBAL_VARIABLES.includes(name)) {
-        continue;
+        return true;
       }
-      if (!variableNames.includes(name)) {
-        return false;
+      if (variableNames.includes(name)) {
+        return true;
       }
     }
 
-    return true;
+    return false;
   }
 
   /**
