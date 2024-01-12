@@ -1,9 +1,9 @@
-import { ScopedVars, TimeRange, ScopedVar } from '@grafana/data';
+import { ScopedVars, ScopedVar } from '@grafana/data';
 import { VARIABLE_REGEX } from '../../constants';
 
 import { getFieldAccessor } from './fieldAccessorCache';
 import { formatVariableValue } from './formatVariableValue';
-import { VariableCustomFormatterFn, VariableInterpolation } from '../types';
+import { CustomFormatterVariable, VariableCustomFormatterFn, VariableInterpolation } from '../types';
 
 /**
  * Internal regex replace function
@@ -14,46 +14,10 @@ type ReplaceFunction = (fullMatch: string, variableName: string, fieldPath: stri
  * Grafana template service which supports only replacing by scopedVars
  */
 export class TemplateSrv {
-  private _variables: any[];
+  private variables: Record<string, CustomFormatterVariable> | undefined;
   private regex = VARIABLE_REGEX;
-  private index: any = {};
-  private timeRange?: TimeRange | null = null;
 
-  constructor() {
-    this._variables = [];
-  }
-
-  init(variables: any, timeRange?: TimeRange) {
-    this._variables = variables;
-    this.timeRange = timeRange;
-    this.updateIndex();
-  }
-
-  updateIndex() {
-    const existsOrEmpty = (value: any) => value || value === '';
-
-    this.index = this._variables.reduce((acc, currentValue) => {
-      if (currentValue.current && (currentValue.current.isNone || existsOrEmpty(currentValue.current.value))) {
-        acc[currentValue.name] = currentValue;
-      }
-      return acc;
-    }, {});
-
-    if (this.timeRange) {
-      const from = this.timeRange.from.valueOf().toString();
-      const to = this.timeRange.to.valueOf().toString();
-
-      this.index = {
-        ...this.index,
-        ['__from']: {
-          current: { value: from, text: from },
-        },
-        ['__to']: {
-          current: { value: to, text: to },
-        },
-      };
-    }
-  }
+  constructor() {}
 
   private getVariableValue(scopedVar: ScopedVar, fieldPath: string | undefined) {
     if (fieldPath) {
@@ -75,8 +39,11 @@ export class TemplateSrv {
     target: string,
     scopedVars: ScopedVars,
     format?: string | Function | undefined,
-    interpolations?: VariableInterpolation[]
+    interpolations?: VariableInterpolation[],
+    variables?: Record<string, CustomFormatterVariable>
   ): string {
+    this.variables = variables;
+
     if (!target) {
       return target ?? '';
     }
@@ -95,6 +62,19 @@ export class TemplateSrv {
     });
   }
 
+  /**
+   * Get Variable At Index
+   * @param name
+   * @private
+   */
+  private getVariableAtIndex(name: string): CustomFormatterVariable | undefined {
+    if (!name || !this.variables) {
+      return;
+    }
+
+    return this.variables?.[name];
+  }
+
   private _evaluateVariableExpression(
     match: string,
     variableName: string,
@@ -109,7 +89,7 @@ export class TemplateSrv {
       const text = this.getVariableText(scopedVar, value);
 
       if (value !== null && value !== undefined) {
-        return formatVariableValue(value, format, null, text);
+        return formatVariableValue(value, format, this.getVariableAtIndex(variableName), text);
       }
     }
 

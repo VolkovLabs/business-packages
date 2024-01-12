@@ -2,7 +2,7 @@ import { ScopedVars } from '@grafana/data';
 
 import { GLOBAL_VARIABLES, VARIABLE_REGEX } from './constants';
 import { TemplateSrv } from './grafana/templating/template_srv';
-import { VariableCustomFormatterFn, VariableInterpolation } from './grafana/types';
+import { CustomFormatterVariable, VariableCustomFormatterFn, VariableInterpolation } from './grafana/types';
 import { VariableFormat } from './types';
 
 /**
@@ -58,14 +58,14 @@ class TemplateService {
 
     for (const name of names) {
       if (GLOBAL_VARIABLES.includes(name)) {
-        continue;
+        return true;
       }
-      if (!variableNames.includes(name)) {
-        return false;
+      if (variableNames.includes(name)) {
+        return true;
       }
     }
 
-    return true;
+    return false;
   }
 
   /**
@@ -85,18 +85,20 @@ class TemplateService {
    * @param scopedVars
    * @param format
    * @param interpolations
+   * @param variables
    */
   public replace(
     target: string,
     scopedVars: ScopedVars,
     format: VariableFormat | VariableCustomFormatterFn | undefined,
-    interpolations?: VariableInterpolation[]
+    interpolations?: VariableInterpolation[],
+    variables?: Record<string, CustomFormatterVariable>
   ): string {
     if (!target) {
       return target ?? '';
     }
 
-    return this.templateService.replace(target, scopedVars, format, interpolations);
+    return this.templateService.replace(target, scopedVars, format, interpolations, variables);
   }
 }
 

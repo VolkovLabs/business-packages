@@ -1,9 +1,9 @@
 # Grafana Utils
 
 - Export `@grafana/data` as a commonjs module
-- Transformations from `@grafana/grafana`
+- Includes Transformations from `@grafana/grafana`
 - Query utils
-- Template service
+- Includes Template service
 
 ## License
 

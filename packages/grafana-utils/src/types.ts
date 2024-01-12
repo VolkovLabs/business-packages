@@ -87,3 +87,25 @@ export enum VariableFormat {
   TEXT = 'text',
   URI_ENCODE = 'uriencode',
 }
+
+/**
+ * Global Variable Name
+ */
+export enum GlobalVariableName {
+  DASHBOARD = '__dashboard',
+  FROM = '__from',
+  TO = '__to',
+  INTERVAL = '__interval',
+  INTERVAL_MS = '__interval_ms',
+  ORG = '__org',
+  USER = '__user',
+  RANGE = '__range',
+  RANGE_MS = '__range_ms',
+  RANGE_S = '__range_s',
+  RATE_INTERVAL = '__rate_interval',
+  RATE_INTERVAL_MS = '__rate_interval_ms',
+  TIME_FILTER = 'timeFilter',
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _TIME_FILTER = '__timeFilter',
+  TIMEZONE = '__timezone',
+}
