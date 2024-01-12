@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.0 (2024-01-12)
+
+### Features / Enhancements
+
+- Update global variables and allow to find unknown variables (#18)
+
 ## 1.1.0 (2023-12-13)
 
 ### Features / Enhancements
