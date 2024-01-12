@@ -100,6 +100,8 @@ export enum GlobalVariableName {
   ORG = '__org',
   USER = '__user',
   RANGE = '__range',
+  RANGE_MS = '__range_ms',
+  RANGE_S = '__range_s',
   RATE_INTERVAL = '__rate_interval',
   RATE_INTERVAL_MS = '__rate_interval_ms',
   TIME_FILTER = 'timeFilter',

@@ -1,3 +1,4 @@
+import { VariableFormat } from './types';
 import { templateService } from './variables';
 
 describe('Template Service', () => {
@@ -52,6 +53,52 @@ describe('Template Service', () => {
           true
         )
       ).toEqual(['instance', '__rate_interval']);
+    });
+  });
+
+  describe('replace', () => {
+    it('Should replace variables', () => {
+      expect(
+        templateService.replace(
+          '$instance, $app',
+          {
+            instance: {
+              value: '1',
+            },
+            app: {
+              value: '2',
+            },
+          },
+          VariableFormat.GLOB
+        )
+      ).toEqual('1, 2');
+    });
+
+    it('Should pass variable in replacer', () => {
+      expect(
+        templateService.replace(
+          '$instance',
+          {
+            instance: {
+              value: ['1', '2'],
+            },
+          },
+          (value, variable) => {
+            return variable.name === 'instance' ? 'found' : 'notFound';
+          },
+          undefined,
+          {
+            instance: {
+              name: 'instance',
+              type: 'custom',
+            },
+            another: {
+              name: 'another',
+              type: 'custom',
+            },
+          }
+        )
+      ).toEqual('found');
     });
   });
 });
