@@ -74,6 +74,8 @@ module.exports = {
         ignoreDeclarationSort: true,
       },
     ],
+    'no-console': ['error', {}],
+    'no-debugger': 'error',
     ...getNamingConventionRule({ target: 'default' }),
   },
   overrides: [
