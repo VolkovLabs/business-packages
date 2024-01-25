@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.0 (2024-01-25)
+
+### Features / Enhancements
+
+- Disallow console and debugger (#20)
+
 ## 1.2.2 (2023-12-01)
 
 ### Features / Enhancements
