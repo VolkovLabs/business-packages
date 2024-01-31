@@ -7,11 +7,6 @@ import { useFormBuilder } from '../../hooks';
 import React from 'react';
 
 /**
- * Props
- */
-type Props = React.ComponentProps<typeof Form>;
-
-/**
  * In Test Ids
  */
 const InTestIds = {
@@ -145,69 +140,62 @@ describe('Form', () => {
         defaultValue: '#123',
         newValue: '#222',
       },
-    ])(
-      'Should render $name field',
-      async ({ name, path, getField, defaultValue, newValue, expectedValue = newValue }) => {
-        render(
-          getComponent<{
-            input: string;
-            select: string;
-            custom: string;
-            slider: number;
-            number: number;
-            color: string;
-          }>({
-            getForm: (builder) =>
-              builder
-                .addInput({
-                  path: 'input',
-                  defaultValue: defaultValue as any,
-                })
-                .addSelect({
-                  path: 'select',
-                  defaultValue: defaultValue as any,
-                  options: [
-                    { value: '1', label: '1' },
-                    { value: '2', label: '2' },
-                  ],
-                })
-                .addCustom({
-                  path: 'custom',
-                  defaultValue: defaultValue as any,
-                  editor: CustomEditor,
-                })
-                .addSlider({
-                  path: 'slider',
-                  defaultValue: path === 'slider' ? (defaultValue as any) : 0,
-                  min: 0,
-                  max: 10,
-                })
-                .addNumberInput({
-                  path: 'number',
-                  defaultValue: path === 'number' ? (defaultValue as any) : 0,
-                })
-                .addColorPicker({
-                  path: 'color',
-                  defaultValue: defaultValue as any,
-                  /**
-                   * Fix jest warning to apply invalid attribute to div element
-                   */
-                  invalidIf: () => undefined as any,
-                }),
-          })
-        );
+    ])('Should render $name field', async ({ path, getField, defaultValue, newValue, expectedValue = newValue }) => {
+      render(
+        getComponent<{
+          input: string;
+          select: string;
+          custom: string;
+          slider: number;
+          number: number;
+          color: string;
+        }>({
+          getForm: (builder) =>
+            builder
+              .addInput({
+                path: 'input',
+                defaultValue: defaultValue as any,
+              })
+              .addSelect({
+                path: 'select',
+                defaultValue: defaultValue as any,
+                options: [
+                  { value: '1', label: '1' },
+                  { value: '2', label: '2' },
+                ],
+              })
+              .addCustom({
+                path: 'custom',
+                defaultValue: defaultValue as any,
+                editor: CustomEditor,
+              })
+              .addSlider({
+                path: 'slider',
+                defaultValue: path === 'slider' ? (defaultValue as any) : 0,
+                min: 0,
+                max: 10,
+              })
+              .addNumberInput({
+                path: 'number',
+                defaultValue: path === 'number' ? (defaultValue as any) : 0,
+              })
+              .addColorPicker({
+                path: 'color',
+                defaultValue: defaultValue as any,
+              }),
+        })
+      );
 
-        expect(getField(false, path)).toBeInTheDocument();
-        expect(getField(false, path)).toHaveValue(defaultValue);
+      expect(getField(false, path)).toBeInTheDocument();
+      expect(getField(false, path)).toHaveValue(defaultValue);
 
-        /**
-         * Change Value
-         */
-        await act(async () => fireEvent.change(getField(false, path), { target: { value: newValue } }));
+      /**
+       * Change Value
+       */
+      await act(async () => fireEvent.change(getField(false, path), { target: { value: newValue } }));
 
-        expect(getField(false, path)).toHaveValue(expectedValue);
-      }
-    );
+      expect(getField(false, path)).toHaveValue(expectedValue);
+    });
 
     it('Should render radio group', async () => {
       render(
@@ -367,8 +355,6 @@ describe('Form', () => {
     });
 
     it('Should hide field', () => {
-      const onToggleExpanded = jest.fn();
-
       render(
         getComponent<{
           field: string;
@@ -405,8 +391,6 @@ describe('Form', () => {
     });
 
     it('Should disable field', () => {
-      const onToggleExpanded = jest.fn();
-
       render(
         getComponent<{
           field: string;
@@ -427,8 +411,6 @@ describe('Form', () => {
     });
 
     it('Should show error message field', () => {
-      const onToggleExpanded = jest.fn();
-
       render(
         getComponent<{
           field: string;

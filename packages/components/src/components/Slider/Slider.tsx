@@ -1,12 +1,17 @@
 import { css, cx } from '@emotion/css';
 import { Global } from '@emotion/react';
 import { useTheme2 } from '@grafana/ui';
-import SliderComponent from 'rc-slider';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { NumberInput } from '../NumberInput';
 import { getStyles } from './Slider.styles';
 import { SliderProps } from './types';
+
+/**
+ * To make it working with grafana build
+ */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { default: SliderComponent } = require('rc-slider');
 
 /**
  * Properties

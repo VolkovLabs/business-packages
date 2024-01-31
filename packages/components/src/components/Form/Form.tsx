@@ -42,6 +42,16 @@ interface Props<TValue extends object> {
 }
 
 /**
+ * Form Control to prevent setting invalid to div element warning
+ * @param className
+ * @param children
+ * @constructor
+ */
+const FormControl = ({ className, children }: { className: string; children: React.ReactNode }) => (
+  <div className={className}>{children}</div>
+);
+
+/**
  * Form
  */
 export const Form = <TValue extends object>({
@@ -152,13 +162,13 @@ export const Form = <TValue extends object>({
     if (field.type === FormFieldType.COLOR) {
       return (
         <Field {...fieldProps}>
-          <div className={styles.inlinePicker}>
+          <FormControl className={styles.inlinePicker}>
             <ColorPicker
               color={field.value}
               onChange={field.onChange}
               data-testid={TEST_IDS.form.fieldColor(field.fullPath)}
             />
-          </div>
+          </FormControl>
         </Field>
       );
     }
