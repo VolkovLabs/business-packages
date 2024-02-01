@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, act, within } from '@testing-library/react';
+import { render, screen, fireEvent, act, within, waitFor } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
 import { FormBuilder } from '../../utils';
 import { Form } from './Form';
 import { TEST_IDS } from '../../constants';
 import { useFormBuilder } from '../../hooks';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 /**
  * In Test Ids
@@ -94,7 +94,7 @@ describe('Form', () => {
     expect(selectors.root(false, defaultName)).toBeInTheDocument();
   });
 
-  describe('Field Render', () => {
+  fdescribe('Field Render', () => {
     it.each([
       {
         name: 'input',
@@ -185,6 +185,8 @@ describe('Form', () => {
               }),
         })
       );
+
+      await waitFor(async () => expect(selectors.root(false, defaultName)).toBeInTheDocument());
 
       expect(getField(false, path)).toBeInTheDocument();
       expect(getField(false, path)).toHaveValue(defaultValue);

@@ -77,4 +77,90 @@ describe('UseFormBuilder', () => {
       input: '2',
     });
   });
+
+  it('Should update field values on value change', async () => {
+    const { result, rerender } = renderHook(() =>
+      useFormBuilder<{ group1: { field: string }; group2: { field: string } }>((builder) =>
+        builder
+          .addGroup(
+            {
+              path: 'group1',
+              label: '',
+            },
+            (builder) =>
+              builder.addInput({
+                path: 'field',
+                defaultValue: '1',
+              })
+          )
+          .addGroup(
+            {
+              path: 'group2',
+              label: '',
+            },
+            (builder) =>
+              builder.addInput({
+                path: 'field',
+                defaultValue: '2',
+              })
+          )
+      )
+    );
+
+    expect(result.current.fields).toEqual([
+      expect.objectContaining({
+        group: [
+          expect.objectContaining({
+            value: '1',
+          }),
+        ],
+      }),
+      expect.objectContaining({
+        group: [
+          expect.objectContaining({
+            value: '2',
+          }),
+        ],
+      }),
+    ]);
+
+    /**
+     * Rerender
+     */
+    rerender(() => null);
+
+    /**
+     * Change state value
+     */
+    await act(async () => {
+      result.current.onChange({
+        group1: {
+          field: '3',
+        },
+        group2: {
+          field: '4',
+        },
+      });
+    });
+
+    /**
+     * Check updated fields
+     */
+    expect(result.current.fields).toEqual([
+      expect.objectContaining({
+        group: [
+          expect.objectContaining({
+            value: '3',
+          }),
+        ],
+      }),
+      expect.objectContaining({
+        group: [
+          expect.objectContaining({
+            value: '4',
+          }),
+        ],
+      }),
+    ]);
+  });
 });

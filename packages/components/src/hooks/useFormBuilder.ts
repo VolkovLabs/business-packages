@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormBuilder } from '../utils';
 
@@ -15,11 +15,9 @@ export const useFormBuilder = <TValue extends object>(getForm: (builder: FormBui
   const [value, setValue] = useState(form.current.getValue());
 
   /**
-   * Sync state and form value
+   * Sync state value on field update
    */
   useEffect(() => {
-    form.current.setValue(value);
-
     const unsubscribe = form.current.subscribeOnChange((value) => {
       setValue(value);
     });
@@ -36,9 +34,17 @@ export const useFormBuilder = <TValue extends object>(getForm: (builder: FormBui
     return form.current.getFields();
   }, [value]);
 
+  /**
+   * On Change
+   */
+  const onChange = useCallback((value: TValue) => {
+    form.current.setValue(value);
+    setValue(value);
+  }, []);
+
   return {
     value,
-    onChange: setValue,
+    onChange,
     fields,
   };
 };
