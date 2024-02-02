@@ -25,6 +25,7 @@ const grafanaESModules = [
 module.exports = {
   moduleNameMapper: {
     '\\.(css|scss|sass)$': 'identity-obj-proxy',
+    'rc-slider': '<rootDir>/src/__tests__/__mocks__/rc-slider.tsx',
   },
   modulePaths: ['<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],

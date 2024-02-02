@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.3 (2024-02-01)
+
+### Features / Enhancements
+
+- Add Form Builder (#21)
+
 ## 1.2.1 (2023-12-05)
 
 ### Bugfixes
