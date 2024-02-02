@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.4 (2024-02-02)
+
+### Bugfixes
+
+- Fix slider disabled state (#25)
+
 ## 1.3.3 (2024-02-01)
 
 ### Features / Enhancements
