@@ -37,6 +37,13 @@ interface Props extends Omit<SliderProps, 'ariaLabelForHandle'> {
    * @type {number}
    */
   inputWidth?: number;
+
+  /**
+   * Disabled
+   *
+   * @type {boolean}
+   */
+  disabled?: boolean;
 }
 
 /**
@@ -55,6 +62,7 @@ export const Slider: React.FC<Props> = ({
   included,
   inputWidth = 8,
   sliderAriaLabel,
+  disabled,
   ...props
 }) => {
   const isHorizontal = orientation === 'horizontal';
@@ -123,6 +131,7 @@ export const Slider: React.FC<Props> = ({
           marks={marks}
           included={included}
           ariaLabelForHandle={sliderAriaLabel}
+          disabled={disabled}
         />
 
         {inputWidth > 0 && (
@@ -141,6 +150,7 @@ export const Slider: React.FC<Props> = ({
             max={max}
             step={step}
             data-testid={props['data-testid']}
+            disabled={disabled}
           />
         )}
       </div>

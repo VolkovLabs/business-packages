@@ -94,7 +94,7 @@ describe('Form', () => {
     expect(selectors.root(false, defaultName)).toBeInTheDocument();
   });
 
-  fdescribe('Field Render', () => {
+  describe('Field Render', () => {
     it.each([
       {
         name: 'input',
@@ -396,20 +396,34 @@ describe('Form', () => {
       render(
         getComponent<{
           field: string;
+          slider: number;
         }>({
           getForm: (builder) =>
-            builder.addInput({
-              path: 'field',
-              defaultValue: '',
-              disableIf: () => true,
-            }),
+            builder
+              .addInput({
+                path: 'field',
+                defaultValue: '',
+                disableIf: () => true,
+              })
+              .addSlider({
+                path: 'slider',
+                defaultValue: 0,
+                min: 0,
+                max: 10,
+                disableIf: () => true,
+              }),
         })
       );
 
       /**
-       * Should be disabled
+       * Input should be disabled
        */
       expect(selectors.fieldInput(false, 'field')).toBeDisabled();
+
+      /**
+       * Slider should be disabled
+       */
+      expect(selectors.fieldSlider(false, 'slider')).toBeDisabled();
     });
 
     it('Should show error message field', () => {
