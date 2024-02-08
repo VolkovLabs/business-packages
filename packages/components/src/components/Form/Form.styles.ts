@@ -11,6 +11,7 @@ export const getStyles = (theme: GrafanaTheme2) => {
     `,
     inlinePicker: css`
       padding: ${theme.spacing(1)} ${theme.spacing(0.5)};
+      width: ${theme.spacing(3)};
     `,
   };
 };
