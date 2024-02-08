@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.5 (2024-02-08)
+
+### Bugfixes
+
+- Fix too far position of popover from the color picker (#26)
+
 ## 1.3.4 (2024-02-02)
 
 ### Bugfixes
