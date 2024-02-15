@@ -18,7 +18,7 @@ export type VariableCustomFormatterFn = (
   value: unknown,
   legacyVariableModel: Partial<CustomFormatterVariable>,
   legacyDefaultFormatter?: VariableCustomFormatterFn
-) => string;
+) => unknown;
 
 /**
  * Variable Value
