@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.0 (2024-02-15)
+
+### Features / Enhancements
+
+- Update variable types and add exporting variable formatter type (#29)
+
 ## 1.2.0 (2024-01-12)
 
 ### Features / Enhancements
