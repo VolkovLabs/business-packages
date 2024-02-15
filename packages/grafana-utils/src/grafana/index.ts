@@ -1,1 +1,0 @@
-export { VariableCustomFormatterFn } from './types';
