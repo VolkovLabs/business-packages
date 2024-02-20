@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.4.0 (2024-02-20)
+
+### Features
+
+- Add useData hook (#30)
+
 ## 1.3.5 (2024-02-08)
 
 ### Bugfixes

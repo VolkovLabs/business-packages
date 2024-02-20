@@ -8,6 +8,7 @@
 ### Hooks
 
 - `useFormBuilder` allows to create declarative forms.
+- `createUseDataHook` allows to create `useData` hook to get data through data source api.
 
 ## Update Grafana Styles
 
