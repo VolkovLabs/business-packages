@@ -13,21 +13,30 @@ jest.useFakeTimers();
  * @param result
  * @param timeout
  */
-const withLatency = <T>(result: T, timeout = 15) => {
+const withLatency = <T>(result: T, timeout = 15): Promise<T> => {
   return new Promise((resolve) => setTimeout(() => resolve(result), timeout));
 };
 
+/**
+ * Data Source type for checking type narrowing
+ */
+type DataSource = {
+  api?: {
+    getAll: () => Promise<{ id: string }[]>;
+  };
+};
+
 describe('useData', () => {
-  const defaultDatasource = {
+  const defaultDatasource: DataSource = {
     api: {
       getAll: jest.fn(),
     },
   };
 
-  const useData = createUseDataHook<typeof defaultDatasource>();
+  const useData = createUseDataHook<DataSource>();
 
   it('Should have initial loading', async () => {
-    const datasource = {
+    const datasource: DataSource = {
       ...defaultDatasource,
       api: {
         ...defaultDatasource.api,
@@ -56,7 +65,7 @@ describe('useData', () => {
       ...defaultDatasource,
       api: {
         ...defaultDatasource.api,
-        getAll: jest.fn(() => [{ id: '1' }, { id: '2' }]),
+        getAll: jest.fn(() => Promise.resolve([{ id: '1' }, { id: '2' }])),
       },
     };
 
@@ -125,7 +134,7 @@ describe('useData', () => {
       ...defaultDatasource,
       api: {
         ...defaultDatasource.api,
-        getAll: jest.fn<{ id: string }[], never>(() => [{ id: '1' }, { id: '2' }]),
+        getAll: jest.fn(() => Promise.resolve([{ id: '1' }, { id: '2' }])),
       },
     };
 

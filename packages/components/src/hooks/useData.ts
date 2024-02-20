@@ -3,7 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 /**
  * Data Source With Api
  */
-type DatasourceWithApi<TDataSource extends { api?: unknown }> = TDataSource & { api: Required<TDataSource>['api'] };
+type DatasourceWithApi<TDataSource extends { api?: unknown }> = Omit<TDataSource, 'api'> & {
+  api: Required<TDataSource>['api'];
+};
 
 /**
  * Type for useCallback function
@@ -29,7 +31,7 @@ export const createUseDataHook = <TDataSource extends { api?: unknown }>() => {
     initial,
   }: {
     datasource: TDataSource | null;
-    query: UseCallback<TDataSource, (datasource: TDataSource) => Promise<TValue | undefined>>;
+    query: UseCallback<TDataSource, (datasource: DatasourceWithApi<TDataSource>) => Promise<TValue | undefined>>;
     initial: TValue;
   }) => {
     const [data, setData] = useState<TValue>(initial);
