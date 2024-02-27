@@ -1,2 +1,2 @@
-export * from './tests';
 export * from './autosizeCodeEditor';
+export * from './tests';
