@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.0 (2024-02-28)
+
+### Features
+
+- Add Autosize Code Editor (#31)
+
 ## 1.4.1 (2024-02-20)
 
 ### Features
