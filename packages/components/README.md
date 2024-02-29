@@ -11,6 +11,10 @@
 - `useFormBuilder` allows to create declarative forms.
 - `createUseDataHook` allows to create `useData` hook to get data through data source api.
 
+### Utils
+
+- `CodeParametersBuilder` allows to create parameters for custom code.
+
 ## Update Grafana Styles
 
 1. Clone and build Grafana locally.

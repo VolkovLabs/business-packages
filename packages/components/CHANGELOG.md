@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.6.0 (2024-02-29)
+
+### Features
+
+- Add Code Parameters Builder (#32)
+
 ## 1.5.0 (2024-02-28)
 
 ### Features
