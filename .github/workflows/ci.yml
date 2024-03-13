@@ -32,3 +32,11 @@ jobs:
 
       - name: Run tests
         run: npm run test:ci
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          directory: ./packages
+          env_vars: OS,PYTHON
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
