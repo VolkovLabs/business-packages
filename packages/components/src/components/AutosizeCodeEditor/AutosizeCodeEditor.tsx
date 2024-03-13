@@ -14,6 +14,8 @@ type Props = React.ComponentProps<typeof CodeEditor> & {
 /**
  * Get Height By Value
  * @param value
+ * @param minHeight
+ * @param maxHeight
  */
 const getHeightByValue = (value: string, minHeight?: number, maxHeight?: number) => {
   const height = value.split('\n').length * CODE_EDITOR_CONFIG.lineHeight;
@@ -54,7 +56,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   useEffect(() => {
     setHeight(getHeightByValue(value, minHeight, maxHeight));
-  }, [value]);
+  }, [value, minHeight, maxHeight]);
 
   return (
     <CodeEditor
