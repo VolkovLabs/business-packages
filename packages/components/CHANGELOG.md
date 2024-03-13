@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.6.1 (2024-03-13)
+
+### Features
+
+- Add min and max heights to Autosize Code editor (#34)
+
 ## 1.6.0 (2024-02-29)
 
 ### Features
