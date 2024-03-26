@@ -25,7 +25,14 @@ const meta = {
     const [{}] = useArgs();
 
     const Preview = () => {
-      const form = useFormBuilder<{ opacity: number; custom: string; color: string; radio: string }>((builder) =>
+      const form = useFormBuilder<{
+        opacity: number;
+        custom: string;
+        color: string;
+        radio: string;
+        groupField1: string;
+        groupField2: string;
+      }>((builder) =>
         builder
           .addSlider({
             path: 'opacity',
@@ -71,13 +78,33 @@ const meta = {
               },
             ],
           })
+          .addInput({
+            path: 'groupField1',
+            defaultValue: '',
+            label: 'String Field',
+            view: {
+              grow: true,
+              row: 'group',
+              labelWidth: 12,
+            },
+          })
+          .addInput({
+            path: 'groupField2',
+            defaultValue: '',
+            label: 'Field 2',
+            view: {
+              grow: false,
+              shrink: true,
+              row: 'group',
+            },
+          })
       );
 
       return <Form {...args} fields={form.fields} value={form.value} />;
     };
 
     return (
-      <div style={{ width: 200 }}>
+      <div style={{ width: 600 }}>
         <Preview />
       </div>
     );
@@ -99,5 +126,17 @@ export const Default: Story = {
     value: {},
     fields: [],
     name: 'default',
+  },
+};
+
+/**
+ * Inline
+ */
+export const Inline: Story = {
+  args: {
+    value: {},
+    fields: [],
+    variant: 'inline',
+    name: 'inline',
   },
 };

@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.7.0 (2024-03-26)
+
+### Features
+
+- Add inline form variant (#35)
+
 ## 1.6.1 (2024-03-13)
 
 ### Features

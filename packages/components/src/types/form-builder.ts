@@ -2,8 +2,47 @@ import { SelectableValue } from '@grafana/data';
 
 import { FormBuilder } from '../utils';
 
+/**
+ * Is Object
+ */
 export type IsObject<T> = T extends object ? T : never;
 
+/**
+ * View Options
+ */
+interface ViewOptions {
+  /**
+   * Row
+   * Allows to render several fields in a row
+   * @type {string}
+   */
+  row?: string;
+
+  /**
+   * Grow
+   *
+   * @type {boolean}
+   */
+  grow?: boolean;
+
+  /**
+   * Shrink
+   *
+   * @type {boolean}
+   */
+  shrink?: boolean;
+
+  /**
+   * Label Width
+   *
+   * @type {number}
+   */
+  labelWidth?: number;
+}
+
+/**
+ * Base Options
+ */
 export interface BaseOptions<TObject extends object, TValue> {
   /**
    * Path
@@ -53,6 +92,13 @@ export interface BaseOptions<TObject extends object, TValue> {
    * Get Error Message
    */
   getErrorMessage?: (config: TObject) => string;
+
+  /**
+   * View Options
+   *
+   * @type {string}
+   */
+  view?: ViewOptions;
 }
 
 export interface SelectOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
@@ -278,6 +324,7 @@ export type RenderFormField<TObject extends object> =
       invalidIf: () => boolean;
       getErrorMessage: () => string;
       fullPath: string;
+      view?: ViewOptions;
     })
   | {
       type: FormFieldType.GROUP;
