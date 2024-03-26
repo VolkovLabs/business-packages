@@ -4,7 +4,7 @@ import { FormBuilder } from '../../utils';
 import { Form } from './Form';
 import { TEST_IDS } from '../../constants';
 import { useFormBuilder } from '../../hooks';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 /**
  * In Test Ids
@@ -48,11 +48,13 @@ describe('Form', () => {
     name,
     expanded,
     onToggleExpanded,
+    variant,
   }: {
     getForm: (builder: FormBuilder<TValue>) => FormBuilder<TValue>;
     name: string;
     expanded?: Record<string, boolean>;
     onToggleExpanded?: (expanded: Record<string, boolean>) => void;
+    variant?: 'default' | 'inline';
   }) => {
     const form = useFormBuilder(getForm);
 
@@ -63,6 +65,7 @@ describe('Form', () => {
         fields={form.fields}
         expanded={expanded}
         onToggleExpanded={onToggleExpanded}
+        variant={variant}
       />
     );
   };
@@ -75,13 +78,23 @@ describe('Form', () => {
     getForm,
     expanded,
     onToggleExpanded,
+    variant,
   }: {
     getForm: (builder: FormBuilder<TValue>) => FormBuilder<TValue>;
     name?: string;
     expanded?: Record<string, boolean>;
     onToggleExpanded?: (expanded: Record<string, boolean>) => void;
+    variant?: 'default' | 'inline';
   }) => {
-    return <WrapperComponent name={name} getForm={getForm} expanded={expanded} onToggleExpanded={onToggleExpanded} />;
+    return (
+      <WrapperComponent
+        name={name}
+        getForm={getForm}
+        expanded={expanded}
+        onToggleExpanded={onToggleExpanded}
+        variant={variant}
+      />
+    );
   };
 
   it('Should render component', () => {
@@ -198,6 +211,160 @@ describe('Form', () => {
 
       expect(getField(false, path)).toHaveValue(expectedValue);
     });
+
+    it.each([
+      {
+        name: 'input',
+        path: 'input',
+        getField: selectors.fieldInput,
+        defaultValue: '1',
+        newValue: '2',
+      },
+      {
+        name: 'select',
+        path: 'select',
+        getField: selectors.fieldSelect,
+        defaultValue: '1',
+        newValue: '2',
+      },
+      {
+        name: 'custom',
+        path: 'custom',
+        getField: selectors.fieldCustom,
+        defaultValue: '1',
+        newValue: '2',
+      },
+      {
+        name: 'slider',
+        path: 'slider',
+        getField: selectors.fieldSlider,
+        defaultValue: 1,
+        newValue: '2',
+        expectedValue: 2,
+      },
+      {
+        name: 'number input',
+        path: 'number',
+        getField: selectors.fieldNumberInput,
+        defaultValue: 1,
+        newValue: '2',
+        expectedValue: 2,
+      },
+      {
+        name: 'color picker',
+        path: 'color',
+        getField: selectors.fieldColor,
+        defaultValue: '#123',
+        newValue: '#222',
+      },
+    ])(
+      'Should render $name inline field',
+      async ({ path, getField, defaultValue, newValue, expectedValue = newValue }) => {
+        render(
+          getComponent<{
+            input: string;
+            select: string;
+            custom: string;
+            slider: number;
+            number: number;
+            color: string;
+            group: {
+              name: string;
+              age: number;
+            };
+          }>({
+            variant: 'inline',
+            getForm: (builder) =>
+              builder
+                .addInput({
+                  path: 'input',
+                  defaultValue: defaultValue as any,
+                  view: {
+                    row: '1',
+                  },
+                })
+                .addSelect({
+                  path: 'select',
+                  defaultValue: defaultValue as any,
+                  options: [
+                    { value: '1', label: '1' },
+                    { value: '2', label: '2' },
+                  ],
+                  view: {
+                    row: '2',
+                  },
+                })
+                .addCustom({
+                  path: 'custom',
+                  defaultValue: defaultValue as any,
+                  editor: CustomEditor,
+                  view: {
+                    row: '2',
+                  },
+                })
+                .addSlider({
+                  path: 'slider',
+                  defaultValue: path === 'slider' ? (defaultValue as any) : 0,
+                  min: 0,
+                  max: 10,
+                  view: {
+                    row: '3',
+                  },
+                })
+                .addNumberInput({
+                  path: 'number',
+                  defaultValue: path === 'number' ? (defaultValue as any) : 0,
+                  view: {
+                    row: '3',
+                  },
+                })
+                .addColorPicker({
+                  path: 'color',
+                  defaultValue: defaultValue as any,
+                  view: {
+                    row: '',
+                  },
+                })
+                .addGroup(
+                  {
+                    path: 'group',
+                    label: 'Group',
+                  },
+                  (builder) =>
+                    builder
+                      .addInput({
+                        path: 'name',
+                        defaultValue: '',
+                        view: {
+                          row: '1,',
+                        },
+                      })
+                      .addSlider({
+                        path: 'age',
+                        defaultValue: 1,
+                        min: 0,
+                        max: 10,
+                        view: {
+                          row: '1,',
+                        },
+                      })
+                ),
+          })
+        );
+
+        await waitFor(async () => expect(selectors.root(false, defaultName)).toBeInTheDocument());
+
+        expect(getField(false, path)).toBeInTheDocument();
+        expect(getField(false, path)).toHaveValue(defaultValue);
+
+        /**
+         * Change Value
+         */
+        await act(async () => fireEvent.change(getField(false, path), { target: { value: newValue } }));
+
+        expect(getField(false, path)).toHaveValue(expectedValue);
+      }
+    );
 
     it('Should render radio group', async () => {
       render(
