@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.8.0 (2024-04-05)
+
+### Features
+
+- Add RangeSlider component (#36)
+
 ## 1.7.0 (2024-03-26)
 
 ### Features
