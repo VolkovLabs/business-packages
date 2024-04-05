@@ -8,6 +8,7 @@ import {
   IsObject,
   NumberInputOptions,
   RadioOptions,
+  RangeSliderOptions,
   RenderFormField,
   SelectOptions,
   SliderOptions,
@@ -139,6 +140,17 @@ export class FormBuilder<TObject extends object> {
     return this.addField({
       ...options,
       type: FormFieldType.SLIDER,
+    });
+  }
+
+  /**
+   * Add Range Slider Field
+   * @param options
+   */
+  addRangeSlider<TOptions extends RangeSliderOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+    return this.addField({
+      ...options,
+      type: FormFieldType.RANGE_SLIDER,
     });
   }
 

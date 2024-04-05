@@ -162,6 +162,29 @@ export interface SliderOptions<TObject extends object, TValue> extends BaseOptio
   marks?: Record<string, string>;
 }
 
+export interface RangeSliderOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+  /**
+   * Min
+   *
+   * @type {number}
+   */
+  min: number;
+
+  /**
+   * Max
+   *
+   * @type {number}
+   */
+  max: number;
+
+  /**
+   * Step
+   *
+   * @type {number}
+   */
+  step?: number;
+}
+
 export interface CustomOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Component
@@ -240,6 +263,7 @@ export enum FormFieldType {
   HIDDEN = 'hidden',
   INPUT = 'input',
   NUMBER_INPUT = 'numberInput',
+  RANGE_SLIDER = 'rangeSlider',
 }
 
 /**
@@ -255,6 +279,9 @@ export type FormField<TObject extends object> =
   | ({
       type: FormFieldType.SLIDER;
     } & SliderOptions<TObject, TObject[keyof TObject]>)
+  | ({
+      type: FormFieldType.RANGE_SLIDER;
+    } & RangeSliderOptions<TObject, TObject[keyof TObject]>)
   | ({
       type: FormFieldType.CUSTOM;
     } & CustomOptions<TObject, TObject[keyof TObject]>)
@@ -293,6 +320,11 @@ export type RenderFormField<TObject extends object> =
           value: number;
           onChange: (value: number) => void;
         } & SliderOptions<TObject, TObject[keyof TObject]>)
+      | ({
+          type: FormFieldType.RANGE_SLIDER;
+          value: [number, number];
+          onChange: (value: [number, number]) => void;
+        } & RangeSliderOptions<TObject, TObject[keyof TObject]>)
       | ({
           type: FormFieldType.CUSTOM;
           value: TObject[keyof TObject];

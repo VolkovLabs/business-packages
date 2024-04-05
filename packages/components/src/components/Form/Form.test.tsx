@@ -139,6 +139,14 @@ describe('Form', () => {
         expectedValue: 2,
       },
       {
+        name: 'range slider',
+        path: 'rangeSlider',
+        getField: selectors.fieldRangeSlider,
+        defaultValue: 0,
+        newValue: [5, 6],
+        expectedValue: 5,
+      },
+      {
         name: 'number input',
         path: 'number',
         getField: selectors.fieldNumberInput,
@@ -160,6 +168,7 @@ describe('Form', () => {
           select: string;
           custom: string;
           slider: number;
+          rangeSlider: [number, number];
           number: number;
           color: string;
         }>({
@@ -188,6 +197,12 @@ describe('Form', () => {
                 min: 0,
                 max: 10,
               })
+              .addRangeSlider({
+                path: 'rangeSlider',
+                defaultValue: [0, 10],
+                min: 0,
+                max: 10,
+              })
               .addNumberInput({
                 path: 'number',
                 defaultValue: path === 'number' ? (defaultValue as any) : 0,
@@ -207,9 +222,9 @@ describe('Form', () => {
       /**
        * Change Value
        */
-      await act(async () => fireEvent.change(getField(false, path), { target: { value: newValue } }));
+      await act(async () => fireEvent.change(getField(false, path), { target: { value: newValue, values: newValue } }));
 
-      expect(getField(false, path)).toHaveValue(expectedValue);
+      expect(getField(false, path)).toHaveValue(expectedValue as any);
     });
 
     it.each([

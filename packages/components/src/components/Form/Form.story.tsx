@@ -27,6 +27,7 @@ const meta = {
     const Preview = () => {
       const form = useFormBuilder<{
         opacity: number;
+        normalize: [number, number];
         custom: string;
         color: string;
         radio: string;
@@ -41,6 +42,21 @@ const meta = {
             max: 100,
             label: 'Opacity',
             description: 'Opacity description',
+            view: {
+              grow: true,
+            },
+          })
+          .addRangeSlider({
+            path: 'normalize',
+            defaultValue: [0, 255],
+            min: 0,
+            max: 255,
+            label: 'Normalize',
+            description: 'Normalize description',
+            marks: { 0: '0', 100: '100' },
+            view: {
+              grow: true,
+            },
           })
           .addColorPicker({
             path: 'color',
