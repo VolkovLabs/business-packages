@@ -38,11 +38,6 @@ interface Props extends Omit<RangeSliderProps, 'ariaLabelForHandle'> {
    * @type {boolean}
    */
   disabled?: boolean;
-
-  /**
-   * Tooltip always visible
-   */
-  tooltipAlwaysVisible?: boolean;
 }
 
 /**
@@ -61,7 +56,6 @@ export const RangeSlider: React.FC<Props> = ({
   included,
   sliderAriaLabel,
   disabled,
-  tooltipAlwaysVisible = true,
   formatTooltipResult,
 }) => {
   const isHorizontal = orientation === 'horizontal';
@@ -97,7 +91,7 @@ export const RangeSlider: React.FC<Props> = ({
     return (
       <HandleTooltip
         value={handleProps.value}
-        visible={tooltipAlwaysVisible || handleProps.dragging}
+        visible={handleProps.dragging}
         tipFormatter={formatTooltipResult ? () => formatTooltipResult(handleProps.value) : undefined}
         placement={isHorizontal ? 'bottom' : 'right'}
       >
@@ -118,7 +112,7 @@ export const RangeSlider: React.FC<Props> = ({
           defaultValue={value}
           value={sliderValue}
           onChange={onSliderChange}
-          onAfterChange={handleAfterChange}
+          onChangeComplete={handleAfterChange}
           vertical={!isHorizontal}
           reverse={reverse}
           marks={marks}

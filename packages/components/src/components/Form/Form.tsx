@@ -230,6 +230,7 @@ export const Form = <TValue extends object>({
             min={field.min}
             max={field.max}
             step={field.step}
+            marks={field.marks}
             sliderAriaLabel={TEST_IDS.form.fieldRangeSlider(field.fullPath)}
           />
         </FieldComponent>

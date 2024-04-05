@@ -54,7 +54,7 @@ export const getStyles = stylesFactory((theme: GrafanaTheme2, isHorizontal: bool
       // The triple class names is needed because that's the specificity used in the source css :(
       .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging,
       .rc-slider-handle:focus-visible {
-        box-shadow: 0 0 0 5px ${theme.colors.text.primary};
+        box-shadow: 0 0 0 4px ${theme.colors.text.primary};
       }
 
       .rc-slider-dot,
@@ -95,6 +95,10 @@ export const getStyles = stylesFactory((theme: GrafanaTheme2, isHorizontal: bool
 
         .rc-slider-tooltip-placement-top {
           padding: 0;
+        }
+        
+        .rc-tooltip-hidden {
+          display: none;
         }
       }
     `,

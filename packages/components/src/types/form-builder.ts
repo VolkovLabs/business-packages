@@ -183,6 +183,13 @@ export interface RangeSliderOptions<TObject extends object, TValue> extends Base
    * @type {number}
    */
   step?: number;
+
+  /**
+   * Marks
+   *
+   * @type {Record<string, string>}
+   */
+  marks?: Record<string, string>;
 }
 
 export interface CustomOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
