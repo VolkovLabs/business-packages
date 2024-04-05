@@ -14,6 +14,7 @@ import React from 'react';
 import { TEST_IDS } from '../../constants';
 import { FormFieldType, RenderFormField } from '../../types';
 import { NumberInput } from '../NumberInput';
+import { RangeSlider } from '../RangeSlider';
 import { Slider } from '../Slider';
 import { getStyles } from './Form.styles';
 
@@ -215,6 +216,22 @@ export const Form = <TValue extends object>({
             step={field.step}
             marks={field.marks}
             data-testid={TEST_IDS.form.fieldSlider(field.fullPath)}
+          />
+        </FieldComponent>
+      );
+    }
+
+    if (field.type === FormFieldType.RANGE_SLIDER) {
+      return (
+        <FieldComponent {...fieldProps}>
+          <RangeSlider
+            value={field.value}
+            onChange={field.onChange}
+            min={field.min}
+            max={field.max}
+            step={field.step}
+            marks={field.marks}
+            sliderAriaLabel={TEST_IDS.form.fieldRangeSlider(field.fullPath)}
           />
         </FieldComponent>
       );

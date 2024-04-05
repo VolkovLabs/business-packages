@@ -4,7 +4,9 @@
     "@emotion/css": "^11.11.2",
     "@grafana/data": "^10.2.1",
     "@grafana/ui": "^10.2.1",
-    "rc-slider": "^10.5.0"
+    "classnames": "^2.5.1",
+    "rc-slider": "^10.5.0",
+    "rc-tooltip": "^6.2.0"
   },
   "description": "UI Components for Grafana",
   "devDependencies": {
@@ -83,5 +85,5 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/index.d.ts",
-  "version": "1.7.0"
+  "version": "1.8.1"
 }
