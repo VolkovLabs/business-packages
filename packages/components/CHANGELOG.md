@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.8.2 (2024-04-18)
+
+### Bugfixes
+
+- Fix unnecessary calling onChange for Number input (#37)
+
 ## 1.8.1 (2024-04-05)
 
 ### Features

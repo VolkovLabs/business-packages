@@ -122,4 +122,18 @@ describe('Number Input', () => {
     fireEvent.blur(selectors.field());
     expect(onChange).toHaveBeenCalledWith(5);
   });
+
+  it('Should not trigger onChange if value not updated', async () => {
+    const onChange = jest.fn();
+
+    render(getComponent({ onChange, value: 5 }));
+
+    fireEvent.change(selectors.field(), { target: { value: '5' } });
+
+    /**
+     * Jest doesn't trigger onBlur by element.blur() so just fire blur event
+     */
+    fireEvent.blur(selectors.field());
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });

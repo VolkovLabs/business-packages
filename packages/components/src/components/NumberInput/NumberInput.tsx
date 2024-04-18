@@ -48,6 +48,7 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
    * Ref
    */
   const ref = useRef<HTMLInputElement>(null);
+  const isChanged = useRef(false);
 
   /**
    * Local Value
@@ -59,6 +60,7 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
    */
   const onChangeValue = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setLocalValue(event.currentTarget.value);
+    isChanged.current = true;
   }, []);
 
   /**
@@ -81,8 +83,11 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
       v = min;
     }
 
-    onChange?.(v);
-    setLocalValue(v.toString());
+    if (isChanged.current) {
+      onChange?.(v);
+      setLocalValue(v.toString());
+      isChanged.current = false;
+    }
   }, [localValue, max, min, onChange, step]);
 
   /**
