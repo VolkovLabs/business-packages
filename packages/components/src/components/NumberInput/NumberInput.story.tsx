@@ -1,5 +1,6 @@
 import { useArgs } from '@storybook/client-api';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import React from 'react';
 
 import { NumberInput } from './NumberInput';
@@ -12,6 +13,9 @@ const meta = {
   component: NumberInput,
   parameters: {
     layout: 'centered',
+  },
+  args: {
+    onChange: fn(),
   },
   argTypes: {
     value: {
@@ -37,7 +41,10 @@ const meta = {
   },
   render: (args) => {
     const [{}, updateArgs] = useArgs();
-    const handleChange = (value: number) => updateArgs({ value });
+    const handleChange = (value: number) => {
+      args.onChange?.(value);
+      updateArgs({ value });
+    };
 
     return <NumberInput {...args} onChange={handleChange} />;
   },
