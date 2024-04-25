@@ -100,6 +100,16 @@ describe('Form Builder', () => {
     expect(form.getValue().color).toEqual('#123');
   });
 
+  it('Should add datetime picker field', () => {
+    const date = new Date('2022-02-02');
+    const form = new FormBuilder<{ datetime: string }>({ path: '', label: '' }).addDateTimePicker({
+      path: 'datetime',
+      defaultValue: date.toISOString(),
+    });
+
+    expect(form.getValue().datetime).toEqual(date.toISOString());
+  });
+
   it('Should add custom field', () => {
     const form = new FormBuilder<{ custom: string }>({ path: '', label: '' }).addCustom({
       path: 'custom',

@@ -1,6 +1,7 @@
 import {
   ColorOptions,
   CustomOptions,
+  DateTimePickerOptions,
   FormField,
   FormFieldType,
   HiddenOptions,
@@ -162,6 +163,17 @@ export class FormBuilder<TObject extends object> {
     return this.addField({
       ...options,
       type: FormFieldType.COLOR,
+    });
+  }
+
+  /**
+   * Add Date Time Picker Field
+   * @param options
+   */
+  addDateTimePicker<TOptions extends DateTimePickerOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+    return this.addField({
+      ...options,
+      type: FormFieldType.DATETIME_PICKER,
     });
   }
 

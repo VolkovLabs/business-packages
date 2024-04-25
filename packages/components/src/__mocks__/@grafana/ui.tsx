@@ -1,4 +1,4 @@
-import { SelectableValue } from '@grafana/data';
+import { dateTime, SelectableValue } from '@grafana/data';
 import React from 'react';
 
 const actual = jest.requireActual('@grafana/ui');
@@ -89,8 +89,26 @@ const Select = jest.fn(
   )
 );
 
+/**
+ * Mock DatetimePicker component
+ */
+const DateTimePicker = jest.fn(({ onChange, ...restProps }) => {
+  return (
+    <input
+      data-testid={restProps['data-testid']}
+      value={restProps.date.toISOString()}
+      onChange={(event) => {
+        if (onChange) {
+          onChange(dateTime(event.target.value));
+        }
+      }}
+    />
+  );
+});
+
 module.exports = {
   ...actual,
   ColorPicker,
   Select,
+  DateTimePicker,
 };
