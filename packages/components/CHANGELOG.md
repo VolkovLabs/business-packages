@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.9.0 (2024-04-05)
+
+### Features
+
+- Add Datetime Picker to form and update Grafana dependencies for components package (#38)
+
 ## 1.8.2 (2024-04-18)
 
 ### Bugfixes
