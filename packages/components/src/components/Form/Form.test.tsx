@@ -272,6 +272,13 @@ describe('Form', () => {
         defaultValue: '#123',
         newValue: '#222',
       },
+      {
+        name: 'datetime picker',
+        path: 'datetime',
+        getField: selectors.fieldDatetime,
+        defaultValue: new Date('2022-02-01T02:02:00').toISOString(),
+        newValue: new Date('2023-02-02T02:02:00').toISOString(),
+      },
     ])(
       'Should render $name inline field',
       async ({ path, getField, defaultValue, newValue, expectedValue = newValue }) => {
@@ -287,6 +294,7 @@ describe('Form', () => {
               name: string;
               age: number;
             };
+            datetime: string;
           }>({
             variant: 'inline',
             getForm: (builder) =>
@@ -363,7 +371,11 @@ describe('Form', () => {
                           row: '1,',
                         },
                       })
-                ),
+                )
+                .addDateTimePicker({
+                  path: 'datetime',
+                  defaultValue: new Date('2022-02-01T02:02:00').toISOString(),
+                }),
           })
         );
 

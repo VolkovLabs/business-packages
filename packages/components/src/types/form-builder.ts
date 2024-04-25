@@ -237,6 +237,29 @@ export interface NumberInputOptions<TObject extends object, TValue> extends Base
   step?: number;
 }
 
+export interface DateTimePickerOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+  /**
+   * Min
+   *
+   * @type {string}
+   */
+  min?: string;
+
+  /**
+   * Max
+   *
+   * @type {string}
+   */
+  max?: string;
+
+  /**
+   * Show seconds
+   *
+   * @type {boolean}
+   */
+  showSeconds?: boolean;
+}
+
 export interface GroupOptions<TObject extends object, TValue extends object> {
   /**
    * Path
@@ -271,6 +294,7 @@ export enum FormFieldType {
   INPUT = 'input',
   NUMBER_INPUT = 'numberInput',
   RANGE_SLIDER = 'rangeSlider',
+  DATETIME_PICKER = 'datetimePicker',
 }
 
 /**
@@ -301,6 +325,9 @@ export type FormField<TObject extends object> =
   | ({
       type: FormFieldType.NUMBER_INPUT;
     } & NumberInputOptions<TObject, TObject[keyof TObject]>)
+  | ({
+      type: FormFieldType.DATETIME_PICKER;
+    } & DateTimePickerOptions<TObject, TObject[keyof TObject]>)
   | ({
       type: FormFieldType.GROUP;
     } & GroupOptions<TObject, IsObject<TObject[keyof TObject]>>)
@@ -357,6 +384,11 @@ export type RenderFormField<TObject extends object> =
           value: number;
           onChange: (value: number) => void;
         } & NumberInputOptions<TObject, TObject[keyof TObject]>)
+      | ({
+          type: FormFieldType.DATETIME_PICKER;
+          value: string;
+          onChange: (value: string) => void;
+        } & DateTimePickerOptions<TObject, TObject[keyof TObject]>)
     ) & {
       showIf: () => boolean;
       disableIf: () => boolean;

@@ -33,6 +33,7 @@ const meta = {
         radio: string;
         groupField1: string;
         groupField2: string;
+        datetime: string;
       }>((builder) =>
         builder
           .addSlider({
@@ -114,13 +115,20 @@ const meta = {
               row: 'group',
             },
           })
+          .addDateTimePicker({
+            path: 'datetime',
+            label: 'Datetime',
+            defaultValue: new Date().toISOString(),
+            min: new Date().toISOString(),
+            showSeconds: false,
+          })
       );
 
       return <Form {...args} fields={form.fields} value={form.value} />;
     };
 
     return (
-      <div style={{ width: 600 }}>
+      <div style={{ width: 600, padding: '20px' }}>
         <Preview />
       </div>
     );

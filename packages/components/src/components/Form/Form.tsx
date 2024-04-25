@@ -1,6 +1,8 @@
+import { dateTime } from '@grafana/data';
 import {
   CollapsableSection,
   ColorPicker,
+  DateTimePicker,
   Field,
   InlineField,
   InlineFieldRow,
@@ -276,6 +278,23 @@ export const Form = <TValue extends object>({
             }}
             placeholder={field.placeholder}
             data-testid={TEST_IDS.form.fieldInput(field.fullPath)}
+          />
+        </FieldComponent>
+      );
+    }
+
+    if (field.type === FormFieldType.DATETIME_PICKER) {
+      return (
+        <FieldComponent {...fieldProps}>
+          <DateTimePicker
+            minDate={field.min ? new Date(field.min) : undefined}
+            maxDate={field.max ? new Date(field.max) : undefined}
+            showSeconds={field.showSeconds}
+            date={dateTime(field.value)}
+            onChange={(value) => {
+              field.onChange(value.toISOString());
+            }}
+            data-testid={TEST_IDS.form.fieldDatetime()}
           />
         </FieldComponent>
       );
