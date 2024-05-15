@@ -101,6 +101,9 @@ export interface BaseOptions<TObject extends object, TValue> {
   view?: ViewOptions;
 }
 
+/**
+ * Select Options
+ */
 export interface SelectOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Options
@@ -113,6 +116,9 @@ export interface SelectOptions<TObject extends object, TValue> extends BaseOptio
   disableOptions?: (config: TObject) => TValue[];
 }
 
+/**
+ * Radio Options
+ */
 export interface RadioOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Options
@@ -132,6 +138,9 @@ export interface RadioOptions<TObject extends object, TValue> extends BaseOption
   fullWidth?: boolean;
 }
 
+/**
+ * Slider Options
+ */
 export interface SliderOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Min
@@ -162,6 +171,9 @@ export interface SliderOptions<TObject extends object, TValue> extends BaseOptio
   marks?: Record<string, string>;
 }
 
+/**
+ * Range Slider Options
+ */
 export interface RangeSliderOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Min
@@ -192,19 +204,58 @@ export interface RangeSliderOptions<TObject extends object, TValue> extends Base
   marks?: Record<string, string>;
 }
 
+/**
+ * Custom Editor Props
+ */
+export interface CustomEditorProps<TValue = never, TSettings = never, TOptions = never> {
+  value: TValue;
+  onChange: (value: TValue) => void;
+  item: { settings?: TSettings };
+  context: { options: TOptions };
+}
+
+/**
+ * Custom Options
+ */
 export interface CustomOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Component
    *
    * @type {React.FC}
    */
-  editor: React.FC<{ value: TValue; onChange: (value: TValue) => void }>;
+  editor: React.FC<CustomEditorProps<TValue, Record<string, unknown>, TObject>>;
+
+  /**
+   * Settings
+   *
+   * @type {Record<string, unknown>}
+   */
+  settings?: Record<string, unknown>;
+
+  /**
+   * Context
+   */
+  context: {
+    /**
+     * Options
+     */
+    options: TObject;
+  };
 }
 
+/**
+ * Color Options
+ */
 export interface ColorOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {}
 
+/**
+ * Hidden Options
+ */
 export interface HiddenOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {}
 
+/**
+ * Input Options
+ */
 export interface InputOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Placeholder
@@ -214,6 +265,9 @@ export interface InputOptions<TObject extends object, TValue> extends BaseOption
   placeholder?: string;
 }
 
+/**
+ * Number Input Options
+ */
 export interface NumberInputOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Min
@@ -237,6 +291,9 @@ export interface NumberInputOptions<TObject extends object, TValue> extends Base
   step?: number;
 }
 
+/**
+ * Date Time Picker Options
+ */
 export interface DateTimePickerOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Min
@@ -260,6 +317,9 @@ export interface DateTimePickerOptions<TObject extends object, TValue> extends B
   showSeconds?: boolean;
 }
 
+/**
+ * Group Options
+ */
 export interface GroupOptions<TObject extends object, TValue extends object> {
   /**
    * Path

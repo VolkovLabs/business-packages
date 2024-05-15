@@ -80,6 +80,7 @@ export const Form = <TValue extends object>({
   onToggleExpanded = () => null,
   fields,
   variant = 'default',
+  value,
 }: Props<TValue>) => {
   /**
    * Styles
@@ -202,6 +203,12 @@ export const Form = <TValue extends object>({
             value={field.value}
             onChange={field.onChange}
             data-testid={TEST_IDS.form.fieldCustom(field.fullPath)}
+            item={{
+              settings: field.settings,
+            }}
+            context={{
+              options: value as never,
+            }}
           />
         </FieldComponent>
       );
