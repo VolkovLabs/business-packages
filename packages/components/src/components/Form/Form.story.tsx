@@ -27,6 +27,8 @@ const meta = {
     const Preview = () => {
       const form = useFormBuilder<{
         opacity: number;
+        step: number;
+        decimal: number;
         normalize: [number, number];
         custom: string;
         color: string;
@@ -43,6 +45,44 @@ const meta = {
             max: 100,
             label: 'Opacity',
             description: 'Opacity description',
+            view: {
+              grow: true,
+            },
+          })
+          .addSlider({
+            path: 'step',
+            defaultValue: 1,
+            step: 2,
+            min: 1,
+            max: 9,
+            marks: {
+              1: '1',
+              3: '3',
+              5: '5',
+              7: '7',
+              9: '9',
+            },
+            label: 'Step',
+            description: 'Move by 2 step',
+            view: {
+              grow: true,
+            },
+          })
+          .addSlider({
+            path: 'decimal',
+            defaultValue: 1,
+            step: 0.01,
+            min: 1,
+            max: 9,
+            marks: {
+              1: '1',
+              3: '3',
+              5: '5',
+              7: '7',
+              9: '9',
+            },
+            label: 'Decimal step',
+            description: 'Move by 0.01 step',
             view: {
               grow: true,
             },

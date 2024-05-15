@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.1 (2024-05-15)
+
+### Features
+
+- Allow to enter value increased by step in Number input (#40)
+
 ## 1.10.0 (2024-05-02)
 
 ### Features

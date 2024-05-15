@@ -73,8 +73,26 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
       v = 0;
     }
 
-    if (step !== undefined && (v * 1000) % (step * 1000) !== 0) {
-      v = 0;
+    /**
+     * Round value by step
+     */
+    if (step !== undefined) {
+      let availableValue = step * 1000;
+
+      if (min !== undefined) {
+        availableValue = min * 1000;
+      }
+
+      /**
+       * Find nearest available value
+       * Next available value will be taken if entered value between allowed range
+       * 7 will be used for 6 entered value with 5,7 available values
+       */
+      while (availableValue < v * 1000) {
+        availableValue += step * 1000;
+      }
+
+      v = availableValue / 1000;
     }
 
     if (max !== undefined && v > max) {
