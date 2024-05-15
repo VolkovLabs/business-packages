@@ -27,6 +27,7 @@ const meta = {
     const Preview = () => {
       const form = useFormBuilder<{
         opacity: number;
+        step: number;
         normalize: [number, number];
         custom: string;
         color: string;
@@ -43,6 +44,25 @@ const meta = {
             max: 100,
             label: 'Opacity',
             description: 'Opacity description',
+            view: {
+              grow: true,
+            },
+          })
+          .addSlider({
+            path: 'step',
+            defaultValue: 1,
+            step: 2,
+            min: 1,
+            max: 9,
+            marks: {
+              1: '1',
+              3: '3',
+              5: '5',
+              7: '7',
+              9: '9',
+            },
+            label: 'Step',
+            description: 'Move to 2 points',
             view: {
               grow: true,
             },

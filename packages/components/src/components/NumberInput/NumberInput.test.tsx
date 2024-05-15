@@ -44,19 +44,19 @@ describe('Number Input', () => {
   it('Should allow to enter decimal value', () => {
     const onChange = jest.fn();
 
-    render(getComponent({ min: -1, max: 1, step: 0.3, onChange }));
+    render(getComponent({ min: -1, max: 1.1, step: 0.3, onChange }));
 
-    fireEvent.change(selectors.field(), { target: { value: '0.9' } });
+    fireEvent.change(selectors.field(), { target: { value: '0.8' } });
     fireEvent.blur(selectors.field());
 
-    expect(onChange).toHaveBeenCalledWith(0.9);
+    expect(onChange).toHaveBeenCalledWith(0.8);
 
     onChange.mockClear();
 
     fireEvent.change(selectors.field(), { target: { value: '0.7' } });
     fireEvent.blur(selectors.field());
 
-    expect(onChange).toHaveBeenCalledWith(0);
+    expect(onChange).toHaveBeenCalledWith(0.8);
   });
 
   it('Should validate value on NaN and use min value', () => {
@@ -68,6 +68,28 @@ describe('Number Input', () => {
     fireEvent.blur(selectors.field());
 
     expect(onChange).toHaveBeenCalledWith(15);
+  });
+
+  it('Should allow to increase value by step', () => {
+    const onChange = jest.fn();
+
+    render(getComponent({ min: 1, max: 9, onChange, value: 1, step: 2 }));
+
+    fireEvent.change(selectors.field(), { target: { value: '3' } });
+    fireEvent.blur(selectors.field());
+
+    expect(onChange).toHaveBeenCalledWith(3);
+  });
+
+  it('Should ceil value if increased more than step', () => {
+    const onChange = jest.fn();
+
+    render(getComponent({ min: 1, max: 9, onChange, value: 1, step: 2 }));
+
+    fireEvent.change(selectors.field(), { target: { value: '2' } });
+    fireEvent.blur(selectors.field());
+
+    expect(onChange).toHaveBeenCalledWith(3);
   });
 
   it('Should set min value', () => {
