@@ -186,8 +186,14 @@ export const Form = <TValue extends object>({
             value={field.value}
             options={field.options}
             onChange={(event) => {
-              field.onChange(event.value ?? field.value);
+              if (field.isMulti) {
+                field.onChange((Array.isArray(event) ? event.map((s) => s.value) : [event.value ?? '']) as never);
+              } else {
+                field.onChange(event.value ?? field.value);
+              }
             }}
+            isMulti={field.isMulti}
+            allowCustomValue={field.allowCustomValue}
             aria-label={TEST_IDS.form.fieldSelect(field.fullPath)}
           />
         </FieldComponent>

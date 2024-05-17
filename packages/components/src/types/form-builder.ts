@@ -111,6 +111,16 @@ export interface SelectOptions<TObject extends object, TValue> extends BaseOptio
    * Disable Options
    */
   disableOptions?: (config: TObject) => TValue[];
+
+  /**
+   * Multi
+   */
+  isMulti?: boolean;
+
+  /**
+   * Allow Custom Value
+   */
+  allowCustomValue?: boolean;
 }
 
 export interface RadioOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {

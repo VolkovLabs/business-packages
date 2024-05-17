@@ -36,6 +36,7 @@ const meta = {
         groupField1: string;
         groupField2: string;
         datetime: string;
+        multiSelect: string[];
       }>((builder) =>
         builder
           .addSlider({
@@ -161,6 +162,15 @@ const meta = {
             defaultValue: new Date().toISOString(),
             min: new Date().toISOString(),
             showSeconds: false,
+          })
+          .addSelect({
+            path: 'multiSelect',
+            label: 'Multi Select',
+            description: 'Multi and allow custom value',
+            defaultValue: [],
+            options: [],
+            isMulti: true,
+            allowCustomValue: true,
           })
       );
 
