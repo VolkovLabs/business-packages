@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.1.0 (2024-05-17)
+
+### Features
+
+- Add multi select with custom values to form (#41)
+
 ## 2.0.1 (2024-05-15)
 
 ### Features
