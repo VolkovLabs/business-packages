@@ -169,8 +169,10 @@ const meta = {
             description: 'Multi and allow custom value',
             defaultValue: [],
             options: [],
-            isMulti: true,
-            allowCustomValue: true,
+            settings: {
+              isMulti: true,
+              allowCustomValue: true,
+            },
           })
       );
 
