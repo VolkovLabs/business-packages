@@ -1,4 +1,5 @@
 import { SelectableValue } from '@grafana/data';
+import { SelectCommonProps } from '@grafana/ui';
 
 import { FormBuilder } from '../utils';
 
@@ -111,6 +112,25 @@ export interface SelectOptions<TObject extends object, TValue> extends BaseOptio
    * Disable Options
    */
   disableOptions?: (config: TObject) => TValue[];
+
+  /**
+   * Settings
+   */
+  settings?: Omit<
+    SelectCommonProps<TValue>,
+    | 'aria-label'
+    | 'data-testid'
+    | 'onBlur'
+    | 'onChange'
+    | 'onCloseMenu'
+    | 'onInputChange'
+    | 'onKeyDown'
+    | 'onMenuScrollToBottom'
+    | 'onMenuScrollToTop'
+    | 'onOpenMenu'
+    | 'onFocus'
+    | 'options'
+  >;
 }
 
 export interface RadioOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
