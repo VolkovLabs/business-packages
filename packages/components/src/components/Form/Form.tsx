@@ -186,7 +186,7 @@ export const Form = <TValue extends object>({
             value={field.value}
             options={field.options}
             onChange={(event) => {
-              if (field.settings.isMulti) {
+              if (field.settings?.isMulti) {
                 field.onChange((Array.isArray(event) ? event.map((s) => s.value) : [event.value ?? '']) as never);
               } else {
                 field.onChange(event.value ?? field.value);

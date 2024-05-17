@@ -116,7 +116,7 @@ export interface SelectOptions<TObject extends object, TValue> extends BaseOptio
   /**
    * Settings
    */
-  settings: Omit<
+  settings?: Omit<
     SelectCommonProps<TValue>,
     | 'aria-label'
     | 'data-testid'
