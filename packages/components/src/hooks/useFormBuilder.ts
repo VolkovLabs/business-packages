@@ -12,7 +12,11 @@ export const useFormBuilder = <TValue extends object>(getForm: (builder: FormBui
     )
   );
 
+  /**
+   * Form value
+   */
   const [value, setValue] = useState(form.current.getValue());
+  const valueRef = useRef(form.current.getValue());
 
   /**
    * Sync state value on field update
@@ -20,6 +24,7 @@ export const useFormBuilder = <TValue extends object>(getForm: (builder: FormBui
   useEffect(() => {
     const unsubscribe = form.current.subscribeOnChange((value) => {
       setValue(value);
+      valueRef.current = value;
     });
 
     return () => {
@@ -40,11 +45,31 @@ export const useFormBuilder = <TValue extends object>(getForm: (builder: FormBui
   const onChange = useCallback((value: TValue) => {
     form.current.setValue(value);
     setValue(value);
+    valueRef.current = value;
+  }, []);
+
+  /**
+   * Re-create form
+   */
+  const create = useCallback((getForm: (builder: FormBuilder<TValue>) => typeof builder, initialValue?: TValue) => {
+    form.current = getForm(
+      new FormBuilder<TValue>({
+        path: '',
+        label: '',
+      })
+    );
+
+    /**
+     * Set new form state
+     */
+    onChange(initialValue ?? form.current.getValue());
   }, []);
 
   return {
     value,
     onChange,
     fields,
+    valueRef,
+    create,
   };
 };
