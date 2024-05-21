@@ -38,6 +38,13 @@ describe('UseFormBuilder', () => {
     expect(result.current.value).toEqual({
       input: '2',
     });
+
+    /**
+     * Check ref value
+     */
+    expect(result.current.valueRef.current).toEqual({
+      input: '2',
+    });
   });
 
   it('Should update state value on field change', async () => {
@@ -162,5 +169,104 @@ describe('UseFormBuilder', () => {
         ],
       }),
     ]);
+  });
+
+  it('Should recreate form', async () => {
+    const { result, rerender } = renderHook(() =>
+      useFormBuilder<{ input: string; input2: string }>((builder) =>
+        builder
+          .addInput({
+            path: 'input',
+            defaultValue: '1',
+          })
+          .addInput({
+            path: 'input2',
+            defaultValue: '2',
+            showIf: () => false,
+          })
+      )
+    );
+
+    expect(result.current.value).toEqual({
+      input: '1',
+      input2: '2',
+    });
+
+    /**
+     * Check if input2 hidden
+     */
+    expect(result.current.fields[1].showIf()).toBeFalsy();
+
+    /**
+     * Re-create form
+     */
+    await act(async () =>
+      result.current.create((builder) =>
+        builder
+          .addInput({
+            path: 'input',
+            defaultValue: '2',
+          })
+          .addInput({
+            path: 'input2',
+            defaultValue: '2',
+            showIf: () => true,
+          })
+      )
+    );
+
+    /**
+     * Rerender
+     */
+    rerender(() => null);
+
+    /**
+     * Check updated result
+     */
+    expect(result.current.value).toEqual({
+      input: '2',
+      input2: '2',
+    });
+
+    /**
+     * Check if input2 visible
+     */
+    expect(result.current.fields[1].showIf()).toBeTruthy();
+
+    /**
+     * Re-create form with initial value
+     */
+    await act(async () =>
+      result.current.create(
+        (builder) =>
+          builder
+            .addInput({
+              path: 'input',
+              defaultValue: '2',
+            })
+            .addInput({
+              path: 'input2',
+              defaultValue: '2',
+              showIf: () => true,
+            }),
+        {
+          input: 'hello',
+          input2: 'bye',
+        }
+      )
+    );
+
+    /**
+     * Rerender
+     */
+    rerender(() => null);
+
+    /**
+     * Check updated result
+     */
+    expect(result.current.value).toEqual({
+      input: 'hello',
+      input2: 'bye',
+    });
   });
 });
