@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.1.2 (2024-05-21)
+
+### Features
+
+- Add exposing form create and value ref (#42)
+
 ## 2.1.2 (2024-05-17)
 
 ### Features
