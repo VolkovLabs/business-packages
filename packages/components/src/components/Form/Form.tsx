@@ -1,4 +1,4 @@
-import { dateTime } from '@grafana/data';
+import { dateTime, dateTimeFormat } from '@grafana/data';
 import {
   CollapsableSection,
   ColorPicker,
@@ -59,6 +59,13 @@ interface Props<TValue extends object> {
    * @type {'default' | 'inline'}
    */
   variant?: 'default' | 'inline';
+
+  /**
+   * Readonly
+   *
+   * @type {boolean}
+   */
+  readonly?: boolean;
 }
 
 /**
@@ -80,6 +87,7 @@ export const Form = <TValue extends object>({
   onToggleExpanded = () => null,
   fields,
   variant = 'default',
+  readonly = false,
 }: Props<TValue>) => {
   /**
    * Styles
@@ -162,7 +170,7 @@ export const Form = <TValue extends object>({
       label: field.label,
       description: field.description,
       key: field.fullPath,
-      disabled: field.disableIf(),
+      disabled: field.disableIf() || readonly,
       invalid: field.invalidIf(),
       error: field.getErrorMessage(),
     };
@@ -265,7 +273,11 @@ export const Form = <TValue extends object>({
           <FormControl className={styles.inlinePicker}>
             <ColorPicker
               color={field.value}
-              onChange={field.onChange}
+              onChange={(color) => {
+                if (!fieldProps.disabled) {
+                  field.onChange(color);
+                }
+              }}
               data-testid={TEST_IDS.form.fieldColor(field.fullPath)}
             />
           </FormControl>
@@ -289,18 +301,26 @@ export const Form = <TValue extends object>({
     }
 
     if (field.type === FormFieldType.DATETIME_PICKER) {
+      const format = field.showSeconds ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD HH:mm';
       return (
         <FieldComponent {...fieldProps}>
-          <DateTimePicker
-            minDate={field.min ? new Date(field.min) : undefined}
-            maxDate={field.max ? new Date(field.max) : undefined}
-            showSeconds={field.showSeconds}
-            date={dateTime(field.value)}
-            onChange={(value) => {
-              field.onChange(value.toISOString());
-            }}
-            data-testid={TEST_IDS.form.fieldDatetime()}
-          />
+          {fieldProps.disabled ? (
+            <Input
+              value={dateTimeFormat(dateTime(field.value), { format })}
+              data-testid={TEST_IDS.form.fieldDatetime()}
+            />
+          ) : (
+            <DateTimePicker
+              minDate={field.min ? new Date(field.min) : undefined}
+              maxDate={field.max ? new Date(field.max) : undefined}
+              showSeconds={field.showSeconds}
+              date={dateTime(field.value)}
+              onChange={(value) => {
+                field.onChange(value.toISOString());
+              }}
+              data-testid={TEST_IDS.form.fieldDatetime()}
+            />
+          )}
         </FieldComponent>
       );
     }

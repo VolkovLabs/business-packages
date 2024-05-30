@@ -20,6 +20,11 @@ const meta = {
       type: 'string',
       defaultValue: 'form',
     },
+    readonly: {
+      name: 'readonly',
+      type: 'boolean',
+      defaultValue: false,
+    },
   },
   render: (args) => {
     const [{}] = useArgs();
@@ -108,7 +113,15 @@ const meta = {
           .addCustom({
             path: 'custom',
             defaultValue: '',
-            editor: ({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
+            editor: ({
+              value,
+              onChange,
+              disabled,
+            }: {
+              value: string;
+              onChange: (value: string) => void;
+              disabled?: boolean;
+            }) => {
               return (
                 <div>
                   Custom Field:{' '}
@@ -116,6 +129,7 @@ const meta = {
                     style={{ border: '1px solid red' }}
                     value={value}
                     onChange={(event) => onChange(event.currentTarget.value)}
+                    disabled={disabled}
                   />
                 </div>
               );
@@ -214,5 +228,18 @@ export const Inline: Story = {
     fields: [],
     variant: 'inline',
     name: 'inline',
+  },
+};
+
+/**
+ * Readonly
+ */
+export const Readonly: Story = {
+  args: {
+    value: {},
+    fields: [],
+    variant: 'inline',
+    name: 'inline',
+    readonly: true,
   },
 };

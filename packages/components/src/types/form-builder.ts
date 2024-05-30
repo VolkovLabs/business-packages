@@ -212,13 +212,33 @@ export interface RangeSliderOptions<TObject extends object, TValue> extends Base
   marks?: Record<string, string>;
 }
 
+export interface StandardEditorProps<TValue> {
+  /**
+   * Value
+   */
+  value: TValue;
+
+  /**
+   * On Change
+   * @param value
+   */
+  onChange: (value: TValue) => void;
+
+  /**
+   * Disabled
+   *
+   * @type {boolean}
+   */
+  disabled?: boolean;
+}
+
 export interface CustomOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
   /**
    * Component
    *
    * @type {React.FC}
    */
-  editor: React.FC<{ value: TValue; onChange: (value: TValue) => void }>;
+  editor: React.FC<{ value: TValue; onChange: (value: TValue) => void; disabled?: boolean }>;
 }
 
 export interface ColorOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {}

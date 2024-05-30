@@ -16,7 +16,7 @@ export default [
         sourcemap: true,
       },
     ],
-    external: ['react', '@grafana/ui', 'rc-slider', '@emotion/css', '@emotion/react', 'rc-tooltip'],
+    external: ['react', '@grafana/ui', 'rc-slider', '@emotion/css', '@emotion/react', 'rc-tooltip', '@grafana/data'],
   },
   {
     input: `src/index.ts`,
@@ -25,6 +25,6 @@ export default [
       file: `${name}.d.ts`,
       format: 'es',
     },
-    external: ['react', '@grafana/ui', 'rc-slider', '@emotion/css', '@emotion/react', 'rc-tooltip'],
+    external: ['react', '@grafana/ui', 'rc-slider', '@emotion/css', '@emotion/react', 'rc-tooltip', '@grafana/data'],
   },
 ];

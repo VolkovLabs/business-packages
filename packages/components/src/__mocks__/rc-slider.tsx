@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Mock RC Slider
  */
-const RcSlider: React.FC<any> = ({ onChange, ariaLabelForHandle, value, range = false }) => {
+const RcSlider: React.FC<any> = ({ onChange, ariaLabelForHandle, value, range = false, disabled }) => {
   return (
     <input
       type="number"
@@ -14,6 +14,7 @@ const RcSlider: React.FC<any> = ({ onChange, ariaLabelForHandle, value, range = 
       }}
       aria-label={ariaLabelForHandle}
       value={range ? value[0] : value}
+      disabled={disabled}
     />
   );
 };

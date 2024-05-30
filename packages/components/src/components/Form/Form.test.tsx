@@ -49,12 +49,14 @@ describe('Form', () => {
     expanded,
     onToggleExpanded,
     variant,
+    readonly,
   }: {
     getForm: (builder: FormBuilder<TValue>) => FormBuilder<TValue>;
     name: string;
     expanded?: Record<string, boolean>;
     onToggleExpanded?: (expanded: Record<string, boolean>) => void;
     variant?: 'default' | 'inline';
+    readonly?: boolean;
   }) => {
     const form = useFormBuilder(getForm);
 
@@ -66,6 +68,7 @@ describe('Form', () => {
         expanded={expanded}
         onToggleExpanded={onToggleExpanded}
         variant={variant}
+        readonly={readonly}
       />
     );
   };
@@ -79,12 +82,14 @@ describe('Form', () => {
     expanded,
     onToggleExpanded,
     variant,
+    readonly,
   }: {
     getForm: (builder: FormBuilder<TValue>) => FormBuilder<TValue>;
     name?: string;
     expanded?: Record<string, boolean>;
     onToggleExpanded?: (expanded: Record<string, boolean>) => void;
     variant?: 'default' | 'inline';
+    readonly?: boolean;
   }) => {
     return (
       <WrapperComponent
@@ -93,6 +98,7 @@ describe('Form', () => {
         expanded={expanded}
         onToggleExpanded={onToggleExpanded}
         variant={variant}
+        readonly={readonly}
       />
     );
   };
@@ -108,6 +114,9 @@ describe('Form', () => {
   });
 
   describe('Field Render', () => {
+    /**
+     * Default form
+     */
     it.each([
       {
         name: 'input',
@@ -227,6 +236,9 @@ describe('Form', () => {
       expect(getField(false, path)).toHaveValue(expectedValue as any);
     });
 
+    /**
+     * Inline form
+     */
     it.each([
       {
         name: 'input',
@@ -392,6 +404,126 @@ describe('Form', () => {
         expect(getField(false, path)).toHaveValue(expectedValue);
       }
     );
+
+    /**
+     * Readonly form
+     */
+    it.each([
+      {
+        name: 'input',
+        path: 'input',
+        getField: selectors.fieldInput,
+      },
+      {
+        name: 'select',
+        path: 'select',
+        getField: selectors.fieldSelect,
+      },
+      {
+        name: 'custom',
+        path: 'custom',
+        getField: selectors.fieldCustom,
+      },
+      {
+        name: 'slider',
+        path: 'slider',
+        getField: selectors.fieldSlider,
+      },
+      {
+        name: 'range slider',
+        path: 'rangeSlider',
+        getField: selectors.fieldRangeSlider,
+      },
+      {
+        name: 'number input',
+        path: 'number',
+        getField: selectors.fieldNumberInput,
+      },
+      {
+        name: 'color picker',
+        path: 'color',
+        getField: selectors.fieldColor,
+      },
+    ])('Should render $name field in readonly state', async ({ path, getField }) => {
+      render(
+        getComponent<{
+          input: string;
+          select: string;
+          custom: string;
+          slider: number;
+          rangeSlider: [number, number];
+          number: number;
+          color: string;
+          datetime: string;
+        }>({
+          getForm: (builder) =>
+            builder
+              .addInput({
+                path: 'input',
+                defaultValue: '',
+              })
+              .addSelect({
+                path: 'select',
+                defaultValue: '',
+                options: [
+                  { value: '1', label: '1' },
+                  { value: '2', label: '2' },
+                ],
+              })
+              .addCustom({
+                path: 'custom',
+                defaultValue: '',
+                editor: CustomEditor,
+              })
+              .addSlider({
+                path: 'slider',
+                defaultValue: 0,
+                min: 0,
+                max: 10,
+              })
+              .addRangeSlider({
+                path: 'rangeSlider',
+                defaultValue: [0, 10],
+                min: 0,
+                max: 10,
+              })
+              .addNumberInput({
+                path: 'number',
+                defaultValue: 0,
+              })
+              .addColorPicker({
+                path: 'color',
+                defaultValue: '',
+              })
+              .addDateTimePicker({
+                path: 'datetime',
+                defaultValue: '',
+              }),
+          readonly: true,
+        })
+      );
+
+      await waitFor(async () => expect(selectors.root(false, defaultName)).toBeInTheDocument());
+
+      expect(getField(false, path)).toBeInTheDocument();
+
+      /**
+       * Color picker can't be disabled
+       */
+      if (path !== 'color') {
+        expect(getField(false, path)).toBeDisabled();
+      } else {
+        /**
+         * Change Value
+         */
+        await act(async () => fireEvent.change(getField(false, path), { target: { value: '#ff0' } }));
+
+        /**
+         * Check if value can't be changed
+         */
+        expect(getField(false, path)).not.toHaveValue('#ff0');
+      }
+    });
 
     it('Should render radio group', async () => {
       render(
