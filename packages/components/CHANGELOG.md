@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.3.0 (2024-05-30)
+
+### Features
+
+- Add readonly state to form (#43)
+
 ## 2.2.0 (2024-05-21)
 
 ### Features
