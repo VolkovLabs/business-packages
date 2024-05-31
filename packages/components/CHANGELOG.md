@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.4.0 (2024-05-31)
+
+### Features
+
+- Add Collapsable Section component (#44)
+
 ## 2.3.0 (2024-05-30)
 
 ### Features
