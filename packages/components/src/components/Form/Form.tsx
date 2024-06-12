@@ -46,7 +46,7 @@ interface Props<TValue extends object> {
   /**
    * On Toggle Expanded
    */
-  onToggleExpanded?: (expanded: Record<string, boolean>) => void;
+  onToggleExpanded?: (expanded: Record<string, boolean>, event: { path: string; expanded: boolean }) => void;
 
   /**
    * Fields
@@ -141,10 +141,13 @@ export const Form = <TValue extends object>({
           contentClassName={styles.section}
           isOpen={expanded[field.fullPath] ?? true}
           onToggle={(isOpen) =>
-            onToggleExpanded({
-              ...expanded,
-              [field.fullPath]: isOpen,
-            })
+            onToggleExpanded(
+              {
+                ...expanded,
+                [field.fullPath]: isOpen,
+              },
+              { path: field.fullPath, expanded: isOpen }
+            )
           }
         >
           {groupFieldsInRows(field.group).map((fields, index) =>

@@ -715,10 +715,13 @@ describe('Form', () => {
        * Expand group 1
        */
       fireEvent.click(selectors.sectionHeader(false, 'group1'));
-      expect(onToggleExpanded).toHaveBeenCalledWith({
-        group1: true,
-        'group1.subGroup1': false,
-      });
+      expect(onToggleExpanded).toHaveBeenCalledWith(
+        {
+          group1: true,
+          'group1.subGroup1': false,
+        },
+        { path: 'group1', expanded: true }
+      );
 
       /**
        * Check if subGroup1 is collapsed
@@ -730,10 +733,13 @@ describe('Form', () => {
        * Expand subGroup 1
        */
       fireEvent.click(selectors.sectionHeader(false, 'group1.subGroup1'));
-      expect(onToggleExpanded).toHaveBeenCalledWith({
-        group1: false,
-        'group1.subGroup1': true,
-      });
+      expect(onToggleExpanded).toHaveBeenCalledWith(
+        {
+          group1: false,
+          'group1.subGroup1': true,
+        },
+        { path: 'group1.subGroup1', expanded: true }
+      );
 
       /**
        * Check if subGroup1 is expanded
