@@ -1,6 +1,5 @@
 import { dateTime, dateTimeFormat } from '@grafana/data';
 import {
-  CollapsableSection,
   ColorPicker,
   DateTimePicker,
   Field,
@@ -15,6 +14,7 @@ import React from 'react';
 
 import { TEST_IDS } from '../../constants';
 import { FormFieldType, RenderFormField } from '../../types';
+import { CollapsableSection } from '../CollapsableSection';
 import { NumberInput } from '../NumberInput';
 import { RangeSlider } from '../RangeSlider';
 import { Slider } from '../Slider';
@@ -139,11 +139,11 @@ export const Form = <TValue extends object>({
           headerDataTestId={TEST_IDS.form.sectionHeader(field.fullPath)}
           contentDataTestId={TEST_IDS.form.sectionContent(field.fullPath)}
           contentClassName={styles.section}
-          isOpen={expanded[field.path] ?? true}
+          isOpen={expanded[field.fullPath] ?? true}
           onToggle={(isOpen) =>
             onToggleExpanded({
               ...expanded,
-              [field.path]: isOpen,
+              [field.fullPath]: isOpen,
             })
           }
         >

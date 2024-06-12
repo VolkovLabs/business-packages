@@ -561,6 +561,9 @@ describe('Form', () => {
         getComponent<{
           group1: {
             field: string;
+            subGroup1: {
+              field: string;
+            };
           };
           group2: {
             field: string;
@@ -574,10 +577,22 @@ describe('Form', () => {
                   label: '',
                 },
                 (builder) =>
-                  builder.addInput({
-                    path: 'field',
-                    defaultValue: '',
-                  })
+                  builder
+                    .addInput({
+                      path: 'field',
+                      defaultValue: '',
+                    })
+                    .addGroup(
+                      {
+                        path: 'subGroup1',
+                        label: '',
+                      },
+                      (builder) =>
+                        builder.addInput({
+                          path: 'field',
+                          defaultValue: '',
+                        })
+                    )
               )
               .addGroup(
                 {
@@ -599,6 +614,13 @@ describe('Form', () => {
       expect(selectors.sectionHeader(false, 'group1')).toBeInTheDocument();
       expect(selectors.sectionContent(false, 'group1')).toBeInTheDocument();
       expect(selectors.fieldInput(false, 'group1.field')).toBeInTheDocument();
+
+      /**
+       * Check subGroup 1
+       */
+      expect(selectors.sectionHeader(false, 'group1.subGroup1')).toBeInTheDocument();
+      expect(selectors.sectionContent(false, 'group1.subGroup1')).toBeInTheDocument();
+      expect(selectors.fieldInput(false, 'group1.subGroup1.field')).toBeInTheDocument();
 
       /**
        * Check group 2
@@ -625,6 +647,9 @@ describe('Form', () => {
         getComponent<{
           group1: {
             field: string;
+            subGroup1: {
+              field: string;
+            };
           };
           group2: {
             field: string;
@@ -638,10 +663,22 @@ describe('Form', () => {
                   label: '',
                 },
                 (builder) =>
-                  builder.addInput({
-                    path: 'field',
-                    defaultValue: '',
-                  })
+                  builder
+                    .addInput({
+                      path: 'field',
+                      defaultValue: '',
+                    })
+                    .addGroup(
+                      {
+                        path: 'subGroup1',
+                        label: '',
+                      },
+                      (builder) =>
+                        builder.addInput({
+                          path: 'field',
+                          defaultValue: '',
+                        })
+                    )
               )
               .addGroup(
                 {
@@ -656,6 +693,7 @@ describe('Form', () => {
               ),
           expanded: {
             group1: false,
+            'group1.subGroup1': false,
           },
           onToggleExpanded,
         })
@@ -679,7 +717,29 @@ describe('Form', () => {
       fireEvent.click(selectors.sectionHeader(false, 'group1'));
       expect(onToggleExpanded).toHaveBeenCalledWith({
         group1: true,
+        'group1.subGroup1': false,
       });
+
+      /**
+       * Check if subGroup1 is collapsed
+       */
+      expect(selectors.sectionHeader(false, 'group1.subGroup1')).toBeInTheDocument();
+      expect(selectors.sectionContent(true, 'group1.subGroup1')).not.toBeInTheDocument();
+
+      /**
+       * Expand subGroup 1
+       */
+      fireEvent.click(selectors.sectionHeader(false, 'group1.subGroup1'));
+      expect(onToggleExpanded).toHaveBeenCalledWith({
+        group1: false,
+        'group1.subGroup1': true,
+      });
+
+      /**
+       * Check if subGroup1 is expanded
+       */
+      expect(selectors.sectionHeader(false, 'group1.subGroup1')).toBeInTheDocument();
+      expect(selectors.sectionContent(false, 'group1.subGroup1')).toBeInTheDocument();
     });
 
     it('Should hide field', () => {
