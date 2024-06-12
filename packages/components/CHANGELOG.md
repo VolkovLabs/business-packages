@@ -4,7 +4,7 @@
 
 ### Features
 
-- Make Expanded state of Collapsible Sections controlled in Form (#45)
+- Make Expanded state of Collapsable Sections controlled in Form (#45)
 
 ## 2.4.0 (2024-05-31)
 
