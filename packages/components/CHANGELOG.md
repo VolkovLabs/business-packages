@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.5.0 (2024-06-12)
+
+### Features
+
+- Make Expanded state of Collapsible Sections controlled in Form (#45)
+
 ## 2.4.0 (2024-05-31)
 
 ### Features
