@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.4.1 (2024-06-20)
+## 1.4.2 (2024-06-20)
 
 ### Features / Enhancements
 
