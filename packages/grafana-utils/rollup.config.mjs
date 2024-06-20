@@ -47,7 +47,7 @@ export default [
     output: [
       {
         file: getOutputPath('client.js'),
-        format: 'cjs',
+        format: 'esm',
         sourcemap: true,
       },
     ],

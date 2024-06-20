@@ -34,10 +34,6 @@
   "keywords": [],
   "license": "Apache-2.0",
   "main": "dist/client.js",
-  "exports": {
-    "./server": "./dist/server.js",
-    "./client": "./dist/client.js"
-  },
   "name": "@volkovlabs/grafana-utils",
   "publishConfig": {
     "access": "public",
@@ -54,6 +50,6 @@
     "test:ci": "jest --maxWorkers 4 --coverage",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
-  "types": "dist/index.d.ts",
+  "types": "dist/client.d.ts",
   "version": "1.4.1"
 }
