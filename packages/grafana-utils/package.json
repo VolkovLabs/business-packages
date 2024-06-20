@@ -34,6 +34,7 @@
   "keywords": [],
   "license": "Apache-2.0",
   "main": "dist/client.js",
+  "module": "dist/esm/client.js",
   "name": "@volkovlabs/grafana-utils",
   "publishConfig": {
     "access": "public",
