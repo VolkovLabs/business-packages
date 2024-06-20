@@ -4,6 +4,7 @@
 - Includes Transformations from `@grafana/grafana`
 - Query utils
 - Includes Template service
+- Frame utils
 
 ## License
 

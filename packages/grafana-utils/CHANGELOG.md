@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.4.0 (2024-06-20)
+
+### Features / Enhancements
+
+- Add frame utils (#47)
+
 ## 1.3.0 (2024-02-15)
 
 ### Features / Enhancements
