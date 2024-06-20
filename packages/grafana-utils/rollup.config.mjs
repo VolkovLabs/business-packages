@@ -4,13 +4,12 @@ import terser from '@rollup/plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import inject from '@rollup/plugin-inject';
-import packageJson from './package.json' assert { type: 'json' };
 
-const name = packageJson.main.replace(/\.js$/, '');
+const getOutputPath = (file) => `dist/${file}`;
 
 export default [
   {
-    input: `src/index.ts`,
+    input: `src/server.ts`,
     plugins: [
       commonjs(),
       nodeResolve({
@@ -36,17 +35,54 @@ export default [
     ],
     output: [
       {
-        file: `${name}.js`,
+        file: getOutputPath('server.js'),
         format: 'cjs',
         sourcemap: true,
       },
     ],
   },
   {
-    input: `src/index.ts`,
+    input: 'src/client.ts',
+    plugins: [esbuild(), terser()],
+    output: [
+      {
+        file: getOutputPath('client.js'),
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: getOutputPath('esm/client.js'),
+        format: 'esm',
+        sourcemap: true,
+      },
+    ],
+    external: [
+      '@grafana/data',
+      '@grafana/schema',
+      'd3',
+      'd3-color',
+      'd3-force',
+      'd3-interpolate',
+      'd3-scale-chromatic',
+      'ol',
+      'react-colorful',
+      'rxjs',
+      'uuid',
+    ],
+  },
+  {
+    input: 'src/client.ts',
     plugins: [dts()],
     output: {
-      file: `${name}.d.ts`,
+      file: getOutputPath('client.d.ts'),
+      format: 'es',
+    },
+  },
+  {
+    input: 'src/server.ts',
+    plugins: [dts()],
+    output: {
+      file: getOutputPath('server.d.ts'),
       format: 'es',
     },
   },
