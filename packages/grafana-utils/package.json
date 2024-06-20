@@ -33,12 +33,16 @@
   ],
   "keywords": [],
   "license": "Apache-2.0",
-  "main": "dist/index.js",
+  "main": "dist/client.js",
+  "exports": {
+    "./server": "./dist/server.js",
+    "./client": "./dist/client.js"
+  },
   "name": "@volkovlabs/grafana-utils",
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "main": "dist/client.js",
+    "types": "dist/client.d.ts"
   },
   "scripts": {
     "build": "rollup -c",
