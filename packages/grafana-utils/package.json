@@ -52,5 +52,5 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/client.d.ts",
-  "version": "1.4.2"
+  "version": "1.4.3"
 }
