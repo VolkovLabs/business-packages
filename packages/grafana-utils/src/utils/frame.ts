@@ -52,24 +52,3 @@ export const getLastFieldValue = <TValue>(series: DataFrame[], fieldName: string
 
   return values[values.length - 1];
 };
-
-/**
- * Convert To Objects
- * @param dataFrame
- */
-export const convertToObjects = (dataFrame: DataFrame) => {
-  const result = [];
-
-  for (let index = 0; index < dataFrame.length; index += 1) {
-    const object = dataFrame.fields.reduce((acc, field) => {
-      return {
-        ...acc,
-        [field.name]: field.values[index],
-      };
-    }, {});
-
-    result.push(object);
-  }
-
-  return result;
-};
