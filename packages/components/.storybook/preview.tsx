@@ -1,13 +1,15 @@
 import type { Preview } from '@storybook/react';
+import type { GrafanaTheme2 } from '@grafana/data';
+
 // @ts-ignore
-import grafanaLightTheme from './grafana-10.2.1/grafana.light.scss';
+import grafanaLightTheme from './grafana-11.1.0/grafana.light.scss';
 // @ts-ignore
-import grafanaDarkTheme from './grafana-10.2.1/grafana.dark.scss';
+import grafanaDarkTheme from './grafana-11.1.0/grafana.dark.scss';
 import { Light, Dark } from './theme';
 import { withTheme } from './withTheme';
 
-const handleThemeChange = (theme: any) => {
-  if (theme !== 'light') {
+const handleThemeChange = (theme: GrafanaTheme2) => {
+  if (theme.isDark) {
     grafanaLightTheme.unuse();
     grafanaDarkTheme.use();
   } else {

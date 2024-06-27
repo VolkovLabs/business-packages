@@ -44,14 +44,14 @@ const config: StorybookConfig = {
      * For Grafana Styles
      */
     {
-      from: './grafana-10.2.1/public',
+      from: './grafana-11.1.0/public',
       to: '/',
     },
     /**
      * For @grafana/ui
      */
     {
-      from: './grafana-10.2.1/public',
+      from: './grafana-11.1.0/public',
       to: '/public',
     },
   ],

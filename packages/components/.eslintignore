@@ -2,4 +2,4 @@ dist/
 
 *.test.tsx
 
-.storybook/grafana-10.2.1/
+.storybook/grafana-11.1.0/

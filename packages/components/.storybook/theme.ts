@@ -11,9 +11,7 @@ const createStorybookTheme = (theme: GrafanaTheme2) => {
     colorPrimary: theme.colors.primary.main,
     colorSecondary: theme.colors.error.main,
 
-    /**
-     * UI
-     */
+    // UI
     appBg: theme.colors.background.canvas,
     appContentBg: theme.colors.background.primary,
     appBorderColor: theme.colors.border.medium,
