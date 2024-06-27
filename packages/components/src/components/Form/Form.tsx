@@ -319,7 +319,9 @@ export const Form = <TValue extends object>({
               showSeconds={field.showSeconds}
               date={dateTime(field.value)}
               onChange={(value) => {
-                field.onChange(value.toISOString());
+                if (value) {
+                  field.onChange(value.toISOString());
+                }
               }}
               data-testid={TEST_IDS.form.fieldDatetime()}
             />
