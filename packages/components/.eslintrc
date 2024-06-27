@@ -3,7 +3,6 @@
     "jest": true
   },
   "extends": ["plugin:prettier/recommended", "@volkovlabs/eslint-config", "plugin:storybook/recommended"],
-  "include": ["./src", ".config/types", ".config/jest-setup.ts", "./test"],
   "plugins": ["@typescript-eslint/eslint-plugin"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
