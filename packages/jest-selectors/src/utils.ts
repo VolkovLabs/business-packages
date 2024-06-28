@@ -1,6 +1,6 @@
 import { BoundFunctions, Queries, Screen } from '@testing-library/react';
 
-import { JestSelectors } from './types';
+import { JestSelectors, SelectorFn } from './types';
 
 /**
  * Get Jest Selectors
@@ -20,7 +20,8 @@ export const getJestSelectors =
        * @param args
        */
       const getElement = (noThrowOnNotFound = false, ...args: unknown[]) => {
-        const value = typeof selector === 'function' ? selector(...args) : selector;
+        const getValue = typeof selector === 'object' && 'selector' in selector ? selector.selector : selector;
+        const value = typeof getValue === 'function' ? getValue(...args) : getValue;
 
         if (value.startsWith('data-testid') || enforceTestIdSelectorForKeys.includes(key as keyof TSelectors)) {
           return noThrowOnNotFound ? screen.queryByTestId(value) : screen.getByTestId(value);
@@ -35,3 +36,37 @@ export const getJestSelectors =
       };
     }, {} as JestSelectors<TSelectors>);
   };
+
+/**
+ * Create Selector
+ * @param selector
+ * @param propName
+ */
+export const createSelector = <TSelector extends SelectorFn>(selector: TSelector | string, propName?: string) => {
+  let attrName = 'aria-label';
+
+  if (propName) {
+    attrName = propName;
+  } else {
+    const selectorValue = typeof selector === 'function' ? selector() : selector;
+    if (selectorValue.startsWith('data-testid')) {
+      attrName = 'data-testid';
+    }
+  }
+
+  if (typeof selector === 'string') {
+    return {
+      selector: () => selector,
+      apply: () => ({
+        [attrName]: selector,
+      }),
+    };
+  }
+
+  return {
+    selector,
+    apply: (...args: Parameters<typeof selector>) => ({
+      [attrName]: selector(...args),
+    }),
+  };
+};
