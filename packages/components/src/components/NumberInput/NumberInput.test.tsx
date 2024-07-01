@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { getJestSelectors } from '@volkovlabs/jest-selectors';
+import { getJestSelectors, createSelector } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
 import { NumberInput } from './NumberInput';
@@ -13,7 +13,7 @@ type Props = React.ComponentProps<typeof NumberInput>;
  * In Test Ids
  */
 const InTestIds = {
-  field: 'data-testid field',
+  field: createSelector('data-testid field'),
 };
 
 describe('Number Input', () => {
@@ -27,7 +27,7 @@ describe('Number Input', () => {
    * Get Component
    */
   const getComponent = (props: Partial<Props>) => {
-    return <NumberInput min={1} max={10} data-testid={InTestIds.field} {...(props as any)} />;
+    return <NumberInput min={1} max={10} {...InTestIds.field.apply()} {...(props as any)} />;
   };
 
   it('Should allow to enter negative value', () => {

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { getJestSelectors } from '@volkovlabs/jest-selectors';
+import { getJestSelectors, createSelector } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
 import { CODE_EDITOR_CONFIG } from '../../constants';
@@ -14,7 +14,7 @@ type Props = React.ComponentProps<typeof AutosizeCodeEditor>;
  * In Test Ids
  */
 const InTestIds = {
-  field: 'data-testid field',
+  field: createSelector('data-testid field'),
 };
 
 /**
@@ -24,7 +24,7 @@ jest.mock('@grafana/ui', () => ({
   ...jest.requireActual('@grafana/ui'),
   CodeEditor: jest.fn(({ value, onChange, height }) => (
     <textarea
-      data-testid={InTestIds.field}
+      {...InTestIds.field.apply()}
       style={{ height }}
       value={value}
       onChange={(event) => onChange(event.currentTarget.value)}
