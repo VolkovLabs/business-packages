@@ -39,34 +39,41 @@ export const getJestSelectors =
 
 /**
  * Create Selector
+ * Function overloading for correct parameters types
  * @param selector
  * @param propName
  */
-export const createSelector = <TSelector extends SelectorFn>(selector: TSelector | string, propName?: string) => {
+function createSelector<TSelector extends string>(
+  selector: TSelector,
+  propName?: string
+): { selector: () => string; apply: () => Record<string, string> };
+function createSelector<TSelector extends SelectorFn>(
+  selector: TSelector,
+  propName?: string
+): { selector: typeof selector; apply: (...args: Parameters<TSelector>) => Record<string, string> };
+function createSelector<TSelector extends () => string>(
+  selector: TSelector,
+  propName?: string
+): { selector: unknown; apply: (...args: unknown[]) => Record<string, string> } {
+  const selectorFn = typeof selector === 'string' ? () => selector as string : selector;
+
   let attrName = 'aria-label';
 
+  /**
+   * Attribute name for selector apply
+   */
   if (propName) {
     attrName = propName;
-  } else {
-    const selectorValue = typeof selector === 'function' ? selector() : selector;
-    if (selectorValue.startsWith('data-testid')) {
-      attrName = 'data-testid';
-    }
-  }
-
-  if (typeof selector === 'string') {
-    return {
-      selector: () => selector,
-      apply: () => ({
-        [attrName]: selector,
-      }),
-    };
+  } else if (selectorFn().startsWith('data-testid')) {
+    attrName = 'data-testid';
   }
 
   return {
-    selector,
-    apply: (...args: Parameters<typeof selector>) => ({
-      [attrName]: selector(...args),
+    selector: selectorFn,
+    apply: (...args: Parameters<typeof selectorFn>) => ({
+      [attrName]: selectorFn(...args),
     }),
   };
-};
+}
+
+export { createSelector };
