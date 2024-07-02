@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.4.1 (2024-07-01)
+
+### Features / Enhancements
+
+- Add createSelector function (#49)
+
 ## 1.3.0 (2024-05-02)
 
 ### Features / Enhancements

@@ -26,6 +26,7 @@ export default [
       '@grafana/data',
       'lodash',
       'rc-slider/assets/index.css',
+      '@volkovlabs/jest-selectors',
     ],
   },
   {
@@ -45,6 +46,7 @@ export default [
       '@grafana/data',
       'lodash',
       'rc-slider/assets/index.css',
+      '@volkovlabs/jest-selectors',
     ],
   },
 ];

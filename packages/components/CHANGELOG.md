@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.7.0 (IN PROGRESS)
+
+### Features
+
+- Update to use auto-apply selectors (#49)
+
 ## 2.6.0 (2024-06-12)
 
 ### Features

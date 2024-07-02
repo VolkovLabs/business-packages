@@ -136,8 +136,8 @@ export const Form = <TValue extends object>({
         <CollapsableSection
           key={field.fullPath}
           label={field.label}
-          headerDataTestId={TEST_IDS.form.sectionHeader(field.fullPath)}
-          contentDataTestId={TEST_IDS.form.sectionContent(field.fullPath)}
+          {...TEST_IDS.form.sectionHeader.apply(field.fullPath)}
+          {...TEST_IDS.form.sectionContent.apply(field.fullPath)}
           contentClassName={styles.section}
           isOpen={expanded[field.fullPath] ?? true}
           onToggle={(isOpen) =>
@@ -204,7 +204,7 @@ export const Form = <TValue extends object>({
               }
             }}
             {...field.settings}
-            aria-label={TEST_IDS.form.fieldSelect(field.fullPath)}
+            {...TEST_IDS.form.fieldSelect.apply(field.fullPath)}
           />
         </FieldComponent>
       );
@@ -214,11 +214,7 @@ export const Form = <TValue extends object>({
       const Editor = field.editor;
       return (
         <FieldComponent {...fieldProps}>
-          <Editor
-            value={field.value}
-            onChange={field.onChange}
-            data-testid={TEST_IDS.form.fieldCustom(field.fullPath)}
-          />
+          <Editor value={field.value} onChange={field.onChange} {...TEST_IDS.form.fieldCustom.apply(field.fullPath)} />
         </FieldComponent>
       );
     }
@@ -233,7 +229,7 @@ export const Form = <TValue extends object>({
             max={field.max}
             step={field.step}
             marks={field.marks}
-            data-testid={TEST_IDS.form.fieldSlider(field.fullPath)}
+            {...TEST_IDS.form.fieldSlider.apply(field.fullPath)}
           />
         </FieldComponent>
       );
@@ -249,7 +245,7 @@ export const Form = <TValue extends object>({
             max={field.max}
             step={field.step}
             marks={field.marks}
-            sliderAriaLabel={TEST_IDS.form.fieldRangeSlider(field.fullPath)}
+            {...TEST_IDS.form.fieldRangeSlider.apply(field.fullPath)}
           />
         </FieldComponent>
       );
@@ -264,7 +260,7 @@ export const Form = <TValue extends object>({
             min={field.min}
             max={field.max}
             step={field.step}
-            data-testid={TEST_IDS.form.fieldNumberInput(field.fullPath)}
+            {...TEST_IDS.form.fieldNumberInput.apply(field.fullPath)}
           />
         </FieldComponent>
       );
@@ -281,7 +277,7 @@ export const Form = <TValue extends object>({
                   field.onChange(color);
                 }
               }}
-              data-testid={TEST_IDS.form.fieldColor(field.fullPath)}
+              {...TEST_IDS.form.fieldColor.apply(field.fullPath)}
             />
           </FormControl>
         </FieldComponent>
@@ -297,7 +293,7 @@ export const Form = <TValue extends object>({
               field.onChange(event.currentTarget.value);
             }}
             placeholder={field.placeholder}
-            data-testid={TEST_IDS.form.fieldInput(field.fullPath)}
+            {...TEST_IDS.form.fieldInput.apply(field.fullPath)}
           />
         </FieldComponent>
       );
@@ -308,10 +304,7 @@ export const Form = <TValue extends object>({
       return (
         <FieldComponent {...fieldProps}>
           {fieldProps.disabled ? (
-            <Input
-              value={dateTimeFormat(dateTime(field.value), { format })}
-              data-testid={TEST_IDS.form.fieldDatetime()}
-            />
+            <Input value={dateTimeFormat(dateTime(field.value), { format })} {...TEST_IDS.form.fieldDatetime.apply()} />
           ) : (
             <DateTimePicker
               minDate={field.min ? new Date(field.min) : undefined}
@@ -323,7 +316,7 @@ export const Form = <TValue extends object>({
                   field.onChange(value.toISOString());
                 }
               }}
-              data-testid={TEST_IDS.form.fieldDatetime()}
+              {...TEST_IDS.form.fieldDatetime.apply()}
             />
           )}
         </FieldComponent>
@@ -332,7 +325,7 @@ export const Form = <TValue extends object>({
 
     if (field.type === FormFieldType.RADIO) {
       return (
-        <FieldComponent {...fieldProps} data-testid={TEST_IDS.form.fieldRadio(field.fullPath)}>
+        <FieldComponent {...fieldProps} {...TEST_IDS.form.fieldRadio.apply(field.fullPath)}>
           <RadioButtonGroup
             value={field.value}
             onChange={field.onChange}
@@ -348,7 +341,7 @@ export const Form = <TValue extends object>({
   };
 
   return (
-    <div data-testid={TEST_IDS.form.root(name)}>
+    <div {...TEST_IDS.form.root.apply(name)}>
       {groupFieldsInRows(fields).map((fields, index) =>
         fields.length > 1 && variant === 'inline' ? (
           <InlineFieldRow key={index}>{fields.map((field) => renderField(field))}</InlineFieldRow>

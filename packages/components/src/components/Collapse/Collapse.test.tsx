@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { getJestSelectors } from '@volkovlabs/jest-selectors';
+import { getJestSelectors, createSelector } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
 import { Collapse } from './Collapse';
@@ -10,9 +10,9 @@ type Props = React.ComponentProps<typeof Collapse>;
  * In Test Ids
  */
 const InTestIds = {
-  header: 'data-testid header',
-  content: 'data-testid content',
-  buttonRemove: 'data-testid button-remove',
+  header: createSelector('data-testid header', 'headerTestId'),
+  content: createSelector('data-testid content', 'contentTestId'),
+  buttonRemove: createSelector('data-testid button-remove'),
 };
 
 /**
@@ -27,7 +27,7 @@ describe('Collapse', () => {
    * Get Tested Component
    */
   const getComponent = (props: Partial<Props>) => {
-    return <Collapse headerTestId={InTestIds.header} contentTestId={InTestIds.content} {...props} />;
+    return <Collapse {...InTestIds.header.apply()} {...InTestIds.content.apply()} {...props} />;
   };
 
   it('Should expand content', () => {
@@ -42,7 +42,11 @@ describe('Collapse', () => {
   it('Actions should not affect collapse state', () => {
     const onToggle = jest.fn();
 
-    render(getComponent({ onToggle, actions: <button data-testid={InTestIds.buttonRemove}>remove</button> }));
+    /**
+     * New
+     */
+    render(getComponent({ onToggle, actions: <button {...InTestIds.buttonRemove.apply()}>remove</button> }));
+
     fireEvent.click(selectors.buttonRemove());
     expect(onToggle).not.toHaveBeenCalled();
   });
