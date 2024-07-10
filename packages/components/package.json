@@ -88,5 +88,5 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/index.d.ts",
-  "version": "2.6.0"
+  "version": "2.7.0"
 }
