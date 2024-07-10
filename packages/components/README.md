@@ -12,6 +12,7 @@
 
 - `useFormBuilder` allows to create declarative forms.
 - `createUseDataHook` allows to create `useData` hook to get data through data source api.
+- `useDashboardTimeRange` allows to use actual dashboard time range.
 
 ### Utils
 

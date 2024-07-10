@@ -1,10 +1,11 @@
 # Change Log
 
-## 2.7.0 (IN PROGRESS)
+## 2.7.0 (2024-07-10)
 
 ### Features
 
 - Update to use auto-apply selectors (#49)
+- Add useDashboardTimeRange hook (#50)
 
 ## 2.6.0 (2024-06-12)
 

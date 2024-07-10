@@ -3,6 +3,7 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@grafana/data": "^11.1.0",
+    "@grafana/runtime": "^11.1.0",
     "@grafana/ui": "^11.1.0",
     "@volkovlabs/jest-selectors": "^1.4.1",
     "classnames": "^2.5.1",
@@ -87,5 +88,5 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/index.d.ts",
-  "version": "2.6.0"
+  "version": "2.7.0"
 }
