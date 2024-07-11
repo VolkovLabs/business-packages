@@ -7,7 +7,7 @@ import { GrafanaTheme2 } from '@grafana/data';
 export const getStyles = (theme: GrafanaTheme2) => {
   return {
     section: css`
-      padding: 0;
+      padding: ${theme.spacing(0, 0, 1, 1)};
     `,
     inlinePicker: css`
       padding: ${theme.spacing(1)} ${theme.spacing(0.5)};

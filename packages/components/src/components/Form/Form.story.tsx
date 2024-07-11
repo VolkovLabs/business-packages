@@ -31,6 +31,12 @@ const meta = {
 
     const Preview = () => {
       const form = useFormBuilder<{
+        group: {
+          field: string;
+          subGroup: {
+            field: string;
+          };
+        };
         opacity: number;
         step: number;
         decimal: number;
@@ -44,6 +50,37 @@ const meta = {
         multiSelect: string[];
       }>((builder) =>
         builder
+          .addGroup(
+            {
+              path: 'group',
+              label: 'Group',
+            },
+            (builder) =>
+              builder
+                .addInput({
+                  path: 'field',
+                  label: 'Field',
+                  defaultValue: '',
+                  view: {
+                    grow: true,
+                  },
+                })
+                .addGroup(
+                  {
+                    path: 'subGroup',
+                    label: 'Sub Group',
+                  },
+                  (builder) =>
+                    builder.addInput({
+                      path: 'field',
+                      label: 'Field',
+                      defaultValue: '',
+                      view: {
+                        grow: true,
+                      },
+                    })
+                )
+          )
           .addSlider({
             path: 'opacity',
             defaultValue: 100,
