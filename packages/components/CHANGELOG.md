@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.7.1 (2024-07-11)
+
+### Features
+
+- Add padding to form section content (#51)
+
 ## 2.7.0 (2024-07-10)
 
 ### Features
