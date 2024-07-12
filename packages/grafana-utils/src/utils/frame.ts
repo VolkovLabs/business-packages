@@ -5,12 +5,12 @@ import { DataFrame, Field, FieldType } from '@grafana/data';
  */
 export const findField = <TValue = unknown>(
   series: DataFrame[],
-  predicateFn: (field: Field) => boolean
+  predicateFn: (field: Field, frame: DataFrame) => boolean
 ): Field<TValue> | undefined => {
   for (let i = 0; i < series.length; i += 1) {
     const frame = series[i];
 
-    const field = frame.fields.find((field) => predicateFn(field));
+    const field = frame.fields.find((field) => predicateFn(field, frame));
 
     /**
      * Field found

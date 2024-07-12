@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.4.4 (2024-07-12)
+
+### Features / Enhancements
+
+- Update findField function (#52)
+
 ## 1.4.3 (2024-06-20)
 
 ### Features / Enhancements
