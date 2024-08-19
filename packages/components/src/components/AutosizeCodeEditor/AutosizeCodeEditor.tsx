@@ -1,8 +1,7 @@
-import { CodeEditor, IconButton, Modal, InlineField, useStyles2 } from '@grafana/ui';
+import { CodeEditor, IconButton, InlineField, Modal, useStyles2 } from '@grafana/ui';
 import React, { useEffect, useState } from 'react';
 
 import { CODE_EDITOR_CONFIG } from '../../constants';
-
 import { getStyles } from './AutosizeCodeEditor.styles';
 
 /**
