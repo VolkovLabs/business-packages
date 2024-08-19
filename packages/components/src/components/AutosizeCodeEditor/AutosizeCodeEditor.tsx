@@ -1,7 +1,9 @@
-import { CodeEditor } from '@grafana/ui';
+import { CodeEditor, IconButton, Modal, InlineField, useStyles2 } from '@grafana/ui';
 import React, { useEffect, useState } from 'react';
 
 import { CODE_EDITOR_CONFIG } from '../../constants';
+
+import { getStyles } from './AutosizeCodeEditor.styles';
 
 /**
  * Properties
@@ -9,6 +11,8 @@ import { CODE_EDITOR_CONFIG } from '../../constants';
 type Props = React.ComponentProps<typeof CodeEditor> & {
   minHeight?: number;
   maxHeight?: number;
+  modalTitle: string;
+  modalHeight?: number;
 };
 
 /**
@@ -44,8 +48,20 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   minHeight,
   maxHeight,
   height: staticHeight,
+  modalTitle,
+  modalHeight,
   ...restProps
 }) => {
+  /**
+   * Styles and Theme
+   */
+  const styles = useStyles2(getStyles);
+
+  /**
+   * State
+   */
+  const [isOpen, setIsOpen] = useState(false);
+
   /**
    * Height
    */
@@ -59,14 +75,30 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   }, [value, minHeight, maxHeight]);
 
   return (
-    <CodeEditor
-      value={value}
-      onChange={(value) => {
-        onChange?.(value);
-        setHeight(getHeightByValue(value, minHeight, maxHeight));
-      }}
-      height={staticHeight ?? height}
-      {...restProps}
-    />
+    <>
+      <CodeEditor
+        value={value}
+        onChange={(value) => {
+          onChange?.(value);
+          setHeight(getHeightByValue(value, minHeight, maxHeight));
+        }}
+        height={staticHeight ?? height}
+        {...restProps}
+      />
+      <InlineField className={styles.line}>
+        <IconButton tooltip="Open in modal view" name="gf-landscape" size="lg" onClick={() => setIsOpen(true)} />
+      </InlineField>
+      <Modal title={modalTitle} isOpen={isOpen} onDismiss={() => setIsOpen(false)} className={styles.modal}>
+        <CodeEditor
+          value={value}
+          onChange={(value) => {
+            onChange?.(value);
+            setHeight(getHeightByValue(value, minHeight, maxHeight));
+          }}
+          height={modalHeight}
+          {...restProps}
+        />
+      </Modal>
+    </>
   );
 };
