@@ -12,5 +12,8 @@ export const getStyles = (theme: GrafanaTheme2) => {
     modal: css`
       width: 80%;
     `,
+    content: css`
+      padding: ${theme.spacing(1)};
+    `,
   };
 };

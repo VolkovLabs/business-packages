@@ -1,7 +1,7 @@
 import { CodeEditor, IconButton, InlineField, Modal, useStyles2 } from '@grafana/ui';
 import React, { useEffect, useState } from 'react';
 
-import { CODE_EDITOR_CONFIG } from '../../constants';
+import { CODE_EDITOR_CONFIG, TEST_IDS } from '../../constants';
 import { getStyles } from './AutosizeCodeEditor.styles';
 
 /**
@@ -12,6 +12,7 @@ type Props = React.ComponentProps<typeof CodeEditor> & {
   maxHeight?: number;
   modalTitle: string;
   modalHeight?: number;
+  modalButtonTooltip: string;
 };
 
 /**
@@ -49,6 +50,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   height: staticHeight,
   modalTitle,
   modalHeight,
+  modalButtonTooltip,
   ...restProps
 }) => {
   /**
@@ -75,6 +77,15 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
 
   return (
     <>
+      <InlineField className={styles.line}>
+        <IconButton
+          tooltip={modalButtonTooltip}
+          name="gf-landscape"
+          size="lg"
+          onClick={() => setIsOpen(true)}
+          {...TEST_IDS.codeEditor.modalButton.apply('modal-button')}
+        />
+      </InlineField>
       <CodeEditor
         value={value}
         onChange={(value) => {
@@ -84,19 +95,18 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         height={staticHeight ?? height}
         {...restProps}
       />
-      <InlineField className={styles.line}>
-        <IconButton tooltip="Open in modal view" name="gf-landscape" size="lg" onClick={() => setIsOpen(true)} />
-      </InlineField>
       <Modal title={modalTitle} isOpen={isOpen} onDismiss={() => setIsOpen(false)} className={styles.modal}>
-        <CodeEditor
-          value={value}
-          onChange={(value) => {
-            onChange?.(value);
-            setHeight(getHeightByValue(value, minHeight, maxHeight));
-          }}
-          height={modalHeight}
-          {...restProps}
-        />
+        <div className={styles.content} {...TEST_IDS.codeEditor.modal.apply()}>
+          <CodeEditor
+            value={value}
+            onChange={(value) => {
+              onChange?.(value);
+              setHeight(getHeightByValue(value, minHeight, maxHeight));
+            }}
+            height={modalHeight}
+            {...restProps}
+          />
+        </div>
       </Modal>
     </>
   );
