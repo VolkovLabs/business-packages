@@ -22,4 +22,8 @@ export const TEST_IDS = {
     fieldDatetime: createSelector(() => `data-testid date-time-input`),
     fieldRadio: createSelector((name: unknown) => `data-testid form field-radio-${name}`),
   },
+  codeEditor: {
+    modalButton: createSelector((name: unknown) => `data-testid code-editor modal-button-${name}`),
+    modal: createSelector(() => `data-testid code-editor modal-window`),
+  },
 };
