@@ -1,147 +1,153 @@
 # Change Log
 
+## 2.8.0 (2024-08-21)
+
+### Features / Enhancements
+
+- Added modal editor to Autosize Code Editor (#54)
+
 ## 2.7.1 (2024-07-11)
 
-### Features
+### Features / Enhancements
 
-- Add padding to form section content (#51)
+- Added padding to form section content (#51)
 
 ## 2.7.0 (2024-07-10)
 
-### Features
+### Features / Enhancements
 
-- Update to use auto-apply selectors (#49)
-- Add useDashboardTimeRange hook (#50)
+- Updated to use auto-apply selectors (#49)
+- Added useDashboardTimeRange hook (#50)
 
 ## 2.6.0 (2024-06-12)
 
-### Features
+### Features / Enhancements
 
-- Make Expanded state of Collapsable Sections controlled in Form (#45)
+- Made Expanded state of Collapsable Sections controlled in Form (#45)
 
 ## 2.4.0 (2024-05-31)
 
-### Features
+### Features / Enhancements
 
-- Add Collapsable Section component (#44)
+- Added Collapsable Section component (#44)
 
 ## 2.3.0 (2024-05-30)
 
-### Features
+### Features / Enhancements
 
-- Add readonly state to form (#43)
+- Added readonly state to form (#43)
 
 ## 2.2.0 (2024-05-21)
 
-### Features
+### Features / Enhancements
 
-- Add exposing form create and value ref (#42)
+- Added exposing form create and value ref (#42)
 
 ## 2.1.2 (2024-05-17)
 
-### Features
+### Features / Enhancements
 
-- Add multi select with custom values to form (#41)
+- Added multi select with custom values to form (#41)
 
 ## 2.0.1 (2024-05-15)
 
-### Features
+### Features / Enhancements
 
-- Allow to enter value increased by step in Number input (#40)
+- Allowed to enter value increased by step in Number input (#40)
 
 ## 1.10.0 (2024-05-02)
 
-### Features
+### Features / Enhancements
 
-- Update @testing-library/react (#39)
+- Updated @testing-library/react (#39)
 
 ## 1.9.0 (2024-04-05)
 
-### Features
+### Features / Enhancements
 
-- Add Datetime Picker to form and update Grafana dependencies for components package (#38)
+- Added Datetime Picker to form and update Grafana dependencies for components package (#38)
 
 ## 1.8.2 (2024-04-18)
 
 ### Bugfixes
 
-- Fix unnecessary calling onChange for Number input (#37)
+- Fixed unnecessary calling onChange for Number input (#37)
 
 ## 1.8.1 (2024-04-05)
 
-### Features
+### Features / Enhancements
 
-- Add RangeSlider component (#36)
+- Added RangeSlider component (#36)
 
 ## 1.7.0 (2024-03-26)
 
-### Features
+### Features / Enhancements
 
-- Add inline form variant (#35)
+- Added inline form variant (#35)
 
 ## 1.6.1 (2024-03-13)
 
-### Features
+### Features / Enhancements
 
-- Add min and max heights to Autosize Code editor (#34)
+- Added min and max heights to Autosize Code editor (#34)
 
 ## 1.6.0 (2024-02-29)
 
-### Features
+### Features / Enhancements
 
-- Add Code Parameters Builder (#32)
+- Added Code Parameters Builder (#32)
 
 ## 1.5.0 (2024-02-28)
 
-### Features
+### Features / Enhancements
 
-- Add Autosize Code Editor (#31)
+- Added Autosize Code Editor (#31)
 
 ## 1.4.1 (2024-02-20)
 
-### Features
+### Features / Enhancements
 
-- Add useData hook (#30)
+- Added useData hook (#30)
 
 ## 1.3.5 (2024-02-08)
 
 ### Bugfixes
 
-- Fix too far position of popover from the color picker (#26)
+- Fixed too far position of popover from the color picker (#26)
 
 ## 1.3.4 (2024-02-02)
 
 ### Bugfixes
 
-- Fix slider disabled state (#25)
+- Fixed slider disabled state (#25)
 
 ## 1.3.3 (2024-02-01)
 
 ### Features / Enhancements
 
-- Add Form Builder (#21)
+- Added Form Builder (#21)
 
 ## 1.2.1 (2023-12-05)
 
 ### Bugfixes
 
-- Fix Collapse component compatibility with Grafana prior to 9.5 (#16)
+- Fixed Collapse component compatibility with Grafana prior to 9.5 (#16)
 
 ## 1.2.0 (2023-11-23)
 
 ### Features / Enhancements
 
-- Add blur on enter press for Number Input component (#13)
+- Added blur on enter press for Number Input component (#13)
 
 ## 1.1.0 (2023-11-20)
 
 ### Features / Enhancements
 
-- Add Collapse component (#8)
+- Added Collapse component (#8)
 
 ## 1.0.0 (2023-11-17)
 
 ### Features / Enhancements
 
 - Initial Release
-- Add Number Input component
+- Added Number Input component
