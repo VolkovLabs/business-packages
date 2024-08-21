@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { getJestSelectors, createSelector } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
@@ -17,19 +17,36 @@ const InTestIds = {
   field: createSelector('data-testid field'),
 };
 
+const editor = {
+  getPosition: () => ({
+    lineNumber: 12,
+    column: 5,
+  }),
+  focus: () => {},
+  setPosition: (value: any) => value,
+  revealLineInCenter: (value: any) => value,
+};
+
 /**
  * Mock Code Editor
  */
 jest.mock('@grafana/ui', () => ({
   ...jest.requireActual('@grafana/ui'),
-  CodeEditor: jest.fn(({ value, onChange, height }) => (
-    <textarea
-      {...InTestIds.field.apply()}
-      style={{ height }}
-      value={value}
-      onChange={(event) => onChange(event.currentTarget.value)}
-    />
-  )),
+  CodeEditor: jest.fn(({ value, onChange, height, onEditorDidMount }) => {
+    /**
+     * Call the onEditorDidMount callback with the editor instance
+     */
+    onEditorDidMount(editor, '');
+
+    return (
+      <textarea
+        {...InTestIds.field.apply()}
+        style={{ height }}
+        value={value}
+        onChange={(event) => onChange(event.currentTarget.value)}
+      />
+    );
+  }),
 }));
 
 describe('AutosizeCodeEditor', () => {
@@ -129,5 +146,25 @@ describe('AutosizeCodeEditor', () => {
     fireEvent.change(editor2, { target: { value: `console.log('test second')` } });
 
     expect(onChange).toHaveBeenCalledWith(`console.log('test second')`);
+  });
+
+  it('Should call onEditorDidMount', async () => {
+    const onChange = jest.fn();
+    const onEditorDidMount = jest.fn();
+
+    jest.spyOn(global, 'setTimeout').mockImplementation((cb: any) => cb());
+
+    render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
+
+    expect(selectors.modalButton(true, 'modal-button')).toBeInTheDocument();
+
+    expect(onEditorDidMount).toHaveBeenCalledTimes(2);
+
+    fireEvent.click(selectors.modalButton(true, 'modal-button'));
+    expect(selectors.modal()).toBeInTheDocument();
+
+    expect(onEditorDidMount).toHaveBeenCalledTimes(4);
+
+    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 0);
   });
 });
