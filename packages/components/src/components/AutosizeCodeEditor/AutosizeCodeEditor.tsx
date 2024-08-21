@@ -1,5 +1,4 @@
 import { CodeEditor, IconButton, InlineField, InlineFieldRow, Modal, useStyles2 } from '@grafana/ui';
-
 /**
  * Monaco
  */
@@ -79,7 +78,6 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const onEditorDidMountMain = useCallback(
     (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType) => {
-      console.log('console >>>> test editor', editor);
       setMonacoEditor(editor);
       if (onEditorDidMount) {
         onEditorDidMount(editor, monaco);
