@@ -15,7 +15,6 @@ type Props = React.ComponentProps<typeof CodeEditor> & {
   minHeight?: number;
   maxHeight?: number;
   modalTitle: string;
-  modalHeight?: number;
   modalButtonTooltip: string;
 };
 
@@ -53,7 +52,6 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   maxHeight,
   height: staticHeight,
   modalTitle,
-  modalHeight,
   modalButtonTooltip,
   onEditorDidMount,
   ...restProps
@@ -149,6 +147,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         isOpen={isOpen}
         onDismiss={() => setIsOpen(false)}
         className={styles.modal}
+        contentClassName={styles.modalBody}
         closeOnEscape
         trapFocus
       >
@@ -160,7 +159,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
               onChange?.(value);
               setHeight(getHeightByValue(value, minHeight, maxHeight));
             }}
-            height={modalHeight}
+            containerStyles={styles.modalEditor}
             onEditorDidMount={modalEditorDidMount}
             {...restProps}
           />
