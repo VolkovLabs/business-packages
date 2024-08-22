@@ -15,12 +15,22 @@ export const getStyles = (theme: GrafanaTheme2) => {
     `,
     modal: css`
       width: 80%;
+      height: 80%;
     `,
     content: css`
       padding: ${theme.spacing(1)};
+      height: 100%;
+    `,
+    modalBody: css`
+      height: 100%;
     `,
     modalIconLine: css`
       margin: ${theme.spacing(0.5)} 0 0 ${theme.spacing(0.5)};
+    `,
+    modalEditor: css`
+      height: 100%;
+      border-radius: 2px;
+      border: 1px solid ${theme.colors.border.medium};
     `,
   };
 };

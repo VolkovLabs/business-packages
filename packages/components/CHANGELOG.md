@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.8.1 (2024-08-22)
+
+### Features / Enhancements
+
+- Updated code editor height (#56)
+
 ## 2.8.0 (2024-08-21)
 
 ### Features / Enhancements
