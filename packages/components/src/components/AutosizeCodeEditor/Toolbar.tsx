@@ -1,12 +1,12 @@
-import { CodeEditor, IconButton, InlineField, InlineFieldRow, Modal, useStyles2 } from '@grafana/ui';
+import { IconButton, InlineField, InlineFieldRow, useStyles2 } from '@grafana/ui';
 /**
  * Monaco
  */
 import type * as monacoType from 'monaco-editor/esm/vs/editor/editor.api';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { getStyles } from './AutosizeCodeEditor.styles';
 import { TEST_IDS } from '../../constants';
+import { getStyles } from './AutosizeCodeEditor.styles';
 
 /**
  * Properties

@@ -1,4 +1,4 @@
-import { CodeEditor, IconButton, InlineField, InlineFieldRow, Modal, useStyles2 } from '@grafana/ui';
+import { CodeEditor, Modal, useStyles2 } from '@grafana/ui';
 /**
  * Monaco
  */
@@ -6,8 +6,8 @@ import type * as monacoType from 'monaco-editor/esm/vs/editor/editor.api';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { CODE_EDITOR_CONFIG, TEST_IDS } from '../../constants';
-import { Toolbar } from './Toolbar';
 import { getStyles } from './AutosizeCodeEditor.styles';
+import { Toolbar } from './Toolbar';
 
 /**
  * Properties
