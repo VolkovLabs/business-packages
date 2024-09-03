@@ -12,10 +12,35 @@ import { getStyles } from './AutosizeCodeEditor.styles';
  * Properties
  */
 type Props = {
+  /**
+   * Monaco Editor
+   */
   monacoEditor: monacoType.editor.IStandaloneCodeEditor | null;
+
+  /**
+   * Open state
+   */
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * Modal Button tooltip
+   *
+   * @type {string}
+   */
   modalButtonTooltip: string;
+
+  /**
+   * Value
+   *
+   * @type {string}
+   */
   editorValue: string;
+
+  /**
+   * Modal state
+   *
+   * @type {boolean}
+   */
   isModal?: boolean;
 };
 
@@ -40,6 +65,9 @@ export const Toolbar: React.FC<Props> = ({
    */
   const [copyPasteText, setCopyPasteText] = useState('');
 
+  /**
+   * Clear out status
+   */
   useEffect(() => {
     if (copyPasteText) {
       setTimeout(() => {
@@ -63,7 +91,7 @@ export const Toolbar: React.FC<Props> = ({
       <InlineFieldRow className={styles.copyPasteSection}>
         <InlineField className={styles.copyPasteIcon}>
           <IconButton
-            tooltip="Copy code"
+            tooltip="Copy from clipboard"
             name="file-blank"
             size="lg"
             onClick={() => {
@@ -76,7 +104,7 @@ export const Toolbar: React.FC<Props> = ({
         </InlineField>
         <InlineField className={styles.copyPasteIcon}>
           <IconButton
-            tooltip="Paste code"
+            tooltip="Paste from clipboard"
             name="file-alt"
             size="lg"
             onClick={async () => {
@@ -91,6 +119,9 @@ export const Toolbar: React.FC<Props> = ({
                   endColumn: selection?.endColumn || 1,
                 };
 
+                /**
+                 * Paste clipboard
+                 */
                 monacoEditor.executeEdits('clipboard', [
                   {
                     range: range,
@@ -98,6 +129,7 @@ export const Toolbar: React.FC<Props> = ({
                     forceMoveMarkers: true,
                   },
                 ]);
+
                 monacoEditor.focus();
                 setCopyPasteText('Pasted!');
               }
