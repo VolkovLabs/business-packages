@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.0 (2024-09-03)
+
+### Features / Enhancements
+
+- Update @testing-library/react to 16 (#60)
+
 ## 1.4.1 (2024-07-01)
 
 ### Features / Enhancements
