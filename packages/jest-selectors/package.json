@@ -32,7 +32,7 @@
   "main": "dist/index.js",
   "name": "@volkovlabs/jest-selectors",
   "peerDependencies": {
-    "@testing-library/react": "^15.0.0"
+    "@testing-library/react": "^16.0.1"
   },
   "publishConfig": {
     "access": "public",
@@ -55,5 +55,5 @@
     "typecheck": "tsc --emitDeclarationOnly false --noEmit"
   },
   "types": "dist/index.d.ts",
-  "version": "1.4.1"
+  "version": "1.5.0"
 }
