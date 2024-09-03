@@ -32,5 +32,16 @@ export const getStyles = (theme: GrafanaTheme2) => {
       border-radius: 2px;
       border: 1px solid ${theme.colors.border.medium};
     `,
+    copyPasteSection: css`
+      margin: ${theme.spacing(0.5)} 0 0 ${theme.spacing(1)};
+    `,
+    copyPasteIcon: css`
+      margin: ${theme.spacing(0)};
+    `,
+    copyPasteText: css`
+      margin: ${theme.spacing(0)};
+      font-size: 12px;
+      color: ${theme.colors.text.secondary};
+    `,
   };
 };

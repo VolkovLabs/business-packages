@@ -1,4 +1,4 @@
-import { CodeEditor, IconButton, InlineField, InlineFieldRow, Modal, useStyles2 } from '@grafana/ui';
+import { CodeEditor, Modal, useStyles2 } from '@grafana/ui';
 /**
  * Monaco
  */
@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { CODE_EDITOR_CONFIG, TEST_IDS } from '../../constants';
 import { getStyles } from './AutosizeCodeEditor.styles';
+import { Toolbar } from './Toolbar';
 
 /**
  * Properties
@@ -66,6 +67,8 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const [isOpen, setIsOpen] = useState(false);
   const [monacoEditor, setMonacoEditor] = useState<monacoType.editor.IStandaloneCodeEditor | null>(null);
+  const [monacoEditorModal, setMonacoEditorModal] = useState<monacoType.editor.IStandaloneCodeEditor | null>(null);
+
   /**
    * Height
    */
@@ -89,6 +92,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const modalEditorDidMount = useCallback(
     (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType) => {
+      setMonacoEditorModal(editor);
       if (monacoEditor) {
         const positionsParams: monacoType.Position | null = monacoEditor?.getPosition();
         if (positionsParams) {
@@ -119,18 +123,12 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
 
   return (
     <>
-      <InlineFieldRow className={styles.line}>
-        <InlineField className={styles.modalIconLine}>
-          <IconButton
-            tooltip={modalButtonTooltip}
-            name="expand-arrows-alt"
-            size="lg"
-            onClick={() => setIsOpen(true)}
-            {...TEST_IDS.codeEditor.modalButton.apply('modal-button')}
-          />
-        </InlineField>
-      </InlineFieldRow>
-
+      <Toolbar
+        setIsOpen={setIsOpen}
+        monacoEditor={monacoEditor}
+        editorValue={value}
+        modalButtonTooltip={modalButtonTooltip}
+      />
       <CodeEditor
         value={value}
         onChange={(value) => {
@@ -152,6 +150,13 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         trapFocus
       >
         <div className={styles.content} {...TEST_IDS.codeEditor.modal.apply()}>
+          <Toolbar
+            isModal
+            setIsOpen={setIsOpen}
+            monacoEditor={monacoEditorModal}
+            editorValue={value}
+            modalButtonTooltip={modalButtonTooltip}
+          />
           <CodeEditor
             showMiniMap
             value={value}

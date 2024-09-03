@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.9.0 (2024-09-02)
+
+### Features / Enhancements
+
+- Added Toolbar to editor with copy/paste clipboard buttons (#59)
+
 ## 2.8.1 (2024-08-22)
 
 ### Features / Enhancements

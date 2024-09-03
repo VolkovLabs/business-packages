@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { getJestSelectors, createSelector } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
@@ -25,6 +25,8 @@ const editor = {
   focus: () => {},
   setPosition: (value: any) => value,
   revealLineInCenter: (value: any) => value,
+  getSelection: () => null,
+  executeEdits: (source: any, edits: any) => true,
 };
 
 /**
@@ -114,10 +116,10 @@ describe('AutosizeCodeEditor', () => {
   it('Should render modal icon button and open/close modal window', () => {
     render(getComponent({}));
 
-    expect(selectors.modalButton(true, 'modal-button')).toBeInTheDocument();
+    expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
     expect(selectors.field()).toBeInTheDocument();
 
-    fireEvent.click(selectors.modalButton(true, 'modal-button'));
+    fireEvent.click(selectors.modalButton(true, 'modal-open'));
     expect(selectors.modal()).toBeInTheDocument();
 
     const closeButton = screen.getByLabelText('Close');
@@ -130,9 +132,9 @@ describe('AutosizeCodeEditor', () => {
     const onChange = jest.fn();
     render(getComponent({ modalHeight: 400, onChange }));
 
-    expect(selectors.modalButton(true, 'modal-button')).toBeInTheDocument();
+    expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
 
-    fireEvent.click(selectors.modalButton(true, 'modal-button'));
+    fireEvent.click(selectors.modalButton(true, 'modal-open'));
     expect(selectors.modal()).toBeInTheDocument();
 
     const elements = screen.getAllByTestId('data-testid field');
@@ -156,15 +158,186 @@ describe('AutosizeCodeEditor', () => {
 
     render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
 
-    expect(selectors.modalButton(true, 'modal-button')).toBeInTheDocument();
+    expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
 
     expect(onEditorDidMount).toHaveBeenCalledTimes(2);
 
-    fireEvent.click(selectors.modalButton(true, 'modal-button'));
+    fireEvent.click(selectors.modalButton(true, 'modal-open'));
     expect(selectors.modal()).toBeInTheDocument();
 
-    expect(onEditorDidMount).toHaveBeenCalledTimes(4);
+    expect(onEditorDidMount).toHaveBeenCalledTimes(6);
 
     expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 0);
+  });
+
+  it('Should render toolbar buttons', async () => {
+    const onChange = jest.fn();
+    const onEditorDidMount = jest.fn();
+
+    render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
+
+    /**
+     * Check modal button
+     */
+    expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
+
+    /**
+     * Check copy button
+     */
+    expect(selectors.copyButton()).toBeInTheDocument();
+
+    /**
+     * Check paste button
+     */
+    expect(selectors.pasteButton()).toBeInTheDocument();
+
+    /**
+     * Click on open modal
+     */
+    fireEvent.click(selectors.modalButton(true, 'modal-open'));
+
+    /**
+     * Check close collapse modal button in toolbar
+     */
+    expect(selectors.modalButton(true, 'modal-close')).toBeInTheDocument();
+  });
+
+  it('Should open/close modal on toolbar button', async () => {
+    const onChange = jest.fn();
+    const onEditorDidMount = jest.fn();
+
+    jest.spyOn(global, 'setTimeout').mockImplementation((cb: any) => cb());
+
+    render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
+
+    /**
+     * Check modal button
+     */
+    expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
+
+    /**
+     * Open modal
+     */
+    fireEvent.click(selectors.modalButton(true, 'modal-open'));
+
+    /**
+     * Modal should be open
+     */
+    expect(selectors.modal()).toBeInTheDocument();
+    expect(selectors.modalButton(true, 'modal-close')).toBeInTheDocument();
+
+    /**
+     * Close modal from toolbar
+     */
+    fireEvent.click(selectors.modalButton(true, 'modal-close'));
+
+    /**
+     * Modal should be close
+     */
+    expect(selectors.modal(true)).not.toBeInTheDocument();
+  });
+
+  describe('copy/paste buttons', () => {
+    beforeAll(() => {
+      /**
+       * Mock navigator.clipboard
+       */
+      Object.defineProperty(navigator, 'clipboard', {
+        value: {
+          /**
+           * Mock navigator.clipboard writeText
+           */
+          writeText: jest.fn().mockImplementation(async (text) => {
+            return Promise.resolve(text);
+          }),
+          /**
+           * Mock navigator.clipboard readText
+           */
+          readText: jest.fn().mockImplementation(async (text) => {
+            return Promise.resolve(text);
+          }),
+        },
+
+        /**
+         * Allows you to change the property later
+         */
+        configurable: true,
+      });
+
+      /**
+       * Use fake timers
+       */
+      jest.useFakeTimers();
+    });
+
+    afterAll(() => {
+      /**
+       * Use real timers
+       */
+      jest.useRealTimers();
+    });
+    it('Should copy code', async () => {
+      const onChange = jest.fn();
+      const onEditorDidMount = jest.fn();
+
+      render(getComponent({ modalHeight: 400, onChange, onEditorDidMount, value: 'test code' }));
+
+      expect(selectors.copyButton()).toBeInTheDocument();
+
+      /**
+       * Click on copy button
+       */
+      await act(() => fireEvent.click(selectors.copyButton()));
+
+      /**
+       * Should display copied text
+       */
+      expect(selectors.copyPasteText()).toBeInTheDocument();
+      expect(selectors.copyPasteText()).toHaveTextContent('Copied!');
+
+      /**
+       * Scroll the timers by 2000 ms to call setTimeout
+       */
+      act(() => {
+        jest.advanceTimersByTime(2000);
+      });
+
+      /**
+       * Should remove copied text
+       */
+      expect(selectors.copyPasteText()).toHaveTextContent('');
+    });
+
+    it('Should paste code', async () => {
+      const onChange = jest.fn();
+      const onEditorDidMount = jest.fn();
+
+      render(getComponent({ modalHeight: 400, onChange, onEditorDidMount, value: 'test code' }));
+
+      expect(selectors.pasteButton()).toBeInTheDocument();
+
+      /**
+       * Click on paste button
+       */
+      await act(() => fireEvent.click(selectors.pasteButton()));
+
+      /**
+       * Should display pasted text
+       */
+      expect(selectors.copyPasteText()).toBeInTheDocument();
+      expect(selectors.copyPasteText()).toHaveTextContent('Pasted!');
+
+      /**
+       * Scroll the timers by 2000 ms to call setTimeout
+       */
+      act(() => {
+        jest.advanceTimersByTime(2000);
+      });
+
+      /**
+       * Should remove copied text
+       */
+      expect(selectors.copyPasteText()).toHaveTextContent('');
+    });
   });
 });
