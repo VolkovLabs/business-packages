@@ -1,3 +1,4 @@
+import { css, cx } from '@emotion/css';
 import {
   CodeEditorMonacoOptions,
   InlineField,
@@ -14,7 +15,6 @@ import React, { useEffect, useState } from 'react';
 
 import { TEST_IDS } from '../../constants';
 import { getStyles } from './AutosizeCodeEditor.styles';
-import { css, cx } from '@emotion/css';
 
 /**
  * Properties
