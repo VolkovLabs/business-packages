@@ -23,10 +23,11 @@ export const TEST_IDS = {
     fieldRadio: createSelector((name: unknown) => `data-testid form field-radio-${name}`),
   },
   codeEditor: {
-    modalButton: createSelector((name: unknown) => `data-testid code-editor modal-button-${name}`),
     copyButton: createSelector(() => `data-testid code-editor copy-button`),
     copyPasteText: createSelector(() => `data-testid code-editor copy-paste-text`),
-    pasteButton: createSelector(() => `data-testid code-editor paste-button`),
     modal: createSelector(() => `data-testid code-editor modal-window`),
+    modalButton: createSelector((name: unknown) => `data-testid code-editor modal-button-${name}`),
+    pasteButton: createSelector(() => `data-testid code-editor paste-button`),
+    wrapButton: createSelector(() => `data-testid code-editor wrap-button`),
   },
 };

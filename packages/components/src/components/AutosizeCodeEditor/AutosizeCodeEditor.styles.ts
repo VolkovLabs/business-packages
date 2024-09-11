@@ -42,6 +42,20 @@ export const getStyles = (theme: GrafanaTheme2) => {
       margin: ${theme.spacing(0)};
       font-size: 12px;
       color: ${theme.colors.text.secondary};
+      transition: width 0.5s ease;
+    `,
+    text: css`
+      position: absolute;
+      left: -20%;
+      opacity: 0;
+      top: 8px;
+      transition:
+        left 0.5s ease,
+        opacity 0.5s ease;
+    `,
+    left: css`
+      left: 0;
+      opacity: 1;
     `,
   };
 };
