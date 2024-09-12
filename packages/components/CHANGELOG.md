@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.0.0 (2024-09-11)
+
+### Features / Enhancements
+
+- Added wrap toolbar button in the Code Editor (#62)
+
 ## 2.9.1 (2024-09-03)
 
 ### Features / Enhancements
