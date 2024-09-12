@@ -1,4 +1,12 @@
-import { IconButton, InlineField, InlineFieldRow, useStyles2 } from '@grafana/ui';
+import { css, cx } from '@emotion/css';
+import {
+  CodeEditorMonacoOptions,
+  InlineField,
+  InlineFieldRow,
+  PageToolbar,
+  ToolbarButton,
+  useStyles2,
+} from '@grafana/ui';
 /**
  * Monaco
  */
@@ -42,11 +50,24 @@ type Props = {
    * @type {boolean}
    */
   isModal?: boolean;
+
+  /**
+   * Monaco options
+   *
+   * @type {CodeEditorMonacoOptions}
+   */
+  currentMonacoOptions: CodeEditorMonacoOptions | undefined;
+
+  /**
+   * Set monaco options
+   *
+   * @type {React.Dispatch<React.SetStateAction<CodeEditorMonacoOptions | undefined>>}
+   */
+  setCurrentMonacoOptions: React.Dispatch<React.SetStateAction<CodeEditorMonacoOptions | undefined>>;
 };
 
 /**
- * Autosize Code Editor
- * @constructor
+ * Toolbar Code Editor
  */
 export const Toolbar: React.FC<Props> = ({
   monacoEditor,
@@ -54,6 +75,8 @@ export const Toolbar: React.FC<Props> = ({
   modalButtonTooltip,
   editorValue,
   isModal = false,
+  setCurrentMonacoOptions,
+  currentMonacoOptions,
 }) => {
   /**
    * Styles and Theme
@@ -77,70 +100,94 @@ export const Toolbar: React.FC<Props> = ({
   }, [copyPasteText]);
 
   return (
-    <InlineFieldRow className={styles.line}>
-      <InlineField className={styles.modalIconLine}>
-        <IconButton
+    <PageToolbar
+      buttonOverflowAlignment="right"
+      className={styles.line}
+      forceShowLeftItems={true}
+      leftItems={[
+        <ToolbarButton
+          key="code-editor-button-modal"
           tooltip={modalButtonTooltip}
-          name={isModal ? 'compress-arrows' : 'expand-arrows-alt'}
-          size="lg"
+          icon={isModal ? 'compress-arrows' : 'expand-arrows-alt'}
+          iconSize="lg"
           onClick={() => setIsOpen(isModal ? false : true)}
           {...TEST_IDS.codeEditor.modalButton.apply(isModal ? 'modal-close' : 'modal-open')}
-        />
-      </InlineField>
-
+        />,
+      ]}
+    >
       <InlineFieldRow className={styles.copyPasteSection}>
-        <InlineField className={styles.copyPasteIcon}>
-          <IconButton
-            tooltip="Copy from clipboard"
-            name="file-blank"
-            size="lg"
-            onClick={() => {
-              navigator.clipboard.writeText(editorValue).then(() => {
-                setCopyPasteText('Copied!');
-              });
-            }}
-            {...TEST_IDS.codeEditor.copyButton.apply()}
-          />
-        </InlineField>
-        <InlineField className={styles.copyPasteIcon}>
-          <IconButton
-            tooltip="Paste from clipboard"
-            name="file-alt"
-            size="lg"
-            onClick={async () => {
-              if (monacoEditor) {
-                const selection: monacoType.Selection | null = monacoEditor.getSelection();
+        <ToolbarButton
+          className={styles.copyPasteIcon}
+          tooltip="Copy code"
+          icon="file-blank"
+          iconSize="lg"
+          onClick={() => {
+            navigator.clipboard.writeText(editorValue).then(() => {
+              setCopyPasteText('Copied!');
+            });
+          }}
+          {...TEST_IDS.codeEditor.copyButton.apply()}
+        />
+        <ToolbarButton
+          className={styles.copyPasteIcon}
+          tooltip="Paste code"
+          icon="file-alt"
+          iconSize="lg"
+          onClick={async () => {
+            if (monacoEditor) {
+              const selection: monacoType.Selection | null = monacoEditor.getSelection();
 
-                const text = await navigator.clipboard.readText();
-                const range = {
-                  startLineNumber: selection?.startLineNumber || 1,
-                  startColumn: selection?.startColumn || 1,
-                  endLineNumber: selection?.endLineNumber || 1,
-                  endColumn: selection?.endColumn || 1,
-                };
+              const text = await navigator.clipboard.readText();
 
-                /**
-                 * Paste clipboard
-                 */
-                monacoEditor.executeEdits('clipboard', [
-                  {
-                    range: range,
-                    text: text,
-                    forceMoveMarkers: true,
-                  },
-                ]);
+              const range = {
+                startLineNumber: selection?.startLineNumber || 1,
+                startColumn: selection?.startColumn || 1,
+                endLineNumber: selection?.endLineNumber || 1,
+                endColumn: selection?.endColumn || 1,
+              };
 
-                monacoEditor.focus();
-                setCopyPasteText('Pasted!');
-              }
-            }}
-            {...TEST_IDS.codeEditor.pasteButton.apply()}
-          />
-        </InlineField>
-        <InlineField className={styles.copyPasteText} {...TEST_IDS.codeEditor.copyPasteText.apply()}>
-          <>{copyPasteText}</>
+              monacoEditor.executeEdits('clipboard', [
+                {
+                  range: range,
+                  text: text,
+                  forceMoveMarkers: false,
+                },
+              ]);
+              monacoEditor.focus();
+              setCopyPasteText('Pasted!');
+            }
+          }}
+          {...TEST_IDS.codeEditor.pasteButton.apply()}
+        />
+        <InlineField
+          className={cx(
+            styles.copyPasteText,
+            copyPasteText
+              ? css`
+                  width: 45px;
+                `
+              : css`
+                  width: 10px;
+                `
+          )}
+          {...TEST_IDS.codeEditor.copyPasteText.apply()}
+        >
+          <div className={cx(styles.text, copyPasteText ? styles.left : '')}>{copyPasteText}</div>
         </InlineField>
       </InlineFieldRow>
-    </InlineFieldRow>
+      <ToolbarButton
+        tooltip="Wrap code on new lines"
+        icon="wrap-text"
+        iconSize="lg"
+        onClick={() => {
+          const wrapCode = currentMonacoOptions?.wordWrap === 'on' ? 'off' : 'on';
+          setCurrentMonacoOptions({
+            ...currentMonacoOptions,
+            wordWrap: wrapCode,
+          });
+        }}
+        {...TEST_IDS.codeEditor.wrapButton.apply()}
+      />
+    </PageToolbar>
   );
 };

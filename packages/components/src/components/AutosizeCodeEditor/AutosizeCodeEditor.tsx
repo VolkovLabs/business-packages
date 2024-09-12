@@ -55,6 +55,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   modalTitle,
   modalButtonTooltip,
   onEditorDidMount,
+  monacoOptions,
   ...restProps
 }) => {
   /**
@@ -68,7 +69,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [monacoEditor, setMonacoEditor] = useState<monacoType.editor.IStandaloneCodeEditor | null>(null);
   const [monacoEditorModal, setMonacoEditorModal] = useState<monacoType.editor.IStandaloneCodeEditor | null>(null);
-
+  const [currentMonacoOptions, setCurrentMonacoOptions] = useState(monacoOptions);
   /**
    * Height
    */
@@ -128,6 +129,8 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         monacoEditor={monacoEditor}
         editorValue={value}
         modalButtonTooltip={modalButtonTooltip}
+        currentMonacoOptions={currentMonacoOptions}
+        setCurrentMonacoOptions={setCurrentMonacoOptions}
       />
       <CodeEditor
         value={value}
@@ -137,6 +140,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         }}
         height={staticHeight ?? height}
         onEditorDidMount={onEditorDidMountMain}
+        monacoOptions={currentMonacoOptions}
         {...restProps}
       />
 
@@ -156,6 +160,8 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             monacoEditor={monacoEditorModal}
             editorValue={value}
             modalButtonTooltip={modalButtonTooltip}
+            currentMonacoOptions={currentMonacoOptions}
+            setCurrentMonacoOptions={setCurrentMonacoOptions}
           />
           <CodeEditor
             showMiniMap
@@ -166,6 +172,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             }}
             containerStyles={styles.modalEditor}
             onEditorDidMount={modalEditorDidMount}
+            monacoOptions={currentMonacoOptions}
             {...restProps}
           />
         </div>

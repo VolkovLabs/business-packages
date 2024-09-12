@@ -34,6 +34,14 @@ const editor = {
  */
 jest.mock('@grafana/ui', () => ({
   ...jest.requireActual('@grafana/ui'),
+  PageToolbar: jest.fn(({ leftItems, children }) => {
+    return (
+      <>
+        {leftItems}
+        {children}
+      </>
+    );
+  }),
   CodeEditor: jest.fn(({ value, onChange, height, onEditorDidMount }) => {
     /**
      * Call the onEditorDidMount callback with the editor instance
@@ -84,8 +92,16 @@ describe('AutosizeCodeEditor', () => {
       .map((value, index) => index)
       .join('\n');
 
+    /**
+     * Check height before changes
+     */
+    expect(selectors.field()).toHaveStyle(`height: 200px`);
+
     fireEvent.change(selectors.field(), { target: { value: valueIn20Rows } });
 
+    /**
+     * Check height after changes
+     */
     expect(selectors.field()).toHaveStyle(`height: 360px`);
   });
 
@@ -130,7 +146,7 @@ describe('AutosizeCodeEditor', () => {
 
   it('Should use code editor in modal window', async () => {
     const onChange = jest.fn();
-    render(getComponent({ modalHeight: 400, onChange }));
+    render(getComponent({ onChange }));
 
     expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
 
@@ -156,7 +172,7 @@ describe('AutosizeCodeEditor', () => {
 
     jest.spyOn(global, 'setTimeout').mockImplementation((cb: any) => cb());
 
-    render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
+    render(getComponent({ onChange, onEditorDidMount }));
 
     expect(selectors.modalButton(true, 'modal-open')).toBeInTheDocument();
 
@@ -174,7 +190,7 @@ describe('AutosizeCodeEditor', () => {
     const onChange = jest.fn();
     const onEditorDidMount = jest.fn();
 
-    render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
+    render(getComponent({ onChange, onEditorDidMount }));
 
     /**
      * Check modal button
@@ -202,13 +218,41 @@ describe('AutosizeCodeEditor', () => {
     expect(selectors.modalButton(true, 'modal-close')).toBeInTheDocument();
   });
 
+  it('Should render wrap button and wrap lines on click', async () => {
+    const onChange = jest.fn();
+    const onEditorDidMount = jest.fn();
+
+    render(getComponent({ onEditorDidMount, onChange }));
+
+    /**
+     * Check paste button
+     */
+    expect(selectors.wrapButton()).toBeInTheDocument();
+
+    expect(onEditorDidMount).toHaveBeenCalledTimes(2);
+
+    act(() => fireEvent.click(selectors.wrapButton()));
+
+    /**
+     * Call onEditorDidMount after set state
+     */
+    expect(onEditorDidMount).toHaveBeenCalledTimes(3);
+
+    act(() => fireEvent.click(selectors.wrapButton()));
+
+    /**
+     * Call onEditorDidMount after set state
+     */
+    expect(onEditorDidMount).toHaveBeenCalledTimes(4);
+  });
+
   it('Should open/close modal on toolbar button', async () => {
     const onChange = jest.fn();
     const onEditorDidMount = jest.fn();
 
     jest.spyOn(global, 'setTimeout').mockImplementation((cb: any) => cb());
 
-    render(getComponent({ modalHeight: 400, onChange, onEditorDidMount }));
+    render(getComponent({ onChange, onEditorDidMount }));
 
     /**
      * Check modal button
@@ -280,7 +324,7 @@ describe('AutosizeCodeEditor', () => {
       const onChange = jest.fn();
       const onEditorDidMount = jest.fn();
 
-      render(getComponent({ modalHeight: 400, onChange, onEditorDidMount, value: 'test code' }));
+      render(getComponent({ onChange, onEditorDidMount, value: 'test code' }));
 
       expect(selectors.copyButton()).toBeInTheDocument();
 
@@ -312,7 +356,7 @@ describe('AutosizeCodeEditor', () => {
       const onChange = jest.fn();
       const onEditorDidMount = jest.fn();
 
-      render(getComponent({ modalHeight: 400, onChange, onEditorDidMount, value: 'test code' }));
+      render(getComponent({ onChange, onEditorDidMount, value: 'test code' }));
 
       expect(selectors.pasteButton()).toBeInTheDocument();
 
