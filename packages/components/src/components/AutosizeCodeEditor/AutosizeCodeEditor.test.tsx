@@ -246,6 +246,49 @@ describe('AutosizeCodeEditor', () => {
     expect(onEditorDidMount).toHaveBeenCalledTimes(4);
   });
 
+  it('Should render mini map  button and show/hide map', async () => {
+    const onChange = jest.fn();
+    const onEditorDidMount = jest.fn();
+
+    render(getComponent({ onEditorDidMount, onChange }));
+
+    /**
+     * Check paste button
+     */
+    expect(selectors.miniMapButton()).toBeInTheDocument();
+
+    /**
+     * Check tooltip via aria-label
+     */
+    expect(selectors.miniMapButton()).toHaveAttribute('aria-label', 'Show mini map');
+
+    expect(onEditorDidMount).toHaveBeenCalledTimes(2);
+
+    act(() => fireEvent.click(selectors.miniMapButton()));
+
+    /**
+     * Call onEditorDidMount after set state
+     */
+    expect(onEditorDidMount).toHaveBeenCalledTimes(3);
+
+    /**
+     * Check tooltip via aria-label
+     */
+    expect(selectors.miniMapButton()).toHaveAttribute('aria-label', 'Hide mini map');
+
+    act(() => fireEvent.click(selectors.miniMapButton()));
+
+    /**
+     * Check tooltip via aria-label
+     */
+    expect(selectors.miniMapButton()).toHaveAttribute('aria-label', 'Show mini map');
+
+    /**
+     * Call onEditorDidMount after set state
+     */
+    expect(onEditorDidMount).toHaveBeenCalledTimes(4);
+  });
+
   it('Should open/close modal on toolbar button', async () => {
     const onChange = jest.fn();
     const onEditorDidMount = jest.fn();

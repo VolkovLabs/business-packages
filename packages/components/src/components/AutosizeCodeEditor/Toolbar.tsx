@@ -64,6 +64,20 @@ type Props = {
    * @type {React.Dispatch<React.SetStateAction<CodeEditorMonacoOptions | undefined>>}
    */
   setCurrentMonacoOptions: React.Dispatch<React.SetStateAction<CodeEditorMonacoOptions | undefined>>;
+
+  /**
+   * Show mini map
+   *
+   * @type {boolean}
+   */
+  isShowMiniMap?: boolean;
+
+  /**
+   * Set show mini map
+   *
+   * @type {React.Dispatch<React.SetStateAction<boolean | undefined>>}
+   */
+  setIsShowMiniMap: React.Dispatch<React.SetStateAction<boolean | undefined>>;
 };
 
 /**
@@ -77,6 +91,8 @@ export const Toolbar: React.FC<Props> = ({
   isModal = false,
   setCurrentMonacoOptions,
   currentMonacoOptions,
+  isShowMiniMap,
+  setIsShowMiniMap,
 }) => {
   /**
    * Styles and Theme
@@ -179,6 +195,7 @@ export const Toolbar: React.FC<Props> = ({
         tooltip="Wrap code on new lines"
         icon="wrap-text"
         iconSize="lg"
+        variant={currentMonacoOptions?.wordWrap === 'on' ? 'active' : 'default'}
         onClick={() => {
           const wrapCode = currentMonacoOptions?.wordWrap === 'on' ? 'off' : 'on';
           setCurrentMonacoOptions({
@@ -187,6 +204,16 @@ export const Toolbar: React.FC<Props> = ({
           });
         }}
         {...TEST_IDS.codeEditor.wrapButton.apply()}
+      />
+      <ToolbarButton
+        tooltip={isShowMiniMap ? 'Hide mini map' : 'Show mini map'}
+        icon="gf-movepane-right"
+        iconSize="lg"
+        variant={isShowMiniMap ? 'active' : 'default'}
+        onClick={() => {
+          setIsShowMiniMap((prev) => !prev);
+        }}
+        {...TEST_IDS.codeEditor.miniMapButton.apply()}
       />
     </PageToolbar>
   );
