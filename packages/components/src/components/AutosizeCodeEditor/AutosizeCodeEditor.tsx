@@ -56,6 +56,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   modalButtonTooltip,
   onEditorDidMount,
   monacoOptions,
+  showMiniMap,
   ...restProps
 }) => {
   /**
@@ -67,9 +68,11 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    * State
    */
   const [isOpen, setIsOpen] = useState(false);
+  const [isShowMiniMap, setIsShowMiniMap] = useState(showMiniMap);
+  const [currentMonacoOptions, setCurrentMonacoOptions] = useState(monacoOptions);
   const [monacoEditor, setMonacoEditor] = useState<monacoType.editor.IStandaloneCodeEditor | null>(null);
   const [monacoEditorModal, setMonacoEditorModal] = useState<monacoType.editor.IStandaloneCodeEditor | null>(null);
-  const [currentMonacoOptions, setCurrentMonacoOptions] = useState(monacoOptions);
+
   /**
    * Height
    */
@@ -125,22 +128,25 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   return (
     <>
       <Toolbar
+        editorValue={value}
         setIsOpen={setIsOpen}
         monacoEditor={monacoEditor}
-        editorValue={value}
+        isShowMiniMap={isShowMiniMap}
+        setIsShowMiniMap={setIsShowMiniMap}
         modalButtonTooltip={modalButtonTooltip}
         currentMonacoOptions={currentMonacoOptions}
         setCurrentMonacoOptions={setCurrentMonacoOptions}
       />
       <CodeEditor
         value={value}
+        showMiniMap={isShowMiniMap}
+        height={staticHeight ?? height}
+        monacoOptions={currentMonacoOptions}
+        onEditorDidMount={onEditorDidMountMain}
         onChange={(value) => {
           onChange?.(value);
           setHeight(getHeightByValue(value, minHeight, maxHeight));
         }}
-        height={staticHeight ?? height}
-        onEditorDidMount={onEditorDidMountMain}
-        monacoOptions={currentMonacoOptions}
         {...restProps}
       />
 
@@ -156,23 +162,25 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         <div className={styles.content} {...TEST_IDS.codeEditor.modal.apply()}>
           <Toolbar
             isModal
-            setIsOpen={setIsOpen}
-            monacoEditor={monacoEditorModal}
             editorValue={value}
+            setIsOpen={setIsOpen}
+            isShowMiniMap={isShowMiniMap}
+            monacoEditor={monacoEditorModal}
+            setIsShowMiniMap={setIsShowMiniMap}
             modalButtonTooltip={modalButtonTooltip}
             currentMonacoOptions={currentMonacoOptions}
             setCurrentMonacoOptions={setCurrentMonacoOptions}
           />
           <CodeEditor
-            showMiniMap
             value={value}
+            showMiniMap={isShowMiniMap}
+            containerStyles={styles.modalEditor}
+            monacoOptions={currentMonacoOptions}
+            onEditorDidMount={modalEditorDidMount}
             onChange={(value) => {
               onChange?.(value);
               setHeight(getHeightByValue(value, minHeight, maxHeight));
             }}
-            containerStyles={styles.modalEditor}
-            onEditorDidMount={modalEditorDidMount}
-            monacoOptions={currentMonacoOptions}
             {...restProps}
           />
         </div>

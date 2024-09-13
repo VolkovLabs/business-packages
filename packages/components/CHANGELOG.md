@@ -1,5 +1,12 @@
 # Change Log
 
+## 3.1.0 (2024-09-13)
+
+### Features / Enhancements
+
+- Updated wrap button to indicate state (#64)
+- Added button for the mini map (#64)
+
 ## 3.0.0 (2024-09-11)
 
 ### Features / Enhancements
