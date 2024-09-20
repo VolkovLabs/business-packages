@@ -97,7 +97,7 @@ export const Collapse: React.FC<Props> = ({
           [styles.headerSolid]: isSolid,
         })}
         data-testid={headerTestId}
-        onClick={() => {console.log('click toggle');onToggle?.(!isOpen)}}
+        onClick={() => onToggle?.(!isOpen)}
       >
         <IconButton
           name={isOpen ? 'angle-down' : 'angle-right'}
