@@ -54,9 +54,9 @@ interface Props {
   isInlineContent?: boolean;
 
   /**
-   * Is toggle Button disabled
+   * Is Expand Disabled
    */
-  isTogglerDisabled?: boolean;
+  isExpandDisabled?: boolean;
 }
 
 /**
@@ -72,7 +72,7 @@ export const Collapse: React.FC<Props> = ({
   contentTestId,
   fill = 'outline',
   isInlineContent = false,
-  isTogglerDisabled = false,
+  isExpandDisabled = false,
 }) => {
   /**
    * Styles and Theme
@@ -97,13 +97,17 @@ export const Collapse: React.FC<Props> = ({
           [styles.headerSolid]: isSolid,
         })}
         data-testid={headerTestId}
-        onClick={() => onToggle?.(!isOpen)}
+        onClick={() => {
+          if (!isExpandDisabled) {
+            onToggle?.(!isOpen);
+          }
+        }}
       >
         <IconButton
           name={isOpen ? 'angle-down' : 'angle-right'}
           tooltip={isOpen ? 'Collapse' : 'Expand'}
           className={styles.collapseIcon}
-          disabled={isTogglerDisabled}
+          disabled={isExpandDisabled}
           aria-expanded={isOpen}
         />
         <div className={styles.title}>{title}</div>
