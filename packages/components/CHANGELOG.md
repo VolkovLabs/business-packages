@@ -1,10 +1,17 @@
 # Change Log
 
-## 3.0.0 (2024-09-20)
+## 3.2.0 (2024-09-20)
 
 ### Features / Enhancements
 
 - Added disabled state to Collapse component (#65)
+
+## 3.1.0 (2024-09-13)
+
+### Features / Enhancements
+
+- Updated wrap button to indicate state (#64)
+- Added button for the mini map (#64)
 
 ## 3.0.0 (2024-09-11)
 
