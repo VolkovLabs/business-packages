@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.2.0 (2024-09-20)
+
+### Features / Enhancements
+
+- Added disabled state to Collapse component (#65)
+
 ## 3.1.0 (2024-09-13)
 
 ### Features / Enhancements

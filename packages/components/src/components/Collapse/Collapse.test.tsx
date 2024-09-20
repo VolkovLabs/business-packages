@@ -39,6 +39,29 @@ describe('Collapse', () => {
     expect(selectors.content()).toBeInTheDocument();
   });
 
+  it('Should not allow to expand content if disabled', () => {
+    const onToggle = jest.fn();
+
+    render(getComponent({ isOpen: false, isExpandDisabled: true, onToggle }));
+
+    fireEvent.click(selectors.header());
+
+    expect(onToggle).not.toHaveBeenCalled();
+  });
+
+  it('Should not allow to collapse content if disabled', () => {
+    const onToggle = jest.fn();
+
+    render(getComponent({ isOpen: true, isExpandDisabled: true, onToggle }));
+
+    expect(selectors.header()).toBeInTheDocument();
+    expect(selectors.content(false)).toBeInTheDocument();
+
+    fireEvent.click(selectors.header());
+
+    expect(onToggle).not.toHaveBeenCalled();
+  });
+
   it('Actions should not affect collapse state', () => {
     const onToggle = jest.fn();
 
