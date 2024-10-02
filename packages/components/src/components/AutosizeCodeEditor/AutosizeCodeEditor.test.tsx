@@ -246,11 +246,15 @@ describe('AutosizeCodeEditor', () => {
     expect(onEditorDidMount).toHaveBeenCalledTimes(4);
   });
 
-  it('Should render mini map  button and show/hide map', async () => {
+  it('Should render mini map button and show/hide map if value more or equal 100 characters', async () => {
     const onChange = jest.fn();
     const onEditorDidMount = jest.fn();
 
-    render(getComponent({ onEditorDidMount, onChange }));
+    const valueIn1000Rows = Array.from(new Array(1000))
+      .map((value, index) => index)
+      .join('\n');
+
+    render(getComponent({ value: valueIn1000Rows, onEditorDidMount, onChange }));
 
     /**
      * Check paste button
@@ -287,6 +291,23 @@ describe('AutosizeCodeEditor', () => {
      * Call onEditorDidMount after set state
      */
     expect(onEditorDidMount).toHaveBeenCalledTimes(4);
+  });
+
+  it('Should not render mini map button if value less than 100 characters', async () => {
+    const onChange = jest.fn();
+    const onEditorDidMount = jest.fn();
+
+    /**
+     * 99 characters
+     */
+    const value = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore';
+
+    render(getComponent({ value: value, onEditorDidMount, onChange }));
+
+    /**
+     * Check paste button
+     */
+    expect(selectors.miniMapButton(true)).not.toBeInTheDocument();
   });
 
   it('Should open/close modal on toolbar button', async () => {
