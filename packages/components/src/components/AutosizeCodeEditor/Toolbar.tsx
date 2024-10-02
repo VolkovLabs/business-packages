@@ -31,13 +31,6 @@ type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
-   * Modal Button tooltip
-   *
-   * @type {string}
-   */
-  modalButtonTooltip: string;
-
-  /**
    * Value
    *
    * @type {string}
@@ -86,7 +79,6 @@ type Props = {
 export const Toolbar: React.FC<Props> = ({
   monacoEditor,
   setIsOpen,
-  modalButtonTooltip,
   editorValue,
   isModal = false,
   setCurrentMonacoOptions,
@@ -123,7 +115,7 @@ export const Toolbar: React.FC<Props> = ({
       leftItems={[
         <ToolbarButton
           key="code-editor-button-modal"
-          tooltip={modalButtonTooltip}
+          tooltip={isModal ? 'Collapse code editor' : 'Expand code editor'}
           icon={isModal ? 'compress-arrows' : 'expand-arrows-alt'}
           iconSize="lg"
           onClick={() => setIsOpen(isModal ? false : true)}
@@ -205,16 +197,18 @@ export const Toolbar: React.FC<Props> = ({
         }}
         {...TEST_IDS.codeEditor.wrapButton.apply()}
       />
-      <ToolbarButton
-        tooltip={isShowMiniMap ? 'Hide mini map' : 'Show mini map'}
-        icon="gf-movepane-right"
-        iconSize="lg"
-        variant={isShowMiniMap ? 'active' : 'default'}
-        onClick={() => {
-          setIsShowMiniMap((prev) => !prev);
-        }}
-        {...TEST_IDS.codeEditor.miniMapButton.apply()}
-      />
+      {editorValue && editorValue.length > 100 && (
+        <ToolbarButton
+          tooltip={isShowMiniMap ? 'Hide mini map' : 'Show mini map'}
+          icon="gf-movepane-right"
+          iconSize="lg"
+          variant={isShowMiniMap ? 'active' : 'default'}
+          onClick={() => {
+            setIsShowMiniMap((prev) => !prev);
+          }}
+          {...TEST_IDS.codeEditor.miniMapButton.apply()}
+        />
+      )}
     </PageToolbar>
   );
 };
