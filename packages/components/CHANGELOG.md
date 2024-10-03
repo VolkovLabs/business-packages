@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.3.0 (2024-10-02)
+
+### Features / Enhancements
+
+- Update Code Editor toolbar (#67)
+
 ## 3.2.0 (2024-09-20)
 
 ### Features / Enhancements

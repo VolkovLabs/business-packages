@@ -15,8 +15,6 @@ import { Toolbar } from './Toolbar';
 type Props = React.ComponentProps<typeof CodeEditor> & {
   minHeight?: number;
   maxHeight?: number;
-  modalTitle: string;
-  modalButtonTooltip: string;
 };
 
 /**
@@ -52,8 +50,6 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   minHeight,
   maxHeight,
   height: staticHeight,
-  modalTitle,
-  modalButtonTooltip,
   onEditorDidMount,
   monacoOptions,
   showMiniMap,
@@ -133,7 +129,6 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         monacoEditor={monacoEditor}
         isShowMiniMap={isShowMiniMap}
         setIsShowMiniMap={setIsShowMiniMap}
-        modalButtonTooltip={modalButtonTooltip}
         currentMonacoOptions={currentMonacoOptions}
         setCurrentMonacoOptions={setCurrentMonacoOptions}
       />
@@ -151,7 +146,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
       />
 
       <Modal
-        title={modalTitle}
+        title="Code editor"
         isOpen={isOpen}
         onDismiss={() => setIsOpen(false)}
         className={styles.modal}
@@ -167,7 +162,6 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             isShowMiniMap={isShowMiniMap}
             monacoEditor={monacoEditorModal}
             setIsShowMiniMap={setIsShowMiniMap}
-            modalButtonTooltip={modalButtonTooltip}
             currentMonacoOptions={currentMonacoOptions}
             setCurrentMonacoOptions={setCurrentMonacoOptions}
           />
