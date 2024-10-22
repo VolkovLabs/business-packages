@@ -13,5 +13,5 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["./src/@types/*"]
   },
-  "include": ["./src", "./types", "./jest-setup.ts"],
+  "include": ["./src", "./types", "./jest-setup.ts"]
 }
