@@ -49,11 +49,6 @@ describe('Use Dashboard Variables', () => {
 
   beforeEach(() => {
     /**
-     * delete __grafanaSceneContext
-     */
-    delete window.__grafanaSceneContext;
-
-    /**
      * Mock Variables
      */
     getVariablesMock.mockReset();

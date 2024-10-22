@@ -1,10 +1,10 @@
 # Change Log
 
-## 3.4.0 (2024-10-22)
+## 3.4.1 (2024-10-22)
 
 ### Features / Enhancements
 
-- Add useDashboardVariables hook (#68)
+- Add useDashboardVariables and useDashboardRefresh hooks (#68)
 
 ## 3.3.0 (2024-10-02)
 

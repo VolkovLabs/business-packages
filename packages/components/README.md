@@ -14,6 +14,7 @@
 - `useDashboardTimeRange` allows to use actual dashboard time range.
 - `useFormBuilder` allows to create declarative forms.
 - `useDashboardVariables` allows to use dashboard variables.
+- `useDashboardRefresh` allows to refresh dashboard.
 
 ### Utils
 
