@@ -10,7 +10,8 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["./src/@types/*"]
   },
-  "include": ["./src", "./types", "./jest-setup.ts"]
+  "include": ["./src", "./types", "./jest-setup.ts"],
 }
