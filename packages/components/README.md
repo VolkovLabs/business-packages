@@ -13,6 +13,8 @@
 - `createUseDataHook` allows to create `useData` hook to get data through data source api.
 - `useDashboardTimeRange` allows to use actual dashboard time range.
 - `useFormBuilder` allows to create declarative forms.
+- `useDashboardVariables` allows to use dashboard variables.
+- `useDashboardRefresh` allows to refresh dashboard.
 
 ### Utils
 
