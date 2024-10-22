@@ -1,5 +1,5 @@
 import { EventBusSrv } from '@grafana/data';
-import { getAppEvents, RefreshEvent } from '@grafana/runtime';
+import { getAppEvents } from '@grafana/runtime';
 import { sceneGraph } from '@grafana/scenes';
 import { renderHook } from '@testing-library/react';
 
