@@ -15,6 +15,7 @@
 - `useFormBuilder` allows to create declarative forms.
 - `useDashboardVariables` allows to use dashboard variables.
 - `useDashboardRefresh` allows to refresh dashboard.
+- `useDatasourceRequest` allows to run data source query.
 
 ### Utils
 

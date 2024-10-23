@@ -7,6 +7,8 @@ export {
   useDashboardTimeRange,
   useDashboardVariables,
   useFormBuilder,
+  useDatasourceRequest,
+  DatasourceResponseError,
 } from './hooks';
 export * from './types';
 export { CodeParameterItem, CodeParametersBuilder, FormBuilder } from './utils';
