@@ -8,15 +8,16 @@
 - `RangeSlider` allows to enter number range values by slider.
 - `Slider` allows to enter number values by slider and/or NumberInput.
 
-### Hooks
+## Hooks
 
 - `createUseDataHook` allows to create `useData` hook to get data through data source api.
-- `useDashboardTimeRange` allows to use actual dashboard time range.
-- `useFormBuilder` allows to create declarative forms.
-- `useDashboardVariables` allows to use dashboard variables.
 - `useDashboardRefresh` allows to refresh dashboard.
+- `useDashboardTimeRange` allows to use actual dashboard time range.
+- `useDashboardVariables` allows to use dashboard variables.
+- `useDatasourceRequest` allows to run data source query.
+- `useFormBuilder` allows to create declarative forms.
 
-### Utils
+## Utils
 
 - `CodeParametersBuilder` allows to create parameters for custom code.
 

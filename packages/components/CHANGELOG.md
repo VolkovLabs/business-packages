@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.5.0 (2024-10-23)
+
+### Features / Enhancements
+
+- Add useDatasourceRequest hooks (#69)
+
 ## 3.4.1 (2024-10-22)
 
 ### Features / Enhancements
