@@ -17,6 +17,21 @@ const InTestIds = {
   field: createSelector('data-testid field'),
 };
 
+const defaultModel = {
+  setEOL: jest.fn(),
+};
+
+const defalutMonaco = {
+  editor: {
+    EndOfLineSequence: {
+      '0': 'LF',
+      '1': 'CRLF',
+      LF: 0,
+      CRLF: 1,
+    },
+  },
+} as any;
+
 const editor = {
   getPosition: () => ({
     lineNumber: 12,
@@ -27,6 +42,7 @@ const editor = {
   revealLineInCenter: (value: any) => value,
   getSelection: () => null,
   executeEdits: (source: any, edits: any) => true,
+  getModel: () => defaultModel,
 };
 
 /**
@@ -46,7 +62,7 @@ jest.mock('@grafana/ui', () => ({
     /**
      * Call the onEditorDidMount callback with the editor instance
      */
-    onEditorDidMount(editor, '');
+    onEditorDidMount(editor, defalutMonaco);
 
     return (
       <textarea
