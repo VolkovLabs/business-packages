@@ -21,7 +21,7 @@ const defaultModel = {
   setEOL: jest.fn(),
 };
 
-const defalutMonaco = {
+const defaultMonaco = {
   editor: {
     EndOfLineSequence: {
       '0': 'LF',
@@ -62,7 +62,7 @@ jest.mock('@grafana/ui', () => ({
     /**
      * Call the onEditorDidMount callback with the editor instance
      */
-    onEditorDidMount(editor, defalutMonaco);
+    onEditorDidMount(editor, defaultMonaco);
 
     return (
       <textarea
