@@ -79,6 +79,12 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const onEditorDidMountMain = useCallback(
     (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType) => {
+      /**
+       * Set end of line to \n to all OS
+       */
+      const model = editor.getModel();
+      model?.setEOL(monaco.editor.EndOfLineSequence.LF);
+
       setMonacoEditor(editor);
       if (onEditorDidMount) {
         onEditorDidMount(editor, monaco);
@@ -92,6 +98,12 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const modalEditorDidMount = useCallback(
     (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType) => {
+      /**
+       * Set end of line to \n to all OS
+       */
+      const model = editor.getModel();
+      model?.setEOL(monaco.editor.EndOfLineSequence.LF);
+
       setMonacoEditorModal(editor);
       if (monacoEditor) {
         const positionsParams: monacoType.Position | null = monacoEditor?.getPosition();
@@ -133,13 +145,14 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         setCurrentMonacoOptions={setCurrentMonacoOptions}
       />
       <CodeEditor
-        value={value}
+        value={value.replaceAll('\\n', '\n')}
         showMiniMap={isShowMiniMap}
         height={staticHeight ?? height}
         monacoOptions={currentMonacoOptions}
         onEditorDidMount={onEditorDidMountMain}
         onChange={(value) => {
-          onChange?.(value);
+          const currentValue = value.replaceAll('\n', '\\n');
+          onChange?.(currentValue);
           setHeight(getHeightByValue(value, minHeight, maxHeight));
         }}
         {...restProps}
@@ -166,13 +179,14 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             setCurrentMonacoOptions={setCurrentMonacoOptions}
           />
           <CodeEditor
-            value={value}
+            value={value.replaceAll('\\n', '\n')}
             showMiniMap={isShowMiniMap}
             containerStyles={styles.modalEditor}
             monacoOptions={currentMonacoOptions}
             onEditorDidMount={modalEditorDidMount}
             onChange={(value) => {
-              onChange?.(value);
+              const currentValue = value.replaceAll('\n', '\\n');
+              onChange?.(currentValue);
               setHeight(getHeightByValue(value, minHeight, maxHeight));
             }}
             {...restProps}
