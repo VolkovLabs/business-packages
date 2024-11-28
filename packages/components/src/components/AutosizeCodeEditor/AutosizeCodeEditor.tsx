@@ -47,6 +47,7 @@ const getHeightByValue = (value: string, minHeight?: number, maxHeight?: number)
 export const AutosizeCodeEditor: React.FC<Props> = ({
   value,
   onChange,
+  onBlur,
   minHeight,
   maxHeight,
   height: staticHeight,
@@ -127,6 +128,29 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   );
 
   /**
+   * Change value
+   */
+  const onChangeValue = useCallback(
+    (value: string) => {
+      const currentValue = value.replaceAll('\n', '\\n');
+      onChange?.(currentValue);
+      setHeight(getHeightByValue(value, minHeight, maxHeight));
+    },
+    [maxHeight, minHeight, onChange]
+  );
+
+  /**
+   * onBlur handler
+   */
+  const onBlurUpdate = useCallback(
+    (value: string) => {
+      const currentValue = value.replaceAll('\n', '\\n');
+      onBlur?.(currentValue);
+    },
+    [onBlur]
+  );
+
+  /**
    * Update Height on value change
    */
   useEffect(() => {
@@ -150,11 +174,8 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         height={staticHeight ?? height}
         monacoOptions={currentMonacoOptions}
         onEditorDidMount={onEditorDidMountMain}
-        onChange={(value) => {
-          const currentValue = value.replaceAll('\n', '\\n');
-          onChange?.(currentValue);
-          setHeight(getHeightByValue(value, minHeight, maxHeight));
-        }}
+        onChange={onChangeValue}
+        onBlur={onBlurUpdate}
         {...restProps}
       />
 
@@ -184,11 +205,8 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             containerStyles={styles.modalEditor}
             monacoOptions={currentMonacoOptions}
             onEditorDidMount={modalEditorDidMount}
-            onChange={(value) => {
-              const currentValue = value.replaceAll('\n', '\\n');
-              onChange?.(currentValue);
-              setHeight(getHeightByValue(value, minHeight, maxHeight));
-            }}
+            onChange={onChangeValue}
+            onBlur={onBlurUpdate}
             {...restProps}
           />
         </div>
