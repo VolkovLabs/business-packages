@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.7.0 (2024-12-02)
+
+### Features / Enhancements
+
+- Add DatasourceEditor and DatasourcePayloadEditor (#73)
+
 ## 3.6.0 (2024-11-29)
 
 ### Features / Enhancements
