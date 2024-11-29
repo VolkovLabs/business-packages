@@ -1,5 +1,12 @@
 # Change Log
 
+## 3.6.0 (2024-11-29)
+
+### Features / Enhancements
+
+- Update AutosizeCodeEditor (#70)
+- Update onBlur behavior for code editor (#71)
+
 ## 3.5.0 (2024-10-23)
 
 ### Features / Enhancements

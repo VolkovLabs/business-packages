@@ -58,7 +58,7 @@ jest.mock('@grafana/ui', () => ({
       </>
     );
   }),
-  CodeEditor: jest.fn(({ value, onChange, height, onEditorDidMount }) => {
+  CodeEditor: jest.fn(({ value, onChange, onBlur, height, onEditorDidMount }) => {
     /**
      * Call the onEditorDidMount callback with the editor instance
      */
@@ -69,7 +69,8 @@ jest.mock('@grafana/ui', () => ({
         {...InTestIds.field.apply()}
         style={{ height }}
         value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
+        onChange={(event) => onChange?.(event.currentTarget.value)}
+        onBlur={(event) => onBlur?.(event.currentTarget.value)}
       />
     );
   }),
@@ -119,6 +120,24 @@ describe('AutosizeCodeEditor', () => {
      * Check height after changes
      */
     expect(selectors.field()).toHaveStyle(`height: 360px`);
+  });
+
+  it('Should not call onBlur if onBlur is not provided', () => {
+    const onBlur = jest.fn();
+    render(getComponent({}));
+
+    fireEvent.blur(selectors.field());
+    expect(onBlur).not.toHaveBeenCalled();
+  });
+
+  it('Should call onBlur if onBlur is provided', () => {
+    const onBlur = jest.fn();
+    render(getComponent({ onBlur, value: '1line\n' }));
+
+    fireEvent.blur(selectors.field());
+
+    expect(onBlur).toHaveBeenCalled();
+    expect(onBlur).toHaveBeenCalledWith('1line\\n');
   });
 
   it('Should update height if props changed', () => {
