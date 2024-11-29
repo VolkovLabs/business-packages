@@ -2,14 +2,14 @@ import { TEST_IDS } from './constants';
 
 export * from './components';
 export {
-  useAutoSave,
   createUseDataHook,
   DatasourceResponseError,
-  useDatasources,
+  useAutoSave,
   useDashboardRefresh,
   useDashboardTimeRange,
   useDashboardVariables,
   useDatasourceRequest,
+  useDatasources,
   useFormBuilder,
 } from './hooks';
 export * from './types';
