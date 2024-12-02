@@ -4,10 +4,12 @@ export * from './components';
 export {
   createUseDataHook,
   DatasourceResponseError,
+  useAutoSave,
   useDashboardRefresh,
   useDashboardTimeRange,
   useDashboardVariables,
   useDatasourceRequest,
+  useDatasources,
   useFormBuilder,
 } from './hooks';
 export * from './types';

@@ -31,4 +31,11 @@ export const TEST_IDS = {
     pasteButton: createSelector(() => `data-testid code-editor paste-button`),
     wrapButton: createSelector(() => `data-testid code-editor wrap-button`),
   },
+  datasourceEditor: {
+    fieldSelect: createSelector('data-testid datasource-editor field-select'),
+  },
+  payloadEditor: {
+    loadingMessage: createSelector('data-testid payload-editor loading-message'),
+    errorMessage: createSelector('data-testid payload-editor error-message'),
+  },
 };
