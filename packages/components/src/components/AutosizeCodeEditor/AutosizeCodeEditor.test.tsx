@@ -132,12 +132,42 @@ describe('AutosizeCodeEditor', () => {
 
   it('Should call onBlur if onBlur is provided', () => {
     const onBlur = jest.fn();
-    render(getComponent({ onBlur, value: '1line\n' }));
+    render(getComponent({ isEscaping: true, onBlur, value: '1line\n' }));
 
     fireEvent.blur(selectors.field());
 
     expect(onBlur).toHaveBeenCalled();
     expect(onBlur).toHaveBeenCalledWith('1line\\n');
+  });
+
+  it('Should not escape value onBlur if option not specified', () => {
+    const onBlur = jest.fn();
+    render(getComponent({ isEscaping: false, onBlur, value: '1line\n' }));
+
+    fireEvent.blur(selectors.field());
+
+    expect(onBlur).toHaveBeenCalled();
+    expect(onBlur).toHaveBeenCalledWith('1line\n');
+  });
+
+  it('Should escape value onChange if value should be escaping', () => {
+    const onChange = jest.fn();
+    render(getComponent({ isEscaping: true, onChange, value: 'none' }));
+
+    fireEvent.change(selectors.field(), { target: { value: '1line\n' } });
+
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith('1line\\n');
+  });
+
+  it('Should not escape value onChange if option not specified', () => {
+    const onChange = jest.fn();
+    render(getComponent({ isEscaping: false, onChange, value: 'none' }));
+
+    fireEvent.change(selectors.field(), { target: { value: '1line\n' } });
+
+    expect(onChange).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith('1line\n');
   });
 
   it('Should update height if props changed', () => {

@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.8.0 (2024-12-12)
+
+### Features / Enhancements
+
+- Allow to disable/enable escaping in AutosizeCodeEditor (#75)
+
 ## 3.7.0 (2024-12-02)
 
 ### Features / Enhancements

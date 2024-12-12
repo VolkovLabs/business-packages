@@ -13,8 +13,20 @@ import { Toolbar } from './Toolbar';
  * Properties
  */
 type Props = React.ComponentProps<typeof CodeEditor> & {
+  /**
+   * Min height
+   */
   minHeight?: number;
+
+  /**
+   * Max height
+   */
   maxHeight?: number;
+
+  /**
+   * Should escape value
+   */
+  isEscaping?: boolean;
 };
 
 /**
@@ -54,6 +66,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   onEditorDidMount,
   monacoOptions,
   showMiniMap,
+  isEscaping = false,
   ...restProps
 }) => {
   /**
@@ -76,22 +89,30 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
   const [height, setHeight] = useState(getHeightByValue(value, minHeight, maxHeight));
 
   /**
+   * Set end of line to \n to all OS
+   */
+  const setEndLine = useCallback(
+    (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType): void => {
+      if (isEscaping) {
+        const model = editor.getModel();
+        model?.setEOL(monaco.editor.EndOfLineSequence.LF);
+      }
+    },
+    [isEscaping]
+  );
+
+  /**
    * Editor did mount handler
    */
   const onEditorDidMountMain = useCallback(
     (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType) => {
-      /**
-       * Set end of line to \n to all OS
-       */
-      const model = editor.getModel();
-      model?.setEOL(monaco.editor.EndOfLineSequence.LF);
-
+      setEndLine(editor, monaco);
       setMonacoEditor(editor);
       if (onEditorDidMount) {
         onEditorDidMount(editor, monaco);
       }
     },
-    [onEditorDidMount]
+    [setEndLine, onEditorDidMount]
   );
 
   /**
@@ -99,12 +120,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const modalEditorDidMount = useCallback(
     (editor: monacoType.editor.IStandaloneCodeEditor, monaco: typeof monacoType) => {
-      /**
-       * Set end of line to \n to all OS
-       */
-      const model = editor.getModel();
-      model?.setEOL(monaco.editor.EndOfLineSequence.LF);
-
+      setEndLine(editor, monaco);
       setMonacoEditorModal(editor);
       if (monacoEditor) {
         const positionsParams: monacoType.Position | null = monacoEditor?.getPosition();
@@ -124,7 +140,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         onEditorDidMount(editor, monaco);
       }
     },
-    [monacoEditor, onEditorDidMount]
+    [setEndLine, monacoEditor, onEditorDidMount]
   );
 
   /**
@@ -132,11 +148,11 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const onChangeValue = useCallback(
     (value: string) => {
-      const currentValue = value.replaceAll('\n', '\\n');
+      const currentValue = isEscaping ? value.replaceAll('\n', '\\n') : value;
       onChange?.(currentValue);
       setHeight(getHeightByValue(value, minHeight, maxHeight));
     },
-    [maxHeight, minHeight, onChange]
+    [maxHeight, minHeight, onChange, isEscaping]
   );
 
   /**
@@ -144,10 +160,10 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
    */
   const onBlurUpdate = useCallback(
     (value: string) => {
-      const currentValue = value.replaceAll('\n', '\\n');
+      const currentValue = isEscaping ? value.replaceAll('\n', '\\n') : value;
       onBlur?.(currentValue);
     },
-    [onBlur]
+    [onBlur, isEscaping]
   );
 
   /**
@@ -169,7 +185,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         setCurrentMonacoOptions={setCurrentMonacoOptions}
       />
       <CodeEditor
-        value={value.replaceAll('\\n', '\n')}
+        value={isEscaping ? value.replaceAll('\\n', '\n') : value}
         showMiniMap={isShowMiniMap}
         height={staticHeight ?? height}
         monacoOptions={currentMonacoOptions}
@@ -200,7 +216,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             setCurrentMonacoOptions={setCurrentMonacoOptions}
           />
           <CodeEditor
-            value={value.replaceAll('\\n', '\n')}
+            value={isEscaping ? value.replaceAll('\\n', '\n') : value}
             showMiniMap={isShowMiniMap}
             containerStyles={styles.modalEditor}
             monacoOptions={currentMonacoOptions}
