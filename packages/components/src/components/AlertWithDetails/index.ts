@@ -1,1 +1,1 @@
-export * from './AlertBoxWithDetails';
+export * from './AlertWithDetails';

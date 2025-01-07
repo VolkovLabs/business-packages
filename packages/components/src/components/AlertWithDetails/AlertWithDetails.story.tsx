@@ -1,12 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 
-import { AlertWithDetails, AlertWithDetailsProps } from './AlertBoxWithDetails';
+import { AlertWithDetails, AlertWithDetailsProps } from './AlertWithDetails';
 
 const variants: string[] = ['error', 'warning', 'info', 'success'];
 
 const meta: Meta<typeof AlertWithDetails> = {
-  title: 'AlertBoxWithDetails',
+  title: 'AlertWithDetails',
   component: AlertWithDetails,
   parameters: {
     controls: {
@@ -14,13 +14,13 @@ const meta: Meta<typeof AlertWithDetails> = {
     },
   },
   args: {
-    error: 'test',
+    details: '{{some json example}}',
     variant: 'error',
     title: 'Title',
-    display: true,
+    children: 'Some content',
   },
   argTypes: {
-    error: { control: 'text' },
+    details: { control: 'textarea' },
     title: { control: 'text' },
     children: { control: 'text' },
     variant: {

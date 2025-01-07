@@ -38,10 +38,9 @@ export const TEST_IDS = {
     loadingMessage: createSelector('data-testid payload-editor loading-message'),
     errorMessage: createSelector('data-testid payload-editor error-message'),
   },
-  alertBox: {
-    root: createSelector('data-testid alert-box root'),
-    details: createSelector('data-testid alert-box details'),
-    sectionHeader: createSelector('data-testid alert-box section-header'),
-    sectionContent: createSelector('data-testid alert-box section-content'),
+  alertWithDetails: {
+    root: createSelector('data-testid alert-with-details root'),
+    detailsSectionHeader: createSelector('data-testid alert-with-details details-section-header'),
+    detailsSectionContent: createSelector('data-testid alert-with-details details-section-content'),
   },
 };
