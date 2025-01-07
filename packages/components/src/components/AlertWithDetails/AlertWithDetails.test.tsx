@@ -69,8 +69,6 @@ describe('AlertWithDetails', () => {
   });
 
   it('Should show Alert with empty content', () => {
-    const onChange = jest.fn();
-
     render(
       getComponent({
         details: '',
