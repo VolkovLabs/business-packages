@@ -1,5 +1,4 @@
 import { createSelector } from '@volkovlabs/jest-selectors';
-import { AlertBox } from '../components/AlertBox';
 
 /**
  * Test Identifiers

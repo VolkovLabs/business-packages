@@ -1,9 +1,9 @@
 import { Alert, useStyles2 } from '@grafana/ui';
 import React, { useState } from 'react';
 
-import { getStyles } from './AlertBox.styles';
-import { CollapsableSection } from '../CollapsableSection';
 import { TEST_IDS } from '../../constants';
+import { CollapsableSection } from '../CollapsableSection';
+import { getStyles } from './AlertBox.styles';
 
 /**
  * Properties
