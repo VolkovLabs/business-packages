@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AlertWithDetails, AlertWithDetailsProps } from './AlertWithDetails';
 
@@ -30,11 +30,8 @@ const meta: Meta<typeof AlertWithDetails> = {
 };
 
 export const Basic: StoryFn<typeof AlertWithDetails> = ({ ...args }: AlertWithDetailsProps) => {
-  return (
-    <div>
-      <AlertWithDetails {...args} />
-    </div>
-  );
+  const [show, setShow] = useState(true);
+  return <div>{show && <AlertWithDetails {...args} onRemove={() => setShow(false)} />}</div>;
 };
 
 export default meta;
