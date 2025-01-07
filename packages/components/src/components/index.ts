@@ -1,4 +1,4 @@
-export * from './AlertBox';
+export * from './AlertWithDetails';
 export * from './AutosizeCodeEditor';
 export * from './CollapsableSection';
 export * from './Collapse';
