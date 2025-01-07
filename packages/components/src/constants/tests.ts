@@ -1,4 +1,5 @@
 import { createSelector } from '@volkovlabs/jest-selectors';
+import { AlertBox } from '../components/AlertBox';
 
 /**
  * Test Identifiers
@@ -37,5 +38,11 @@ export const TEST_IDS = {
   payloadEditor: {
     loadingMessage: createSelector('data-testid payload-editor loading-message'),
     errorMessage: createSelector('data-testid payload-editor error-message'),
+  },
+  alertBox: {
+    root: createSelector('data-testid alert-box root'),
+    details: createSelector('data-testid alert-box details'),
+    sectionHeader: createSelector('data-testid alert-box section-header'),
+    sectionContent: createSelector('data-testid alert-box section-content'),
   },
 };
