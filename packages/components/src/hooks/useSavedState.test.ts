@@ -17,7 +17,7 @@ describe('Use Saved State', () => {
       update: jest.fn(),
     }));
 
-    const { result } = await act(async () => renderHook(() => useSavedState({ key: 'abc', initialValue: 123 })));
+    const { result } = await act(async () => renderHook(() => useSavedState('abc', 123)));
 
     expect(result.current[0]).toEqual(111);
   });
@@ -35,15 +35,15 @@ describe('Use Saved State', () => {
 
     const { result } = await act(async () =>
       renderHook(() =>
-        useSavedState({
-          key: 'abc',
-          initialValue: {
+        useSavedState(
+          'abc',
+          {
             a: 'initial',
             b: 'initial',
           },
-          version: 0,
-          getStateForSave: ({ a }) => ({ a }),
-        })
+          0,
+          ({ a }) => ({ a })
+        )
       )
     );
 
@@ -60,7 +60,7 @@ describe('Use Saved State', () => {
       update,
     }));
 
-    const { result } = await act(async () => renderHook(() => useSavedState({ key: 'abc', initialValue: 123 })));
+    const { result } = await act(async () => renderHook(() => useSavedState('abc', 123)));
 
     await act(async () => result.current[1](123));
 
@@ -76,12 +76,9 @@ describe('Use Saved State', () => {
 
     const { result } = await act(async () =>
       renderHook(() =>
-        useSavedState({
-          key: 'abc',
-          initialValue: {
-            a: 'hello',
-            b: 'hello',
-          },
+        useSavedState('abc', {
+          a: 'hello',
+          b: 'hello',
         })
       )
     );

@@ -1,7 +1,7 @@
+import { RecursivePartial } from '../types';
 import { merge } from 'lodash';
 import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 
-import { RecursivePartial } from '../types';
 import { useLocalStorage } from './useLocalStorage';
 
 /**
@@ -17,19 +17,12 @@ type SetValueAction<TValue> = TValue | ((value: TValue) => TValue);
 /**
  * Use Saved State
  */
-export const useSavedState = <TValue extends object | string | number | []>({
-  key,
-  initialValue,
-  version = 1,
-  getStateForSave = (value) => value as never,
-  enabled = true,
-}: {
-  key: string;
-  initialValue: TValue;
-  version?: number;
-  getStateForSave?: GetStateForSave<TValue>;
-  enabled?: boolean;
-}): [TValue, Dispatch<SetValueAction<TValue>>, boolean] => {
+export const useSavedState = <TValue extends object | string | number | []>(
+  key: string,
+  initialValue: TValue,
+  version = 2,
+  getStateForSave: GetStateForSave<TValue> = (value) => value as never
+): [TValue, Dispatch<SetValueAction<TValue>>, boolean] => {
   /**
    * Value
    */
@@ -54,7 +47,7 @@ export const useSavedState = <TValue extends object | string | number | []>({
       const savedValue = await getValue();
 
       if (savedValue) {
-        if (typeof savedValue === 'object') {
+        if (typeof savedValue === 'object' && !Array.isArray(savedValue)) {
           setValue((value) => merge({ ...(value as object) }, savedValue));
         } else {
           setValue(savedValue);
@@ -63,10 +56,8 @@ export const useSavedState = <TValue extends object | string | number | []>({
       setLoaded(true);
     };
 
-    if (enabled) {
-      getSavedValue();
-    }
-  }, [enabled, getValue]);
+    getSavedValue();
+  }, [getValue]);
 
   /**
    * Update Value
@@ -75,14 +66,11 @@ export const useSavedState = <TValue extends object | string | number | []>({
     (updated: SetValueAction<TValue>) => {
       setValue((value) => {
         const newValue = typeof updated === 'function' ? updated(value) : updated;
-
-        if (enabled) {
-          saveValue(getStateForSaveRef.current(newValue));
-        }
+        saveValue(getStateForSaveRef.current(newValue));
         return newValue;
       });
     },
-    [enabled, saveValue]
+    [saveValue]
   );
 
   return [value, update, loaded];
