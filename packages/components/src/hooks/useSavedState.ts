@@ -1,7 +1,7 @@
-import { RecursivePartial } from '../types';
 import { merge } from 'lodash';
 import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 
+import { RecursivePartial } from '../types';
 import { useLocalStorage } from './useLocalStorage';
 
 /**
