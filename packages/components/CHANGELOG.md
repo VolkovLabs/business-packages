@@ -1,5 +1,24 @@
 # Change Log
 
+## 4.1.0 (2025-01-17)
+
+### Features / Enhancements
+
+- Update AutosizeCodeEditor (#78)
+
+## 4.0.0 (2024-01-10)
+
+### Features / Enhancements
+
+- Add useSavedState hook (#77)
+- Add useLocalStorage hook (#77)
+
+## 3.9.0 (2024-01-09)
+
+### Features / Enhancements
+
+- Add Alert with details component (#76)
+
 ## 3.8.0 (2024-12-12)
 
 ### Features / Enhancements
