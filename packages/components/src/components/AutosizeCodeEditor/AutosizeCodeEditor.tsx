@@ -183,6 +183,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
         setIsShowMiniMap={setIsShowMiniMap}
         currentMonacoOptions={currentMonacoOptions}
         setCurrentMonacoOptions={setCurrentMonacoOptions}
+        readOnly={restProps.readOnly}
       />
       <CodeEditor
         value={isEscaping ? value.replaceAll('\\n', '\n') : value}
@@ -214,6 +215,7 @@ export const AutosizeCodeEditor: React.FC<Props> = ({
             setIsShowMiniMap={setIsShowMiniMap}
             currentMonacoOptions={currentMonacoOptions}
             setCurrentMonacoOptions={setCurrentMonacoOptions}
+            readOnly={restProps.readOnly}
           />
           <CodeEditor
             value={isEscaping ? value.replaceAll('\\n', '\n') : value}

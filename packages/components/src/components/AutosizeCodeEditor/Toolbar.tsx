@@ -71,6 +71,13 @@ type Props = {
    * @type {React.Dispatch<React.SetStateAction<boolean | undefined>>}
    */
   setIsShowMiniMap: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+
+  /**
+   * Is read only mode
+   *
+   * @type {boolean}
+   */
+  readOnly?: boolean;
 };
 
 /**
@@ -85,6 +92,7 @@ export const Toolbar: React.FC<Props> = ({
   currentMonacoOptions,
   isShowMiniMap,
   setIsShowMiniMap,
+  readOnly,
 }) => {
   /**
    * Styles and Theme
@@ -137,8 +145,9 @@ export const Toolbar: React.FC<Props> = ({
           {...TEST_IDS.codeEditor.copyButton.apply()}
         />
         <ToolbarButton
+          disabled={readOnly}
           className={styles.copyPasteIcon}
-          tooltip="Paste code"
+          tooltip={readOnly ? `Cannot edit in read-only mode` : `Paste code`}
           icon="file-alt"
           iconSize="lg"
           onClick={async () => {

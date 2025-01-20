@@ -512,5 +512,25 @@ describe('AutosizeCodeEditor', () => {
        */
       expect(selectors.copyPasteText()).toHaveTextContent('');
     });
+
+    it('Should disable paste button for read-only mode', async () => {
+      const onChange = jest.fn();
+      const onEditorDidMount = jest.fn();
+
+      render(getComponent({ onChange, onEditorDidMount, value: 'test code', readOnly: true }));
+
+      expect(selectors.pasteButton()).toBeInTheDocument();
+
+      /**
+       * Click on paste button
+       */
+      await act(() => fireEvent.click(selectors.pasteButton()));
+
+      /**
+       * Should display pasted text
+       */
+      expect(selectors.pasteButton()).toBeInTheDocument();
+      expect(selectors.pasteButton()).toBeDisabled();
+    });
   });
 });

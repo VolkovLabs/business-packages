@@ -1,5 +1,24 @@
 # Change Log
 
+## 4.1.0 (2025-01-17)
+
+### Features / Enhancements
+
+- Updated AutosizeCodeEditor (#78)
+
+## 4.0.0 (2024-01-10)
+
+### Features / Enhancements
+
+- Added useSavedState hook (#77)
+- Added useLocalStorage hook (#77)
+
+## 3.9.0 (2024-01-09)
+
+### Features / Enhancements
+
+- Added Alert with details component (#76)
+
 ## 3.8.0 (2024-12-12)
 
 ### Features / Enhancements
@@ -10,32 +29,32 @@
 
 ### Features / Enhancements
 
-- Add DatasourceEditor and DatasourcePayloadEditor (#73)
+- Added DatasourceEditor and DatasourcePayloadEditor (#73)
 
 ## 3.6.0 (2024-11-29)
 
 ### Features / Enhancements
 
-- Update AutosizeCodeEditor (#70)
-- Update onBlur behavior for code editor (#71)
+- Updated AutosizeCodeEditor (#70)
+- Updated onBlur behavior for code editor (#71)
 
 ## 3.5.0 (2024-10-23)
 
 ### Features / Enhancements
 
-- Add useDatasourceRequest hooks (#69)
+- Added useDatasourceRequest hooks (#69)
 
 ## 3.4.1 (2024-10-22)
 
 ### Features / Enhancements
 
-- Add useDashboardVariables and useDashboardRefresh hooks (#68)
+- Added useDashboardVariables and useDashboardRefresh hooks (#68)
 
 ## 3.3.0 (2024-10-02)
 
 ### Features / Enhancements
 
-- Update Code Editor toolbar (#67)
+- Updated Code Editor toolbar (#67)
 
 ## 3.2.0 (2024-09-20)
 
@@ -60,7 +79,7 @@
 
 ### Features / Enhancements
 
-- Update @testing-library/react to 16 (#60)
+- Updated @testing-library/react to 16 (#60)
 
 ## 2.9.0 (2024-09-02)
 
