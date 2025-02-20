@@ -1,3 +1,5 @@
+import { set } from 'lodash';
+
 import {
   ColorOptions,
   CustomOptions,
@@ -14,7 +16,6 @@ import {
   SelectOptions,
   SliderOptions,
 } from '../types';
-import { set } from 'lodash';
 
 /**
  * Form Builder

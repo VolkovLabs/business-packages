@@ -12,7 +12,7 @@ describe('Form Builder', () => {
   >(
     fields: Array<RenderFormField<TFormValue, TGroupValue>>,
     path: string
-  ): (RenderFormField<any, any> & { type: TType }) | undefined => {
+  ): (RenderFormField<TFormValue, TGroupValue> & { type: TType }) | undefined => {
     return fields.find((field) => field.path === path) as never;
   };
 
