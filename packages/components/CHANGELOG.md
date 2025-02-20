@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.2.0 (2025-02-20)
+
+### Features / Enhancements
+
+- Allow to use global form config in field functions (#79)
+
 ## 4.1.0 (2025-01-17)
 
 ### Features / Enhancements

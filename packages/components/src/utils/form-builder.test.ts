@@ -1,7 +1,21 @@
-import { FormFieldType } from '../types';
+import { FormFieldType, RenderFormField } from '../types';
 import { FormBuilder } from './form-builder';
 
 describe('Form Builder', () => {
+  /**
+   * Utils
+   */
+  const getFieldByPath = <
+    TType extends FormFieldType,
+    TGroupValue extends object = any,
+    TFormValue extends object = TGroupValue,
+  >(
+    fields: Array<RenderFormField<TFormValue, TGroupValue>>,
+    path: string
+  ): (RenderFormField<TFormValue, TGroupValue> & { type: TType }) | undefined => {
+    return fields.find((field) => field.path === path) as never;
+  };
+
   it('Should add hidden field', () => {
     const form = new FormBuilder<{ hidden: number }>({ path: '', label: '' }).addHidden({
       path: 'hidden',
@@ -331,15 +345,16 @@ describe('Form Builder', () => {
       );
     });
 
-    it('Should hide field', () => {
-      const form = new FormBuilder<{
+    it('Should toggle field visibility', () => {
+      type FormValue = {
         input: string;
         input2: string;
         group: { field: string };
         group2: {
           field2: string;
         };
-      }>({
+      };
+      const form = new FormBuilder<FormValue>({
         path: '',
         label: '',
       })
@@ -369,39 +384,73 @@ describe('Form Builder', () => {
             path: 'group2',
             label: '',
           },
-          (builder) => builder
+          (builder) =>
+            builder.addInput({
+              path: 'field2',
+              defaultValue: '',
+              showIf: (config, formConfig) => {
+                /**
+                 * Check if formConfig contain actual values in root and nested levels
+                 */
+                return formConfig.input !== '' && formConfig.group.field !== '';
+              },
+            })
         );
 
-      expect(form.getFields()[0]).toEqual(
+      expect(getFieldByPath<FormFieldType.INPUT, FormValue>(form.getFields(), 'input')).toEqual(
         expect.objectContaining({
           path: 'input',
           value: '',
         })
       );
-      expect(form.getFields()[0].showIf()).toBeFalsy();
-      expect(form.getFields()[1].showIf()).toBeFalsy();
+      expect(getFieldByPath<FormFieldType.INPUT, FormValue>(form.getFields(), 'input')?.showIf()).toBeFalsy();
+      expect(getFieldByPath<FormFieldType.GROUP, FormValue>(form.getFields(), 'group')?.showIf()).toBeFalsy();
 
       /**
        * Should be visible by default
        */
-      expect(form.getFields()[2].showIf()).toBeTruthy();
-      expect(form.getFields()[3].showIf()).toBeTruthy();
+      expect(getFieldByPath<FormFieldType.INPUT, FormValue>(form.getFields(), 'input2')?.showIf()).toBeTruthy();
+      expect(getFieldByPath<FormFieldType.GROUP, FormValue>(form.getFields(), 'group2')?.showIf()).toBeTruthy();
 
-      const renderField = form.getFields()[0];
+      /**
+       * Nested field should be hidden by form config
+       */
+      expect(
+        getFieldByPath(
+          getFieldByPath<FormFieldType.GROUP, FormValue>(form.getFields(), 'group2')?.group || [],
+          'field2'
+        )?.showIf()
+      ).toBeFalsy();
+
+      const renderField = getFieldByPath<FormFieldType.INPUT, FormValue>(form.getFields(), 'input');
 
       /**
        * Update field value
        */
-      if (renderField.type === FormFieldType.INPUT) {
-        renderField.onChange('123');
+      if (renderField?.type === FormFieldType.INPUT) {
+        renderField?.onChange('123');
       }
-      expect(form.getFields()[0].showIf()).toBeTruthy();
-      expect(form.getFields()[1].showIf()).toBeTruthy();
-      expect(form.getFields()[2].showIf()).toBeTruthy();
+
+      expect(getFieldByPath<FormFieldType.INPUT, FormValue>(form.getFields(), 'input')?.showIf()).toBeTruthy();
+      expect(getFieldByPath<FormFieldType.GROUP, FormValue>(form.getFields(), 'group')?.showIf()).toBeTruthy();
+      expect(getFieldByPath<FormFieldType.INPUT, FormValue>(form.getFields(), 'input2')?.showIf()).toBeTruthy();
+      expect(
+        getFieldByPath(
+          getFieldByPath<FormFieldType.GROUP, FormValue>(form.getFields(), 'group2')?.group || [],
+          'field2'
+        )?.showIf()
+      ).toBeTruthy();
     });
 
     it('Should disable field', () => {
-      const form = new FormBuilder<{ input: string; input2: string }>({ path: '', label: '' })
+      type FormValue = {
+        input: string;
+        input2: string;
+        group: {
+          field: string;
+        };
+      };
+      const form = new FormBuilder<FormValue>({ path: '', label: '' })
         .addInput({
           path: 'input',
           defaultValue: '',
@@ -410,7 +459,19 @@ describe('Form Builder', () => {
         .addInput({
           path: 'input2',
           defaultValue: '',
-        });
+        })
+        .addGroup(
+          {
+            path: 'group',
+            label: '',
+          },
+          (builder) =>
+            builder.addInput({
+              path: 'field',
+              defaultValue: '',
+              disableIf: (config, formConfig) => formConfig.input === '',
+            })
+        );
 
       let renderField = form.getFields()[0];
 
@@ -428,6 +489,16 @@ describe('Form Builder', () => {
       }
 
       /**
+       * Check If Disabled by form config
+       */
+      expect(
+        getFieldByPath<FormFieldType.INPUT>(
+          getFieldByPath<FormFieldType.GROUP>(form.getFields(), 'group')?.group || [],
+          'field'
+        )?.disableIf()
+      ).toBeTruthy();
+
+      /**
        * Update field value
        */
       if (renderField.type === FormFieldType.INPUT) {
@@ -439,10 +510,21 @@ describe('Form Builder', () => {
       if (renderField.type === FormFieldType.INPUT) {
         expect(renderField.disableIf()).toBeTruthy();
       }
+
+      /**
+       * Check if enabled by form config
+       */
+      expect(
+        getFieldByPath<FormFieldType.INPUT>(
+          getFieldByPath<FormFieldType.GROUP>(form.getFields(), 'group')?.group || [],
+          'field'
+        )?.disableIf()
+      ).toBeFalsy();
     });
 
     it('Should invalidate field', () => {
-      const form = new FormBuilder<{ input: string; input2: string }>({ path: '', label: '' })
+      type FormValue = { input: string; input2: string; group: { field: string } };
+      const form = new FormBuilder<FormValue>({ path: '', label: '' })
         .addInput({
           path: 'input',
           defaultValue: '',
@@ -451,7 +533,19 @@ describe('Form Builder', () => {
         .addInput({
           path: 'input2',
           defaultValue: '',
-        });
+        })
+        .addGroup(
+          {
+            path: 'group',
+            label: '',
+          },
+          (builder) =>
+            builder.addInput({
+              path: 'field',
+              defaultValue: '',
+              invalidIf: (config, formConfig) => formConfig.input === '',
+            })
+        );
 
       let renderField = form.getFields()[0];
 
@@ -469,6 +563,16 @@ describe('Form Builder', () => {
       }
 
       /**
+       * Check If Invalid by form config
+       */
+      expect(
+        getFieldByPath<FormFieldType.INPUT>(
+          getFieldByPath<FormFieldType.GROUP>(form.getFields(), 'group')?.group || [],
+          'field'
+        )?.invalidIf()
+      ).toBeTruthy();
+
+      /**
        * Update field value
        */
       if (renderField.type === FormFieldType.INPUT) {
@@ -480,9 +584,19 @@ describe('Form Builder', () => {
       if (renderField.type === FormFieldType.INPUT) {
         expect(renderField.invalidIf()).toBeTruthy();
       }
+
+      /**
+       * Check If Valid by form config
+       */
+      expect(
+        getFieldByPath<FormFieldType.INPUT>(
+          getFieldByPath<FormFieldType.GROUP>(form.getFields(), 'group')?.group || [],
+          'field'
+        )?.invalidIf()
+      ).toBeFalsy();
     });
 
-    it('Should invalidate field', () => {
+    it('Should format field error message', () => {
       const form = new FormBuilder<{ input: string; input2: string }>({ path: '', label: '' })
         .addInput({
           path: 'input',

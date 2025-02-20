@@ -1,3 +1,5 @@
+import { set } from 'lodash';
+
 import {
   ColorOptions,
   CustomOptions,
@@ -18,29 +20,33 @@ import {
 /**
  * Form Builder
  */
-export class FormBuilder<TObject extends object> {
-  private fields: Array<FormField<TObject>> = [];
-  private value: TObject = {} as TObject;
+export class FormBuilder<TFormValue extends object, TGroupValue extends object = TFormValue> {
+  private fields: Array<FormField<TFormValue, TGroupValue>> = [];
+  private formValue: TFormValue;
+  private value: TGroupValue = {} as TGroupValue;
   path: string;
   fullPath: string;
   label: string;
-  setValueToParent: (value: TObject) => void = () => null;
-  onChangeHandler: (value: TObject) => void = () => null;
+  setValueToParent: (value: TGroupValue) => void = () => null;
+  onChangeHandler: (value: TGroupValue) => void = () => null;
 
   constructor({
     path,
     label,
     fullPath = path,
     setValueToParent,
+    formValue = {} as TFormValue,
   }: {
     path: string;
     label: string;
     fullPath?: string;
-    setValueToParent?: (value: TObject) => void;
+    setValueToParent?: (value: TGroupValue) => void;
+    formValue?: TFormValue;
   }) {
     this.path = path;
     this.label = label;
     this.fullPath = fullPath;
+    this.formValue = formValue;
 
     if (setValueToParent) {
       this.setValueToParent = setValueToParent;
@@ -51,7 +57,7 @@ export class FormBuilder<TObject extends object> {
    * Add Field
    * @param options
    */
-  private addField(options: FormField<TObject>) {
+  private addField(options: FormField<TFormValue, TGroupValue>) {
     if (options.type === FormFieldType.GROUP) {
       this.fields.push(options);
 
@@ -82,7 +88,7 @@ export class FormBuilder<TObject extends object> {
    * Add Select Field
    * @param options
    */
-  addHidden<TOptions extends HiddenOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addHidden<TOptions extends HiddenOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(options: TOptions) {
     return this.addField({
       ...options,
       type: FormFieldType.HIDDEN,
@@ -93,7 +99,7 @@ export class FormBuilder<TObject extends object> {
    * Add Select Field
    * @param options
    */
-  addSelect<TOptions extends SelectOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addSelect<TOptions extends SelectOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(options: TOptions) {
     return this.addField({
       ...options,
       type: FormFieldType.SELECT,
@@ -104,7 +110,7 @@ export class FormBuilder<TObject extends object> {
    * Add Radio Field
    * @param options
    */
-  addRadio<TOptions extends RadioOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addRadio<TOptions extends RadioOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(options: TOptions) {
     return this.addField({
       ...options,
       type: FormFieldType.RADIO,
@@ -115,7 +121,7 @@ export class FormBuilder<TObject extends object> {
    * Add Input Field
    * @param options
    */
-  addInput<TOptions extends InputOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addInput<TOptions extends InputOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(options: TOptions) {
     return this.addField({
       ...options,
       type: FormFieldType.INPUT,
@@ -126,7 +132,9 @@ export class FormBuilder<TObject extends object> {
    * Add Number Input Field
    * @param options
    */
-  addNumberInput<TOptions extends NumberInputOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addNumberInput<TOptions extends NumberInputOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(
+    options: TOptions
+  ) {
     return this.addField({
       ...options,
       type: FormFieldType.NUMBER_INPUT,
@@ -137,7 +145,7 @@ export class FormBuilder<TObject extends object> {
    * Add Slider Field
    * @param options
    */
-  addSlider<TOptions extends SliderOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addSlider<TOptions extends SliderOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(options: TOptions) {
     return this.addField({
       ...options,
       type: FormFieldType.SLIDER,
@@ -148,7 +156,9 @@ export class FormBuilder<TObject extends object> {
    * Add Range Slider Field
    * @param options
    */
-  addRangeSlider<TOptions extends RangeSliderOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addRangeSlider<TOptions extends RangeSliderOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(
+    options: TOptions
+  ) {
     return this.addField({
       ...options,
       type: FormFieldType.RANGE_SLIDER,
@@ -159,7 +169,9 @@ export class FormBuilder<TObject extends object> {
    * Add Color Picker Field
    * @param options
    */
-  addColorPicker<TOptions extends ColorOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addColorPicker<TOptions extends ColorOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(
+    options: TOptions
+  ) {
     return this.addField({
       ...options,
       type: FormFieldType.COLOR,
@@ -170,7 +182,9 @@ export class FormBuilder<TObject extends object> {
    * Add Date Time Picker Field
    * @param options
    */
-  addDateTimePicker<TOptions extends DateTimePickerOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addDateTimePicker<TOptions extends DateTimePickerOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(
+    options: TOptions
+  ) {
     return this.addField({
       ...options,
       type: FormFieldType.DATETIME_PICKER,
@@ -181,7 +195,7 @@ export class FormBuilder<TObject extends object> {
    * Add Custom Field
    * @param options
    */
-  addCustom<TOptions extends CustomOptions<TObject, TObject[TOptions['path']]>>(options: TOptions) {
+  addCustom<TOptions extends CustomOptions<TFormValue, TGroupValue, TGroupValue[TOptions['path']]>>(options: TOptions) {
     return this.addField({
       ...options,
       type: FormFieldType.CUSTOM,
@@ -195,21 +209,25 @@ export class FormBuilder<TObject extends object> {
    */
   addGroup<
     TOptions extends {
-      path: keyof TObject;
+      path: keyof TGroupValue;
       label: string;
-      showIf?: (value: TObject) => boolean;
+      showIf?: (value: TGroupValue, form: TFormValue) => boolean;
     },
   >(
     { path, label, showIf = () => true }: TOptions,
-    group: (builder: FormBuilder<IsObject<TObject[TOptions['path']]>>) => typeof builder
+    group: (builder: FormBuilder<TFormValue, IsObject<TGroupValue[TOptions['path']]>>) => typeof builder
   ) {
-    const builder = new FormBuilder<IsObject<TObject[TOptions['path']]>>({
+    const fullPath = [this.fullPath, path].filter((p) => !!p).join('.');
+    const builder = new FormBuilder<TFormValue, IsObject<TGroupValue[TOptions['path']]>>({
       path: path as string,
       label,
-      fullPath: [this.fullPath, path].filter((p) => !!p).join('.'),
+      fullPath,
       setValueToParent: (value) => {
         this.setFieldValue(path, value);
+
+        set(this.formValue, fullPath, value);
       },
+      formValue: this.formValue,
     });
 
     return this.addField({
@@ -232,27 +250,34 @@ export class FormBuilder<TObject extends object> {
    * @param name
    * @param value
    */
-  setFieldValue(name: keyof TObject, value: TObject[typeof name]) {
+  setFieldValue(name: keyof TGroupValue, value: TGroupValue[typeof name]) {
     this.value = {
       ...this.value,
       [name]: value,
     };
     this.setValueToParent(this.value);
     this.onChangeHandler(this.value);
+
+    /**
+     * Root level, setValueToParent is not defined so update formValue here
+     */
+    if (!this.fullPath) {
+      set(this.formValue, name, value);
+    }
   }
 
   /**
    * Get Fields
    */
-  getFields(): Array<RenderFormField<TObject>> {
-    return this.fields.map(({ showIf = () => true, ...item }): RenderFormField<TObject> => {
+  getFields(): Array<RenderFormField<TFormValue, TGroupValue>> {
+    return this.fields.map(({ showIf = () => true, ...item }): RenderFormField<TFormValue, TGroupValue> => {
       if (item.type === FormFieldType.GROUP) {
         return {
           ...item,
           path: item.group.path,
           label: item.group.label,
           group: item.group.getFields(),
-          showIf: () => showIf(this.value),
+          showIf: () => showIf(this.value, this.formValue),
           fullPath: item.group.fullPath,
         };
       }
@@ -272,10 +297,10 @@ export class FormBuilder<TObject extends object> {
          */
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange: (value: any) => this.setFieldValue(field.path, value),
-        showIf: () => showIf(this.value),
-        disableIf: () => disableIf(this.value),
-        invalidIf: () => invalidIf(this.value),
-        getErrorMessage: () => getErrorMessage(this.value),
+        showIf: () => showIf(this.value, this.formValue),
+        disableIf: () => disableIf(this.value, this.formValue),
+        invalidIf: () => invalidIf(this.value, this.formValue),
+        getErrorMessage: () => getErrorMessage(this.value, this.formValue),
         fullPath: [this.fullPath, field.path].filter((p) => !!p).join('.'),
       };
 
@@ -302,7 +327,7 @@ export class FormBuilder<TObject extends object> {
    * Set Value
    * @param value
    */
-  setValue(value: TObject) {
+  setValue(value: TGroupValue) {
     this.value = value;
 
     /**
@@ -315,7 +340,7 @@ export class FormBuilder<TObject extends object> {
     });
   }
 
-  subscribeOnChange(handler: (value: TObject) => void) {
+  subscribeOnChange(handler: (value: TGroupValue) => void) {
     this.onChangeHandler = handler;
 
     return () => {
