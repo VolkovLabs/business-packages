@@ -51,7 +51,7 @@ interface Props<TValue extends object> {
   /**
    * Fields
    */
-  fields: Array<RenderFormField<TValue>>;
+  fields: Array<RenderFormField<TValue, TValue>>;
 
   /**
    * Variant
@@ -81,14 +81,14 @@ const FormControl = ({ className, children }: { className: string; children: Rea
 /**
  * Form
  */
-export const Form = <TValue extends object>({
+export const Form = <TFormValue extends object>({
   name,
   expanded = {},
   onToggleExpanded = () => null,
   fields,
   variant = 'default',
   readonly = false,
-}: Props<TValue>) => {
+}: Props<TFormValue>) => {
   /**
    * Styles
    */
@@ -98,7 +98,7 @@ export const Form = <TValue extends object>({
    * Group Fields In Rows
    * @param fields
    */
-  const groupFieldsInRows = <TObject extends object>(fields: RenderFormField<TObject>[]) => {
+  const groupFieldsInRows = <TGroupValue extends object>(fields: RenderFormField<TFormValue, TGroupValue>[]) => {
     const rowsMap = fields.reduce(
       (acc, field, index) => {
         const rowKey = 'view' in field && field.view?.row ? `row_${field.view.row}` : index.toString();
@@ -111,12 +111,12 @@ export const Form = <TValue extends object>({
         /**
          * Add field to row
          */
-        rowValue.push(field as RenderFormField<TObject>);
+        rowValue.push(field as RenderFormField<TFormValue, TGroupValue>);
         acc.set(rowKey, rowValue);
 
         return acc;
       },
-      new Map() as Map<string, RenderFormField<TObject>[]>
+      new Map() as Map<string, RenderFormField<TFormValue, TGroupValue>[]>
     );
 
     return Array.from(rowsMap.values());
@@ -126,7 +126,7 @@ export const Form = <TValue extends object>({
    * Render Field
    * @param field
    */
-  const renderField = <TObject extends object>(field: RenderFormField<TObject>) => {
+  const renderField = <TGroupValue extends object>(field: RenderFormField<TFormValue, TGroupValue>) => {
     if (!field.showIf()) {
       return null;
     }

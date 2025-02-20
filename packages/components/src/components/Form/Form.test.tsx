@@ -753,6 +753,9 @@ describe('Form', () => {
         getComponent<{
           field: string;
           field2: string;
+          group: {
+            field: string;
+          };
         }>({
           getForm: (builder) =>
             builder
@@ -764,7 +767,19 @@ describe('Form', () => {
                 path: 'field2',
                 defaultValue: '',
                 showIf: (config) => config.field !== '',
-              }),
+              })
+              .addGroup(
+                {
+                  path: 'group',
+                  label: '',
+                },
+                (builder) =>
+                  builder.addInput({
+                    path: 'field',
+                    defaultValue: '',
+                    showIf: (config, formConfig) => formConfig.field !== '',
+                  })
+              ),
         })
       );
 
@@ -772,6 +787,7 @@ describe('Form', () => {
        * Should be hidden
        */
       expect(selectors.fieldInput(true, 'field2')).not.toBeInTheDocument();
+      expect(selectors.fieldInput(true, 'group.field')).not.toBeInTheDocument();
 
       /**
        * Update dependent field
@@ -782,6 +798,7 @@ describe('Form', () => {
        * Should be visible now
        */
       expect(selectors.fieldInput(false, 'field2')).toBeInTheDocument();
+      expect(selectors.fieldInput(false, 'group.field')).toBeInTheDocument();
     });
 
     it('Should disable field', () => {

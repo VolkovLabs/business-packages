@@ -44,14 +44,14 @@ interface ViewOptions {
 /**
  * Base Options
  */
-export interface BaseOptions<TObject extends object, TValue> {
+export interface BaseOptions<TFormValue extends object, TGroupValue extends object, TValue> {
   /**
    * Path
    *
    * @template TObject
    * @type {TObject}
    */
-  path: keyof TObject;
+  path: keyof TGroupValue;
 
   /**
    * Default Value
@@ -77,22 +77,22 @@ export interface BaseOptions<TObject extends object, TValue> {
   /**
    * Show If
    */
-  showIf?: (config: TObject) => boolean;
+  showIf?: (config: TGroupValue, formConfig: TFormValue) => boolean;
 
   /**
    * Disable If
    */
-  disableIf?: (config: TObject) => boolean;
+  disableIf?: (config: TGroupValue, formConfig: TFormValue) => boolean;
 
   /**
    * Invalid If
    */
-  invalidIf?: (config: TObject) => boolean;
+  invalidIf?: (config: TGroupValue, formConfig: TFormValue) => boolean;
 
   /**
    * Get Error Message
    */
-  getErrorMessage?: (config: TObject) => string;
+  getErrorMessage?: (config: TGroupValue, formConfig: TFormValue) => string;
 
   /**
    * View Options
@@ -102,7 +102,8 @@ export interface BaseOptions<TObject extends object, TValue> {
   view?: ViewOptions;
 }
 
-export interface SelectOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface SelectOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Options
    */
@@ -111,7 +112,7 @@ export interface SelectOptions<TObject extends object, TValue> extends BaseOptio
   /**
    * Disable Options
    */
-  disableOptions?: (config: TObject) => TValue[];
+  disableOptions?: (config: TGroupValue) => TValue[];
 
   /**
    * Settings
@@ -133,7 +134,8 @@ export interface SelectOptions<TObject extends object, TValue> extends BaseOptio
   >;
 }
 
-export interface RadioOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface RadioOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Options
    */
@@ -142,7 +144,7 @@ export interface RadioOptions<TObject extends object, TValue> extends BaseOption
   /**
    * Disable Options
    */
-  disableOptions?: (config: TObject) => TValue[];
+  disableOptions?: (config: TGroupValue) => TValue[];
 
   /**
    * Full Width
@@ -152,7 +154,8 @@ export interface RadioOptions<TObject extends object, TValue> extends BaseOption
   fullWidth?: boolean;
 }
 
-export interface SliderOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface SliderOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Min
    *
@@ -182,7 +185,8 @@ export interface SliderOptions<TObject extends object, TValue> extends BaseOptio
   marks?: Record<string, string>;
 }
 
-export interface RangeSliderOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface RangeSliderOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Min
    *
@@ -232,7 +236,8 @@ export interface StandardEditorProps<TValue> {
   disabled?: boolean;
 }
 
-export interface CustomOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface CustomOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Component
    *
@@ -241,11 +246,14 @@ export interface CustomOptions<TObject extends object, TValue> extends BaseOptio
   editor: React.FC<{ value: TValue; onChange: (value: TValue) => void; disabled?: boolean }>;
 }
 
-export interface ColorOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {}
+export interface ColorOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {}
 
-export interface HiddenOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {}
+export interface HiddenOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {}
 
-export interface InputOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface InputOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Placeholder
    *
@@ -254,7 +262,8 @@ export interface InputOptions<TObject extends object, TValue> extends BaseOption
   placeholder?: string;
 }
 
-export interface NumberInputOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface NumberInputOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Min
    *
@@ -277,7 +286,8 @@ export interface NumberInputOptions<TObject extends object, TValue> extends Base
   step?: number;
 }
 
-export interface DateTimePickerOptions<TObject extends object, TValue> extends BaseOptions<TObject, TValue> {
+export interface DateTimePickerOptions<TFormValue extends object, TGroupValue extends object, TValue>
+  extends BaseOptions<TFormValue, TGroupValue, TValue> {
   /**
    * Min
    *
@@ -300,24 +310,24 @@ export interface DateTimePickerOptions<TObject extends object, TValue> extends B
   showSeconds?: boolean;
 }
 
-export interface GroupOptions<TObject extends object, TValue extends object> {
+export interface GroupOptions<TFormValue extends object, TGroupValue extends object, TValue extends object> {
   /**
    * Path
    *
    * @template TObject
    * @type {TObject}
    */
-  path: keyof TObject;
+  path: keyof TGroupValue;
 
   /**
    * Group
    */
-  group: FormBuilder<TValue>;
+  group: FormBuilder<TFormValue, TValue>;
 
   /**
    * Show If
    */
-  showIf?: (config: TObject) => boolean;
+  showIf?: (config: TGroupValue, formConfig: TFormValue) => boolean;
 }
 
 /**
@@ -340,95 +350,95 @@ export enum FormFieldType {
 /**
  * Form Field
  */
-export type FormField<TObject extends object> =
+export type FormField<TFormValue extends object, TGroupValue extends object> =
   | ({
       type: FormFieldType.SELECT;
-    } & SelectOptions<TObject, TObject[keyof TObject]>)
+    } & SelectOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.RADIO;
-    } & RadioOptions<TObject, TObject[keyof TObject]>)
+    } & RadioOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.SLIDER;
-    } & SliderOptions<TObject, TObject[keyof TObject]>)
+    } & SliderOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.RANGE_SLIDER;
-    } & RangeSliderOptions<TObject, TObject[keyof TObject]>)
+    } & RangeSliderOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.CUSTOM;
-    } & CustomOptions<TObject, TObject[keyof TObject]>)
+    } & CustomOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.COLOR;
-    } & ColorOptions<TObject, TObject[keyof TObject]>)
+    } & ColorOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.INPUT;
-    } & InputOptions<TObject, TObject[keyof TObject]>)
+    } & InputOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.NUMBER_INPUT;
-    } & NumberInputOptions<TObject, TObject[keyof TObject]>)
+    } & NumberInputOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.DATETIME_PICKER;
-    } & DateTimePickerOptions<TObject, TObject[keyof TObject]>)
+    } & DateTimePickerOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
   | ({
       type: FormFieldType.GROUP;
-    } & GroupOptions<TObject, IsObject<TObject[keyof TObject]>>)
-  | ({ type: FormFieldType.HIDDEN } & HiddenOptions<TObject, TObject[keyof TObject]>);
+    } & GroupOptions<TFormValue, TGroupValue, IsObject<TGroupValue[keyof TGroupValue]>>)
+  | ({ type: FormFieldType.HIDDEN } & HiddenOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>);
 
 /**
  * Render Form Field
  */
-export type RenderFormField<TObject extends object> =
+export type RenderFormField<TFormValue extends object, TGroupValue extends object = TFormValue> =
   | ((
       | ({
           type: FormFieldType.SELECT;
-          value: TObject[keyof TObject];
-          onChange: (value: TObject[keyof TObject]) => void;
-        } & SelectOptions<TObject, TObject[keyof TObject]>)
+          value: TGroupValue[keyof TGroupValue];
+          onChange: (value: TGroupValue[keyof TGroupValue]) => void;
+        } & SelectOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.RADIO;
-          value: TObject[keyof TObject];
-          onChange: (value: TObject[keyof TObject]) => void;
-          disableOptions: () => Array<TObject[keyof TObject]>;
-        } & RadioOptions<TObject, TObject[keyof TObject]>)
+          value: TGroupValue[keyof TGroupValue];
+          onChange: (value: TGroupValue[keyof TGroupValue]) => void;
+          disableOptions: () => Array<TGroupValue[keyof TGroupValue]>;
+        } & RadioOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.SLIDER;
           value: number;
           onChange: (value: number) => void;
-        } & SliderOptions<TObject, TObject[keyof TObject]>)
+        } & SliderOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.RANGE_SLIDER;
           value: [number, number];
           onChange: (value: [number, number]) => void;
-        } & RangeSliderOptions<TObject, TObject[keyof TObject]>)
+        } & RangeSliderOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.CUSTOM;
-          value: TObject[keyof TObject];
-          onChange: (value: TObject[keyof TObject]) => void;
-        } & CustomOptions<TObject, TObject[keyof TObject]>)
+          value: TGroupValue[keyof TGroupValue];
+          onChange: (value: TGroupValue[keyof TGroupValue]) => void;
+        } & CustomOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.COLOR;
           value: string;
           onChange: (value: string) => void;
-        } & ColorOptions<TObject, TObject[keyof TObject]>)
+        } & ColorOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.HIDDEN;
-          value: TObject[keyof TObject];
-          onChange: (value: TObject[keyof TObject]) => void;
-        } & HiddenOptions<TObject, TObject[keyof TObject]>)
+          value: TGroupValue[keyof TGroupValue];
+          onChange: (value: TGroupValue[keyof TGroupValue]) => void;
+        } & HiddenOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.INPUT;
           value: string;
           onChange: (value: string) => void;
-        } & InputOptions<TObject, TObject[keyof TObject]>)
+        } & InputOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.NUMBER_INPUT;
           value: number;
           onChange: (value: number) => void;
-        } & NumberInputOptions<TObject, TObject[keyof TObject]>)
+        } & NumberInputOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
       | ({
           type: FormFieldType.DATETIME_PICKER;
           value: string;
           onChange: (value: string) => void;
-        } & DateTimePickerOptions<TObject, TObject[keyof TObject]>)
+        } & DateTimePickerOptions<TFormValue, TGroupValue, TGroupValue[keyof TGroupValue]>)
     ) & {
       showIf: () => boolean;
       disableIf: () => boolean;
@@ -441,7 +451,7 @@ export type RenderFormField<TObject extends object> =
       type: FormFieldType.GROUP;
       path: string;
       label: string;
-      group: Array<RenderFormField<IsObject<TObject[keyof TObject]>>>;
+      group: Array<RenderFormField<TFormValue, IsObject<TGroupValue[keyof TGroupValue]>>>;
       showIf: () => boolean;
       fullPath: string;
     };
