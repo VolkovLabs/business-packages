@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.3.0 (2025-02-24)
+
+### Features / Enhancements
+
+- Add findField to components (#81)
+
 ## 4.2.0 (2025-02-20)
 
 ### Features / Enhancements

@@ -13,6 +13,6 @@ export {
   useFormBuilder,
 } from './hooks';
 export * from './types';
-export { CodeParameterItem, CodeParametersBuilder, FormBuilder } from './utils';
+export { CodeParameterItem, CodeParametersBuilder, findField, FormBuilder } from './utils';
 
 export const formSelectors = TEST_IDS.form;
