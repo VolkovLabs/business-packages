@@ -1,5 +1,6 @@
 import { Input } from '@grafana/ui';
 import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { roundValueBySteps } from '../../utils';
 
 /**
  * Properties
@@ -26,6 +27,13 @@ interface Props extends Omit<React.ComponentProps<typeof Input>, 'onChange' | 'v
   step?: number;
 
   /**
+   * Steps
+   *
+   * @type {number[]}
+   */
+  steps?: number[];
+
+  /**
    * Min
    *
    * @type {min}
@@ -43,7 +51,7 @@ interface Props extends Omit<React.ComponentProps<typeof Input>, 'onChange' | 'v
 /**
  * Number Input
  */
-export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, ...restProps }) => {
+export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, steps, ...restProps }) => {
   /**
    * Ref
    */
@@ -73,10 +81,10 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
       v = 0;
     }
 
-    /**
-     * Round value by step
-     */
     if (step !== undefined) {
+      /**
+       * Round value by step
+       */
       let availableValue = step * 1000;
 
       if (min !== undefined) {
@@ -101,12 +109,19 @@ export const NumberInput: React.FC<Props> = ({ value, onChange, min, max, step, 
       v = min;
     }
 
+    /**
+     * Round value by steps
+     */
+    if (steps !== undefined) {
+      v = roundValueBySteps(v, steps);
+    }
+
     if (isChanged.current) {
       onChange?.(v);
       setLocalValue(v.toString());
       isChanged.current = false;
     }
-  }, [localValue, max, min, onChange, step]);
+  }, [localValue, max, min, onChange, step, steps]);
 
   /**
    * On Key Down

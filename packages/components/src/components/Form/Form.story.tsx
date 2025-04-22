@@ -39,6 +39,7 @@ const meta = {
         };
         opacity: number;
         step: number;
+        size: number;
         decimal: number;
         normalize: [number, number];
         custom: string;
@@ -107,6 +108,25 @@ const meta = {
             },
             label: 'Step',
             description: 'Move by 2 step',
+            view: {
+              grow: true,
+            },
+          })
+          .addSlider({
+            path: 'size',
+            defaultValue: 2,
+            min: 2,
+            max: 32,
+            steps: [2, 4, 8, 16, 32],
+            marks: {
+              2: '2',
+              4: '4',
+              8: '8',
+              16: '16',
+              32: '32',
+            },
+            label: 'Size',
+            description: 'Allowed values 2,4,8,16,32',
             view: {
               grow: true,
             },

@@ -229,6 +229,7 @@ export const Form = <TFormValue extends object>({
             max={field.max}
             step={field.step}
             marks={field.marks}
+            steps={field.steps}
             {...TEST_IDS.form.fieldSlider.apply(field.fullPath)}
           />
         </FieldComponent>
@@ -260,6 +261,7 @@ export const Form = <TFormValue extends object>({
             min={field.min}
             max={field.max}
             step={field.step}
+            steps={field.steps}
             {...TEST_IDS.form.fieldNumberInput.apply(field.fullPath)}
           />
         </FieldComponent>

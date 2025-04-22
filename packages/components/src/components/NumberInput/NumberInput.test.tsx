@@ -92,6 +92,17 @@ describe('Number Input', () => {
     expect(onChange).toHaveBeenCalledWith(3);
   });
 
+  it('Should round value by steps', () => {
+    const onChange = jest.fn();
+
+    render(getComponent({ min: 1, max: 9, onChange, value: 1, step: undefined, steps: [1, 5] }));
+
+    fireEvent.change(selectors.field(), { target: { value: '3' } });
+    fireEvent.blur(selectors.field());
+
+    expect(onChange).toHaveBeenCalledWith(5);
+  });
+
   it('Should set min value', () => {
     const onChange = jest.fn();
 

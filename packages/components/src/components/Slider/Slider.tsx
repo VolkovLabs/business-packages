@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { NumberInput } from '../NumberInput';
 import { getStyles } from './Slider.styles';
 import { SliderProps } from './types';
+import { roundValueBySteps } from '../../utils';
 
 /**
  * To make it working with grafana build
@@ -44,6 +45,13 @@ interface Props extends Omit<SliderProps, 'ariaLabelForHandle'> {
    * @type {boolean}
    */
   disabled?: boolean;
+
+  /**
+   * Steps
+   *
+   * @type {number[]}
+   */
+  steps?: number[];
 }
 
 /**
@@ -63,6 +71,7 @@ export const Slider: React.FC<Props> = ({
   inputWidth = 8,
   sliderAriaLabel,
   disabled,
+  steps,
   ...props
 }) => {
   const isHorizontal = orientation === 'horizontal';
@@ -71,14 +80,29 @@ export const Slider: React.FC<Props> = ({
   const SliderWithTooltip = SliderComponent;
   const [sliderValue, setSliderValue] = useState(value ?? min);
 
+  /**
+   * Validate Value By Steps
+   */
+  const validateValue = useCallback(
+    (value: number) => {
+      if (!steps) {
+        return value;
+      }
+
+      return roundValueBySteps(value, steps);
+    },
+    [steps]
+  );
+
   const onSliderChange = useCallback(
     (v: number | number[]) => {
       const value = typeof v === 'number' ? v : v[0];
+      const validatedValue = validateValue(value);
 
-      setSliderValue(value);
-      onChange?.(value);
+      setSliderValue(validatedValue);
+      onChange?.(validatedValue);
     },
-    [setSliderValue, onChange]
+    [setSliderValue, onChange, validateValue]
   );
 
   const onSliderInputChange = useCallback(
@@ -99,9 +123,10 @@ export const Slider: React.FC<Props> = ({
   const handleAfterChange = useCallback(
     (v: number | number[]) => {
       const value = typeof v === 'number' ? v : v[0];
-      onAfterChange?.(value);
+      const validatedValue = validateValue(value);
+      onAfterChange?.(validatedValue);
     },
-    [onAfterChange]
+    [onAfterChange, validateValue]
   );
 
   useEffect(() => {
@@ -125,7 +150,7 @@ export const Slider: React.FC<Props> = ({
           defaultValue={value}
           value={sliderValue}
           onChange={onSliderChange}
-          onAfterChange={handleAfterChange}
+          onChangeComplete={handleAfterChange}
           vertical={!isHorizontal}
           reverse={reverse}
           marks={marks}
@@ -151,6 +176,7 @@ export const Slider: React.FC<Props> = ({
             step={step}
             data-testid={props['data-testid']}
             disabled={disabled}
+            steps={steps}
           />
         )}
       </div>
