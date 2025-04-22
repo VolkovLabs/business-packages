@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.4.0 (2025-04-22)
+
+### Features / Enhancements
+
+- Add allowed steps to slider and number input components (#82)
+
 ## 4.3.0 (2025-02-24)
 
 ### Features / Enhancements

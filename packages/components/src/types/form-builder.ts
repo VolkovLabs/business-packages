@@ -178,6 +178,13 @@ export interface SliderOptions<TFormValue extends object, TGroupValue extends ob
   step?: number;
 
   /**
+   * Steps
+   *
+   * @type {number[]}
+   */
+  steps?: number[];
+
+  /**
    * Marks
    *
    * @type {Record<string, string>}
@@ -284,6 +291,13 @@ export interface NumberInputOptions<TFormValue extends object, TGroupValue exten
    * @type {number}
    */
   step?: number;
+
+  /**
+   * Steps
+   *
+   * @type {number[]}
+   */
+  steps?: number[];
 }
 
 export interface DateTimePickerOptions<TFormValue extends object, TGroupValue extends object, TValue>
