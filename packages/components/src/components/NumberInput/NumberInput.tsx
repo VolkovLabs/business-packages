@@ -1,5 +1,6 @@
 import { Input } from '@grafana/ui';
 import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import { roundValueBySteps } from '../../utils';
 
 /**

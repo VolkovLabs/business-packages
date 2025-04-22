@@ -3,10 +3,10 @@ import { Global } from '@emotion/react';
 import { useTheme2 } from '@grafana/ui';
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { roundValueBySteps } from '../../utils';
 import { NumberInput } from '../NumberInput';
 import { getStyles } from './Slider.styles';
 import { SliderProps } from './types';
-import { roundValueBySteps } from '../../utils';
 
 /**
  * To make it working with grafana build
