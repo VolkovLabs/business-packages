@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.0 (2024-07-18)
+
+### Features / Enhancements
+
+- Migrate to Eslint v9 (#83)
+
 ## 1.3.0 (2024-01-25)
 
 ### Features / Enhancements
