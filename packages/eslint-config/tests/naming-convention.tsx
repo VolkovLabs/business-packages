@@ -36,7 +36,9 @@ type User = object;
 /**
  * Interface
  */
-interface UserObject {}
+interface UserObject {
+  field: string;
+}
 
 /**
  * Generic Type

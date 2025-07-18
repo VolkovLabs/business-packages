@@ -11,9 +11,12 @@ npm install --save-dev @volkovlabs/eslint-config
 Add to ESLint config the following
 
 ```
-{
-    "extends": ["@volkovlabs/eslint-config"],
-}
+import eslintConfig from '@volkovlabs/eslint-config';
+import { defineConfig } from 'eslint/config';
+
+export default defineConfig([
+  eslintConfig,
+]);
 ```
 
 ## Working in Monorepo

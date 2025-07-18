@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { useArgs } from '@storybook/preview-api';
+// eslint-disable-next-line storybook/no-renderer-packages
 import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 

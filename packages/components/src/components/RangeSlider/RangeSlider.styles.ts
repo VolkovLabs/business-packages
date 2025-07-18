@@ -3,7 +3,6 @@ import { css as cssCore } from '@emotion/react';
 import { GrafanaTheme2 } from '@grafana/data';
 import { stylesFactory } from '@grafana/ui';
 
-// eslint-disable-next-line deprecation/deprecation
 export const getStyles = stylesFactory((theme: GrafanaTheme2, isHorizontal: boolean, hasMarks = false) => {
   const { spacing } = theme;
   const railColor = theme.colors.border.strong;

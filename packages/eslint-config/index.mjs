@@ -1,4 +1,8 @@
 'use strict';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
+import tsEslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
 
 /**
  * Get Naming Convention Rule
@@ -51,34 +55,36 @@ const getNamingConventionRule = ({ target = 'default' }) => ({
 /**
  * Documentation - https://eslint.org/docs/latest/extend/plugins#configs-in-plugins
  */
-module.exports = {
-  extends: ['plugin:@typescript-eslint/recommended'],
-  plugins: ['@typescript-eslint/eslint-plugin', 'simple-import-sort', 'deprecation'],
-  rules: {
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        args: 'after-used',
-        ignoreRestSiblings: true,
-        vars: 'all',
+export default defineConfig(
+  tsEslint.config(
+    tsEslint.configs.recommended,
+    {
+      plugins: { '@typescript-eslint/eslint-plugin': tsPlugin, 'simple-import-sort': eslintPluginSimpleImportSort },
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {
+            args: 'after-used',
+            ignoreRestSiblings: true,
+            vars: 'all',
+          },
+        ],
+        '@typescript-eslint/no-deprecated': 'warn',
+        'simple-import-sort/exports': 'error',
+        'simple-import-sort/imports': 'error',
+        'sort-imports': [
+          'error',
+          {
+            ignoreCase: true,
+            ignoreDeclarationSort: true,
+          },
+        ],
+        'no-console': ['error', {}],
+        'no-debugger': 'error',
+        ...getNamingConventionRule({ target: 'default' }),
       },
-    ],
-    'deprecation/deprecation': ['warn'],
-    'simple-import-sort/exports': 'error',
-    'simple-import-sort/imports': 'error',
-    'sort-imports': [
-      'error',
-      {
-        ignoreCase: true,
-        ignoreDeclarationSort: true,
-      },
-    ],
-    'no-console': ['error', {}],
-    'no-debugger': 'error',
-    ...getNamingConventionRule({ target: 'default' }),
-  },
-  overrides: [
+    },
     {
       files: ['**/*.tsx'],
       rules: {
@@ -96,6 +102,6 @@ module.exports = {
       rules: {
         ...getNamingConventionRule({ target: 'decorator' }),
       },
-    },
-  ],
-};
+    }
+  )
+);

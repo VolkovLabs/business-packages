@@ -11,7 +11,7 @@ import { RangeSliderProps } from './types';
 /**
  * To make it working with grafana build
  */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { default: SliderComponent } = require('rc-slider');
 
 /**
