@@ -1,9 +1,11 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { getJestSelectors, createSelector } from '@volkovlabs/jest-selectors';
+import { createSelector, getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
 import { CODE_EDITOR_CONFIG, TEST_IDS } from '../../constants';
 import { AutosizeCodeEditor } from './AutosizeCodeEditor';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /**
  * Properties
@@ -18,6 +20,7 @@ const InTestIds = {
 };
 
 const defaultModel = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   setEOL: jest.fn(),
 };
 
@@ -26,7 +29,9 @@ const defaultMonaco = {
     EndOfLineSequence: {
       '0': 'LF',
       '1': 'CRLF',
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       LF: 0,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       CRLF: 1,
     },
   },

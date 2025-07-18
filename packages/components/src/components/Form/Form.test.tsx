@@ -1,10 +1,11 @@
-import { render, screen, fireEvent, act, within, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { getJestSelectors } from '@volkovlabs/jest-selectors';
-import { FormBuilder } from '../../utils';
-import { Form } from './Form';
+import React from 'react';
+
 import { TEST_IDS } from '../../constants';
 import { useFormBuilder } from '../../hooks';
-import React from 'react';
+import { FormBuilder } from '../../utils';
+import { Form } from './Form';
 
 /**
  * In Test Ids

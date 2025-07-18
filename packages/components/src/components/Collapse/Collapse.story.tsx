@@ -1,5 +1,6 @@
 import { Button, Icon } from '@grafana/ui';
 import { useArgs } from '@storybook/client-api';
+// eslint-disable-next-line storybook/no-renderer-packages
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 

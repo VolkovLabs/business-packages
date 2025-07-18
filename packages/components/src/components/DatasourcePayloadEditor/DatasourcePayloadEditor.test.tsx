@@ -4,7 +4,6 @@ import { createSelector, getJestSelectors } from '@volkovlabs/jest-selectors';
 import React from 'react';
 
 import { TEST_IDS } from '../../constants';
-
 import { DatasourcePayloadEditor } from './DatasourcePayloadEditor';
 
 /**

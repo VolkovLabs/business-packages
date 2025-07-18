@@ -7,7 +7,7 @@ import React, { useEffect, useRef } from 'react';
 /**
  * To make it working with grafana build
  */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { default: Tooltip } = require('rc-tooltip');
 
 export const HandleTooltip = (props: {

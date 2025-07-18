@@ -4,7 +4,6 @@ import React from 'react';
 
 import { TEST_IDS } from '../../constants';
 import { useDatasources } from '../../hooks';
-
 import { DatasourceEditor } from './DatasourceEditor';
 
 /**

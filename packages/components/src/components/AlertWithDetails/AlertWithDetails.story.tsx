@@ -1,4 +1,5 @@
-import { Meta, StoryFn } from '@storybook/react';
+// eslint-disable-next-line storybook/no-renderer-packages
+import type { Meta, StoryFn } from '@storybook/react';
 import React, { useState } from 'react';
 
 import { AlertWithDetails, AlertWithDetailsProps } from './AlertWithDetails';
