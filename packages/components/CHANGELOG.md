@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.5.0 (2025-07-31)
+
+### Features / Enhancements
+
+- Updated @grafana/data and @grafana/runtime (#84)
+
 ## 4.4.0 (2025-04-22)
 
 ### Features / Enhancements
