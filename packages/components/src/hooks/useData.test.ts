@@ -17,12 +17,14 @@ const withLatency = <T>(result: T, timeout = 15): Promise<T> => {
   return new Promise((resolve) => setTimeout(() => resolve(result), timeout));
 };
 
+type ResponseItem = { id: string };
+
 /**
  * Data Source type for checking type narrowing
  */
 type DataSource = {
   api?: {
-    getAll: () => Promise<{ id: string }[]>;
+    getAll: (abortController?: AbortController) => Promise<ResponseItem[]>;
   };
 };
 
@@ -161,5 +163,54 @@ describe('useData', () => {
      * Check updated result
      */
     expect(result.current.data).toEqual([{ id: '1' }]);
+  });
+
+  it('Should cancel previous requests', async () => {
+    let isAborted = false;
+    const datasource = {
+      ...defaultDatasource,
+      api: {
+        ...defaultDatasource.api,
+        getAll: jest.fn((abortController?: AbortController) => {
+          return new Promise<ResponseItem[]>((resolve, reject) => {
+            setTimeout(() => {
+              resolve([{ id: '1' }, { id: '2' }]);
+            });
+            abortController?.signal.addEventListener('abort', () => {
+              reject(new DOMException('Operation aborted', 'AbortError'));
+              isAborted = true;
+            });
+          });
+        }),
+      },
+    };
+
+    const { result } = await act(async () =>
+      renderHook(() =>
+        useData({
+          datasource,
+          query: useCallback((datasource, abortController) => datasource.api.getAll(abortController), []),
+          initial: [],
+        })
+      )
+    );
+
+    await act(async () => jest.runOnlyPendingTimersAsync());
+
+    expect(result.current.data).toEqual([{ id: '1' }, { id: '2' }]);
+
+    /**
+     * Refresh twice
+     */
+    await act(async () => {
+      result.current.update();
+      result.current.update();
+      await jest.runOnlyPendingTimersAsync();
+    });
+
+    /**
+     * Check if request aborted
+     */
+    expect(isAborted).toEqual(true);
   });
 });

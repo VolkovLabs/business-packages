@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.6.0 (2025-08-12)
+
+### Features / Enhancements
+
+- Add abort controller to `useData` hook (#87)
+
 ## 4.5.0 (2025-07-31)
 
 ### Features / Enhancements
